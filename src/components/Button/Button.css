@@ -1,0 +1,54 @@
+.button {
+  height: 32px;
+  padding: 0;
+  border: 0;
+  color: #000;
+  align-items: center;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+  transition: opacity .15s;
+  margin-right: 10px;
+}
+
+.button:last-of-type {
+  margin-right: 0;
+}
+
+.button_size_small {
+  height: 32px;
+  padding: 0 20px;
+}
+
+.button_size_medium {
+  height: 36px;
+  padding: 0 17px;
+}
+
+.button_form-factor_square {
+  border-radius: 3px;
+}
+
+.button_form-factor_round {
+  border-radius: 10px;
+}
+
+.button_color_green {
+  background-color: #3DDC84;
+}
+
+.button_color_gray {
+  background-color: #303030;
+  color: #fff;
+}
+
+.button_color_blue {
+  background-color: #4285F4;
+}
+
+.button:hover {
+  opacity: .8;
+}

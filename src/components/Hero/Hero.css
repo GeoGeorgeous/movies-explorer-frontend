@@ -1,0 +1,33 @@
+.hero {
+  background-color: #202020;
+  height: 513px;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-end;
+
+}
+
+.hero__banner {
+  width: 1200px;
+  height: 493px;
+  background-color: #272727;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero__banner-title {
+  font-family: Inter;
+  margin-top: 160px;
+  max-width: 730px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
