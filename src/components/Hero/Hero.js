@@ -1,7 +1,6 @@
 import React from 'react';
 import NavTab from '../NavTab/NavTab';
-import './Hero.css'
-
+import './Hero.css';
 
 function Hero() {
   return (

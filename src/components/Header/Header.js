@@ -14,9 +14,9 @@ function Header() {
           color="green"
           formFactor="square"
           text="Войти"
-           />
+        />
       </ul>
-      </header>
+    </header>
   );
 }
 
