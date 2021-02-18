@@ -14,7 +14,9 @@ function Button(props) {
   };
 
   return (
-    <button className={`
+    <button
+      type="button"
+      className={`
     button button_size_${size}
     button_form-factor_${formFactor}
     button_color_${color}

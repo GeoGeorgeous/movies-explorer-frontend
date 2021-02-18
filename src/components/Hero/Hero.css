@@ -6,7 +6,7 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: flex-end;
-
+  margin-bottom: 10px;
 }
 
 .hero__banner {

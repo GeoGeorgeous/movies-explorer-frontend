@@ -1,0 +1,47 @@
+.about-me__container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin-top: 66px;
+}
+
+.about-me__author {
+  font-family: Inter;
+  font-style: normal;
+  max-width: 600px;
+}
+
+.about-me__avatar {
+  border-radius: 10px;
+  object-fit: contain;
+  width: 270px;
+  height: 327px;
+}
+
+.about-me__header {
+  margin: 0 0 18px 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+}
+
+.about-me__subtitle {
+  margin: 0 0 26px 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.about-me__text {
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+}
