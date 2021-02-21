@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
-import PropTypes from 'prop-types';
 import './Section.css';
+import PropTypes from 'prop-types';
 
 function Section(props) {
   const { title, children, theme} = props;

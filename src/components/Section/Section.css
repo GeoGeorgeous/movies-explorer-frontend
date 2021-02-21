@@ -1,11 +1,11 @@
+.section {
+  width: calc(100% - (70px*2));
+  padding: 100px 70px;
+}
+
 .section__theme_light {
   background-color: #272727;
 }
-
-.section {
-  width: calc(100% - 70px*2);
-  padding: 100px 70px;
-};
 
 .section__header {
   padding: 0;
@@ -16,9 +16,9 @@
   font-size: 22px;
   line-height: 27px;
   letter-spacing: -0.04em;
-};
+}
 
 .section__line {
   border-color: #DADADA;
-};
+}
 

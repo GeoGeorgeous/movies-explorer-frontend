@@ -2,7 +2,7 @@
 import React from 'react';
 import Section from '../Section/Section';
 import './AboutMe.css';
-import avatar from '../../images/avatar.jpg';
+import avatar from '../../images/avatar.png';
 
 function AboutMe() {
   return (
@@ -18,9 +18,28 @@ function AboutMe() {
             После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами
             и ушёл с постоянной работы.
           </p>
+          <ul className="about-me__social-links">
+            <li className="about-me__link-item">
+              <a className="about-me__social-link" href="#">Facebook</a>
+            </li>
+            <li className="about-me__link-item">
+              <a className="about-me__social-link" href="#">Github</a>
+            </li>
+          </ul>
         </div>
         <img className="about-me__avatar" src={avatar} />
       </div>
+      <ul className="about-me__project-buttons">
+        <li className="about-me__project-button-item">
+          <button className="about-me__project-button">Статичный сайт</button>
+        </li>
+        <li className="about-me__project-button-item">
+          <button className="about-me__project-button">Адаптивный сайт</button>
+        </li>
+        <li className="about-me__project-button-item">
+          <button className="about-me__project-button">Одностраничное приложение</button>
+        </li>
+      </ul>
     </Section>
   );
 }
