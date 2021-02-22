@@ -10,6 +10,7 @@ function Register() {
     buttonText="Зарегистрироваться"
     hintText="Уже зарегистрированы?"
     hintLinkText="Войти"
+    hintLinkUrl="/signin"
     >
       <label for="name" className="spf__label">Имя</label>
       <input

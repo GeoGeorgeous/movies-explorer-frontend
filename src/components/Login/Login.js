@@ -10,6 +10,7 @@ function Login() {
     buttonText="Войти"
     hintText="Ещё не зарегистрированы?"
     hintLinkText="Регистрация"
+    hintLinkUrl="/signup"
     >
       <label for="email" className="spf__label">E-mail</label>
       <input
