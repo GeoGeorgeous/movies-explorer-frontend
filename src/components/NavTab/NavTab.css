@@ -1,6 +1,9 @@
 .navtab {
   margin-bottom: 30px;
-  width: 308px;
   height: 36px;
   border-radius: 10px;
+}
+
+.navtab__achor-link {
+  margin-right: 10px;
 }
