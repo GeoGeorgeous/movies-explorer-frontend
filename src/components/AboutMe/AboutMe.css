@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-top: 66px;
+  margin: 66px 0 100px 0;
 }
 
 .about-me__author {
@@ -128,4 +128,14 @@
 
 .about-me__project-button:focus {
   outline: 0;
+}
+
+
+.about-me__portfolio-header {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  color: #8B8B8B;
 }

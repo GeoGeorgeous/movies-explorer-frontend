@@ -1,9 +1,10 @@
 .footer {
   width: calc(100% - (70px*2));
-  padding: 70px 70px 20px 80px;
+  padding: 70px 70px 20px 70px;
 }
 
 .footer__about {
+  margin: 0;
   font-family: Inter;
   font-style: normal;
   font-weight: normal;

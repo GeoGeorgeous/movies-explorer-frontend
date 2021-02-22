@@ -29,6 +29,7 @@ function AboutMe() {
         </div>
         <img className="about-me__avatar" src={avatar} />
       </div>
+      <h4 className="about-me__portfolio-header">Портфолио</h4>
       <ul className="about-me__project-buttons">
         <li className="about-me__project-button-item">
           <button className="about-me__project-button">Статичный сайт</button>

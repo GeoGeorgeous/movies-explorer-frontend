@@ -14,13 +14,10 @@ function AboutProject() {
           <h3 className="about-project__header">На выполнение диплома ушло 5 недель</h3>
           <p className="about-project__text">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
         </div>
-        <div className="about-project__progress">
-          <div className="progress-bar progress-bar__green">1 неделя</div>
-          <div className="progress-bar progress-bar__grey">4 недели</div>
-          <p className="progress-bar progress-bar__subtitle_small">Back-end</p>
-          <p className="progress-bar progress-bar__subtitle_large">Front-end</p>
-        </div>
-
+      </div>
+      <div className="about-project__progress___grid">
+        <span className="about-project__backend" />
+        <span className="about-project__frontend" />
       </div>
     </Section>
   );
