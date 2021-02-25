@@ -8,11 +8,11 @@ function Button(props) {
     text, size, formFactor, color, url,
   } = props;
   Button.propTypes = {
-    text: PropTypes.string.isRequired,
-    size: PropTypes.string.isRequired,
-    formFactor: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired, // Текст кнопки
+    size: PropTypes.string.isRequired, // Размер строки: small, medium, large
+    formFactor: PropTypes.string.isRequired, // Форма кнопки: square, round
+    color: PropTypes.string.isRequired, // Цвет фона для кнопки: green, gray, blue
+    url: PropTypes.string.isRequired, // Адрес ссылки ('/..')
   };
 
   return (

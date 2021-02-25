@@ -1,18 +1,22 @@
 .button {
-  height: 32px;
-  padding: 0;
-  border: 0;
-  color: #000;
   align-items: center;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  cursor: pointer;
-  transition: opacity .15s;
+
+  height: 32px;
   margin-right: 10px;
+  padding: 0;
+
+  cursor: pointer;
   user-select: none;
+  transition: opacity .15s;
+
+  color: #000;
+  border: 0;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 16px;
 }
 
 .button:last-of-type {
@@ -47,13 +51,13 @@
 }
 
 .button_color_gray {
-  background-color: #303030;
   color: #fff;
+  background-color: #303030;
 }
 
 .button_color_blue {
-  background-color: #4285F4;
   color: #fff;
+  background-color: #4285F4;
 }
 
 .button:hover {
