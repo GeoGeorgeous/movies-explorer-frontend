@@ -9,7 +9,9 @@ function SavedMovies() {
   return (
     <>
       <ErrorPopup />
-      <Header />
+      <Header
+        loggedIn="true"
+      />
       <SearchForm />
       <MoviesCardList />
     </>

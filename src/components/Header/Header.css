@@ -58,3 +58,7 @@
   opacity: .8;
 }
 
+.header__link-active {
+  color: #3DDC84;
+}
+

@@ -1,11 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '../Button/Button';
 import './Header.css';
 import logo from '../../images/logo.svg';
 
 function Header(props) {
+  const location = useLocation();
+  const moviesActive = location.pathname === '/movies' ? 'header__link-active' : '';
+  const savedMoviesActive = location.pathname === '/saved-movies' ? 'header__link-active' : '';
   const { loggedIn } = props;
   Header.propTypes = {
     loggedIn: PropTypes.bool.isRequired, // logged in? (хардкод до авторизации)
@@ -21,10 +24,10 @@ function Header(props) {
           <>
             <ul className="header__links">
               <li className="header__link-item">
-                <Link to="/movies" className="header__link">Фильмы</Link>
+                <Link to="/movies" className={`header__link ${moviesActive}`}>Фильмы</Link>
               </li>
               <li className="header__link-item">
-                <Link to="/saved-movies" className="header__link">Сохранённые фильмы</Link>
+                <Link to="/saved-movies" className={`header__link ${savedMoviesActive}`}>Сохранённые фильмы</Link>
               </li>
             </ul>
             <Button
