@@ -1,10 +1,11 @@
 .spf {
-  margin: 0 auto;
-  padding: 70px 0;
-  height: 100%;
-  width: 399px;
   display: flex;
   flex-direction: column;
+
+  width: 399px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 70px 0;
 }
 
 .spf__logo-link {
@@ -14,9 +15,11 @@
 
 .spf__logo {
   display: block;
+
   width: 38px;
-  padding: 0;
   margin-bottom: 40px;
+  padding: 0;
+
   transition: opacity .2s;
 }
 
@@ -27,32 +30,39 @@
 .spf__header {
   margin-bottom: 40px;
   padding: 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 29px;
+
   color: #FFFFFF;
+
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 29px;
 }
 
 .spf__form {
   display: flex;
   flex-flow: column nowrap;
+
   margin-bottom: 69px;
 }
 
 .spf__input {
-  padding: 15px;
-  outline: 0;
-  border: 1px;
-  background-color: #2F2F2F;
-  border-radius: 8px;
   margin-bottom: 20px;
+  padding: 15px;
+
+  transition: box-shadow .4s;
+
   color: #fff;
-  caret-color: #4285F4;
+  border: 1px;
+  border-radius: 8px;
+  outline: 0;
+  background-color: #2F2F2F;
+
   font-size: 13px;
   line-height: 16px;
-  transition: box-shadow .4s;
+
+  caret-color: #4285F4;
 }
 
 .spf__input:focus {
@@ -64,30 +74,35 @@
 }
 
 .spf__label {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 10px;
-  line-height: 12px;
-  color: #8B8B8B;
   margin-bottom: 10px;
+
+  color: #8B8B8B;
+
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 12px;
 }
 
 .spf__button {
-  margin-top: auto;
-  background: #4285F4;
-  border-radius: 3px;
   height: 45px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
+  margin-top: auto;
+
+  cursor: pointer;
+  transition: opacity .2s;
   text-align: center;
+
   color: #fff;
   border: 0;
-  transition: opacity .2s;
-  cursor: pointer;
+  border-radius: 3px;
+  background: #4285F4;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 17px;
 }
 
 .spf__button:hover {
@@ -96,25 +111,30 @@
 
 .spf__hint {
   margin: 16px 0 0 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
+
   text-align: center;
+
   color: #8B8B8B;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 17px;
 }
 
 .spf__hint-link {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  color: #4285F4;
-  text-decoration: none;
   transition: opacity .2s;
+  text-align: center;
+  text-decoration: none;
+
+  color: #4285F4;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 17px;
 }
 
 .spf__hint-link:hover {
