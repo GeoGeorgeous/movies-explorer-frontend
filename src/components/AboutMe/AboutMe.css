@@ -2,57 +2,60 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+
   margin: 66px 0 100px 0;
 }
 
 .about-me__author {
-  font-family: Inter;
-  font-style: normal;
-  max-width: 600px;
   display: flex;
   flex-direction: column;
-}
 
-.about-me__avatar {
-  border-radius: 10px;
-  width: 271px;
-  height: auto;
+  max-width: 600px;
+
+  font-family: Inter;
+  font-style: normal;
 }
 
 .about-me__header {
   margin: 0 0 18px 0;
   padding: 0;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 50px;
-  line-height: 58px;
+
   letter-spacing: -0.04em;
+
+  font-size: 50px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 58px;
 }
 
 .about-me__subtitle {
   margin: 0 0 26px 0;
   padding: 0;
-  font-style: normal;
-  font-weight: 500;
+
   font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
   line-height: 20px;
 }
 
-.about-me__text {
+.about-me__description {
   margin: 0;
   padding: 0;
-  font-style: normal;
-  font-weight: normal;
+
   font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
   line-height: 22px;
 }
 
 .about-me__social-links {
   display: flex;
   flex-flow: row nowrap;
-  list-style: none;
-  padding: 0;
+
   margin: auto 0 0 0;
+  padding: 0;
+
+  list-style: none;
 }
 
 .about-me__link-item {
@@ -64,29 +67,51 @@
 }
 
 .about-me__social-link {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  color: #fff;
-  text-decoration: none;
   transition: opacity .2s;
-}
+  text-decoration: none;
 
+  color: #fff;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 17px;
+}
 
 .about-me__social-link:hover {
   opacity: .8;
 }
 
+.about-me__avatar {
+  width: 271px;
+  height: auto;
+
+  border-radius: 10px;
+
+  object-fit: contain;
+}
+
+.about-me__portfolio-header {
+  color: #8B8B8B;
+
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 20px;
+}
+
 .about-me__project-buttons {
   margin: 50px 0 0 0;
   padding: 0;
+
   list-style: none;
 }
 
 .about-me__project-button-item {
   margin-top: 20px;
+
   border-bottom: 1px solid #424242;
 }
 
@@ -100,26 +125,29 @@
 
 .about-me__project-button {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0 0 20px 0;
   width: 100%;
   height: 70px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 30px;
-  line-height: 50px;
+  margin: 0;
+  padding: 0 0 20px 0;
+
+  cursor: pointer;
+  transition: opacity .2s;
+  text-align: left;
   letter-spacing: -0.04em;
+
   color: #fff;
+  border: none;
   background: transparent;
   background-image: url(../../images/arrow-icon.svg);
   background-repeat: no-repeat;
   background-position-x: calc(100% - 7px);
   background-position-y: center;
-  text-align: left;
-  border: none;
-  cursor: pointer;
-  transition: opacity .2s;
+
+  font-family: Inter;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 50px;
 }
 
 .about-me__project-button:hover {
@@ -128,14 +156,4 @@
 
 .about-me__project-button:focus {
   outline: 0;
-}
-
-
-.about-me__portfolio-header {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 20px;
-  color: #8B8B8B;
 }
