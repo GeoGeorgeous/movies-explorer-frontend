@@ -1,11 +1,10 @@
 .sf {
-  min-height: 74px;
   width: calc(100% - 70px*2);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  padding: 80px 70px 100px 70px;
+  padding: 80px 0 10px 70px;
 }
 
 .sf__form {
