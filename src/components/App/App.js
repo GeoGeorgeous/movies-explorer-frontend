@@ -6,6 +6,7 @@ import Main from '../Main/Main';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound'
+import Movies from '../Movies/Movies';
 import './App.css';
 
 function App() {
@@ -47,6 +48,9 @@ function App() {
         </Route>
         <Route exact path="/signin">
           <Login />
+        </Route>
+        <Route exact path="/movies">
+          <Movies />
         </Route>
         <Route path="*">
           <NotFound />

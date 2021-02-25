@@ -23,9 +23,9 @@ function Login() {
       <input
       type="password"
       className="spf__input"
-      placeholder="vitaliy@yandex.com"
+      placeholder="•"
       id="password"
-      placeholder="" />
+      placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" />
 
     </SinglePageForm>
   );

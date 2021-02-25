@@ -1,6 +1,6 @@
 .hero {
   background-color: #202020;
-  height: 513px;
+  min-height: 513px;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;

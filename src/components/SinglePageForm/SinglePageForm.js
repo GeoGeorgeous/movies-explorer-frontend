@@ -50,7 +50,7 @@ function SinglePageForm(props) {
         onLoaderFinished={() => setProgress(0)}
         />
       <div className="spf">
-        <img className="spf__logo" src={logo}/>
+        <Link className="spf__logo-link" to="/"><img className="spf__logo" src={logo}/></Link>
         <h1 className="spf__header">{header}</h1>
         <form className="spf__form" id="spf" onSubmit={handleSubmit}>
           {children}

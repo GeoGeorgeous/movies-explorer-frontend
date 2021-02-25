@@ -12,6 +12,7 @@
   cursor: pointer;
   transition: opacity .15s;
   margin-right: 10px;
+  user-select: none;
 }
 
 .button:last-of-type {
@@ -26,6 +27,11 @@
 .button_size_medium {
   height: 36px;
   padding: 0 17px;
+}
+
+.button_size_large {
+  height: 44px;
+  padding: 0 15px;
 }
 
 .button_form-factor_square {
@@ -47,6 +53,7 @@
 
 .button_color_blue {
   background-color: #4285F4;
+  color: #fff;
 }
 
 .button:hover {

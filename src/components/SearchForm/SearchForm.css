@@ -1,0 +1,62 @@
+.sf {
+  min-height: 74px;
+  width: calc(100% - 70px*2);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 70px 100px 70px;
+}
+
+.sf__form {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sf__input {
+  width: 100%;
+  padding: 15px;
+  outline: 0;
+  border: 1px;
+  background-color: #2F2F2F;
+  border-radius: 8px;
+  color: #fff;
+  caret-color: #4285F4;
+  font-size: 13px;
+  line-height: 16px;
+  transition: box-shadow .4s;
+  margin-right: 10px;
+}
+
+.sf__input:focus {
+  box-shadow: 0px 0px 0px 1px #4285F4 inset;
+}
+
+.sf__filter {
+  margin: 30px 0 40px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.sf__filter-label {
+  user-select: none;
+  cursor: pointer;
+  margin-left: 14px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+.sf__line {
+  margin: 40px 0 10px 0;
+  width: 100%;
+  margin: 0;
+  border-color: #424242;
+}

@@ -1,5 +1,5 @@
 .header {
-  height: 74px;
+  min-height: 74px;
   width: calc(100% - 70px*2);
   display: flex;
   flex-flow: row nowrap;

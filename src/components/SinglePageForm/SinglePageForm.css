@@ -7,10 +7,21 @@
   flex-direction: column;
 }
 
+.spf__logo-link {
+  width: 38px;
+  height: 38px;
+}
+
 .spf__logo {
+  display: block;
   width: 38px;
   padding: 0;
   margin-bottom: 40px;
+  transition: opacity .2s;
+}
+
+.spf__logo:hover {
+  opacity: .8;
 }
 
 .spf__header {

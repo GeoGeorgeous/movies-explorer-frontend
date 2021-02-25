@@ -1,0 +1,52 @@
+/* Основные свойства кнопки */
+.checkbox {
+  border-radius: 20px;
+  height: 20px;
+  width: 36px;
+  appearance: none;
+  outline: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  /* Скорость анимации для тени, фона */
+  transition-duration: .2s;
+  transition-timing-function: ease-in-out;
+  cursor: pointer;
+  /* Фон кнопки в выкл. состоянии */
+  background-color: #2F2F2F;
+}
+
+/* Круг в выкл состоянии */
+.checkbox::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-color: #1b1b1b;
+  position: absolute;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: left .2s;
+}
+
+/* Тени для круга в выкл и вкл состояниях */
+.checkbox:hover::after {
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, .18);
+}
+
+/* Кнопка в вкл состоянии */
+.checkbox:checked {
+  background-color: #3DDC84;
+}
+
+/* Круг в вкл состоянии */
+.checkbox:checked::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  position: absolute;
+  border-radius: 50%;
+  top: 2px;
+  left: 18px;
+}
