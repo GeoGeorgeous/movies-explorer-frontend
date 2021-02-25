@@ -1,13 +1,11 @@
 .button {
-  align-items: center;
-
   height: 32px;
   margin-right: 10px;
   padding: 0;
 
   cursor: pointer;
   user-select: none;
-  transition: opacity .15s;
+  transition: opacity .2s;
 
   color: #000;
   border: 0;
@@ -17,6 +15,8 @@
   font-weight: 500;
   font-style: normal;
   line-height: 16px;
+
+  text-align: center;
 }
 
 .button:last-of-type {
@@ -30,7 +30,7 @@
 
 .button_size_medium {
   height: 36px;
-  padding: 0 17px;
+  width: 96px;
 }
 
 .button_size_large {

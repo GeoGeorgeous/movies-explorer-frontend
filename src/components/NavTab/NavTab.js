@@ -32,7 +32,7 @@ function NavTab() {
         </li>
 
         <li>
-          <HashLink to="/#aboutMe" className="navtab__achor-link">
+          <HashLink to="/#aboutMe" className="navtab__achor-link navtab__achor-last-link">
             <Button
               size="medium"
               color="gray"
