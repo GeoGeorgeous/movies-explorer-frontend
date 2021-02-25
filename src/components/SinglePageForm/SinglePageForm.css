@@ -107,10 +107,15 @@
   font-weight: 500;
   font-style: normal;
   line-height: 17px;
+  user-select: none;
 }
 
 .spf__button:hover {
   opacity: .8;
+}
+
+.spf__button:focus {
+  outline: 0;
 }
 
 .spf__hint {
