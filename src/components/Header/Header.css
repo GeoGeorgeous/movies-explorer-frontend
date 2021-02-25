@@ -24,9 +24,15 @@
   height: 38px;
 }
 
-.header__link {
-  margin-right: 30px;
+.header__links {
+  display: flex;
+  align-items: center;
+  flex-flow: row nowrap;
 
+  list-style-type: none;
+}
+
+.header__link {
   transition: opacity .2s;
   text-align: right;
   text-decoration: none;
@@ -38,6 +44,14 @@
   font-weight: 500;
   font-style: normal;
   line-height: 16px;
+}
+
+.header__link-item {
+  margin-right: 30px;
+}
+
+.header__link-item:last-of-type {
+  margin-right: 0;
 }
 
 .header__link:hover {

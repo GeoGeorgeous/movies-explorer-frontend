@@ -6,6 +6,7 @@
   cursor: pointer;
   user-select: none;
   transition: opacity .2s;
+  text-align: center;
 
   color: #000;
   border: 0;
@@ -15,8 +16,6 @@
   font-weight: 500;
   font-style: normal;
   line-height: 16px;
-
-  text-align: center;
 }
 
 .button:last-of-type {
@@ -29,8 +28,8 @@
 }
 
 .button_size_medium {
-  height: 36px;
   width: 96px;
+  height: 36px;
 }
 
 .button_size_large {
@@ -44,6 +43,10 @@
 
 .button_form-factor_round {
   border-radius: 10px;
+}
+
+.button_form-factor_extra-round {
+  border-radius: 20px;
 }
 
 .button_color_green {

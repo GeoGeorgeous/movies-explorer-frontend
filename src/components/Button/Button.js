@@ -10,7 +10,7 @@ function Button(props) {
   Button.propTypes = {
     text: PropTypes.string.isRequired, // Текст кнопки
     size: PropTypes.string.isRequired, // Размер строки: small, medium, large
-    formFactor: PropTypes.string.isRequired, // Форма кнопки: square, round
+    formFactor: PropTypes.string.isRequired, // Форма кнопки: square, round, extra-round
     color: PropTypes.string.isRequired, // Цвет фона для кнопки: green, gray, blue
     url: PropTypes.string.isRequired, // Адрес ссылки ('/..')
   };

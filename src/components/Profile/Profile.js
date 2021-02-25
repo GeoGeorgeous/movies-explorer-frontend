@@ -8,7 +8,9 @@ function Profile() {
 
   return (
     <>
-      <Header />
+      <Header
+        loggedIn="true"
+      />
       <div className="profile">
         <h1 className="profile__header">Привет, Виталий!</h1>
         <form className="profile__form" id="profile">
