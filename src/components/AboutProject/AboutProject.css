@@ -1,148 +1,122 @@
 .about-project__grid {
   display: grid;
+
+  padding-top: 69px;
+  padding-bottom: 110px;
+
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   gap: 110px 40px;
-  padding-top: 69px;
-  padding-bottom: 110px;
-}
-
-.about-project__grid-item {
-
 }
 
 .about-project__header {
-  padding: 0;
   margin: 0 0 26px 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 24px;
+  padding: 0;
+
   letter-spacing: -0.04em;
+
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 24px;
 }
 
-.about-project__text {
-  padding: 0;
+.about-project__description {
   margin: 0;
+  padding: 0;
+
   font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
   line-height: 20px;
 }
 
-.about-project__progress {
-  grid-column: span 2;
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.progress-bar {
-  height: 36px;
-  width: 100%;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  text-align: center;
+.about-project__progress-bar {
   display: grid;
-  place-items: center;
-}
 
-.progress-bar__green {
-  width: 228px;
-  background-color: #3DDC84;
-  color: #000;
-}
-
-.progress-bar__grey {
-  width: 912px;
-  background-color: #303030;
-  color: #fff;
-}
-
-.progress-bar__subtitle_small {
-  margin: 0;
-  height: auto;
-  width: 228px;
-  font-size: 14px;
-  line-height: 17px;
-  color: #A0A0A0;
-}
-
-.progress-bar__subtitle_large {
-  height: auto;
-  width: 912px;
-  font-size: 14px;
-  line-height: 17px;
-  color: #A0A0A0;
-}
-
-.about-project__progress___grid {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
   padding-bottom: 32px;
+
+  grid-template-columns: 1fr 4fr;
 }
 
 /* progress-bar backend */
 .about-project__backend {
+  position: relative;
+
+  display: block;
+
   width: 100%;
   height: 36px;
+
   background-color: #3DDC84;
-  position: relative;
-  display: block;
 }
 
 .about-project__backend::before {
-  content: '1 неделя';
-  font-size: 14px;
-  line-height: 17px;
-  color: #000;
   position: absolute;
   top: 50%;
   left: 50%;
+
+  content: '1 неделя';
   transform: translate(-50%, -50%);
+
+  color: #000;
+
+  font-size: 14px;
+  line-height: 17px;
 }
 
 .about-project__backend::after {
-  content: 'Back-end';
-  font-size: 14px;
-  line-height: 17px;
-  color: #A0A0A0;
   position: absolute;
   top: 57px;
   left: 50%;
+
+  content: 'Back-end';
   transform: translate(-50%, -50%);
+
+  color: #A0A0A0;
+
+  font-size: 14px;
+  line-height: 17px;
 }
 
 /* progress-bar frontend */
 .about-project__frontend {
+  position: relative;
+
+  display: block;
+
   width: 100%;
   height: 36px;
+
   background-color: #303030;
-  position: relative;
-  display: block;
 }
 
 .about-project__frontend::before {
-  content: '4 недели';
-  font-size: 14px;
-  line-height: 17px;
-  color: #fff;
   position: absolute;
   top: 50%;
   left: 50%;
+
+  content: '4 недели';
   transform: translate(-50%, -50%);
+
+  color: #fff;
+
+  font-size: 14px;
+  line-height: 17px;
 }
 
 .about-project__frontend::after {
-  content: 'Front-end';
-  font-size: 14px;
-  line-height: 17px;
-  color: #A0A0A0;
   position: absolute;
   top: 57px;
   left: 50%;
+
+  content: 'Front-end';
   transform: translate(-50%, -50%);
+
+  color: #A0A0A0;
+
+  font-size: 14px;
+  line-height: 17px;
 }
