@@ -1,34 +1,35 @@
 import React from 'react';
+import { HashLink } from 'react-router-hash-link';
 import Button from '../Button/Button';
 import './NavTab.css';
 
 function NavTab() {
   return (
     <nav className="navtab">
-      <a href="#aboutProject" className="navtab__achor-link">
+      <HashLink to="/#aboutProject" className="navtab__achor-link">
         <Button
           size="medium"
           color="gray"
           formFactor="round"
           text="О проекте"
         />
-      </a>
-      <a href="#techs" className="navtab__achor-link">
+      </HashLink>
+      <HashLink to="/#techs" className="navtab__achor-link">
         <Button
           size="medium"
           color="gray"
           formFactor="round"
           text="Технологии"
         />
-      </a>
-      <a href="#aboutMe" className="navtab__achor-link">
+      </HashLink>
+      <HashLink to="/#aboutMe" className="navtab__achor-link">
         <Button
           size="medium"
           color="gray"
           formFactor="round"
           text="Студент"
         />
-      </a>
+      </HashLink>
     </nav>
   );
 }
