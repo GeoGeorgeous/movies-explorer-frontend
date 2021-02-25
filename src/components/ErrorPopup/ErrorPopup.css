@@ -1,0 +1,49 @@
+.error {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility .3s,
+    opacity .3s,
+    background-color .3s;
+  position: fixed;
+  top: -65;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 60px;
+  background-color: #9D1A3C;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  cursor: pointer;
+}
+
+.error:hover {
+  background-color: #560D21;
+}
+
+
+.error_shown {
+  visibility: visible;
+  opacity: 1;
+  top: 0;
+}
+
+.error__header {
+  margin-left: 25%;
+  font-family: Inter;
+  font-style: normal;
+  font-size: 17px;
+  line-height: 21px;
+  text-align: left;
+}
+
+.error__message {
+  margin-left: 25px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 14px;
+  color: #fff;
+}
