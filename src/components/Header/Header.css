@@ -11,6 +11,12 @@
 
 .header__logo-link {
   height: 38px;
+
+  transition: opacity .2s;
+}
+
+.header__logo-link:hover {
+  opacity: .8;
 }
 
 .header__logo {
