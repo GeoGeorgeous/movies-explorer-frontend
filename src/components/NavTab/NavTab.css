@@ -1,7 +1,15 @@
 .navtab {
-  margin-bottom: 30px;
   height: 36px;
+  margin-bottom: 30px;
+
   border-radius: 10px;
+}
+
+.navtab__items {
+  display: flex;
+  flex-flow: row nowrap;
+
+  list-style: none;
 }
 
 .navtab__achor-link {
