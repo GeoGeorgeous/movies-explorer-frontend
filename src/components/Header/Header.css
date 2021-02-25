@@ -1,11 +1,16 @@
 .header {
-  min-height: 74px;
-  width: calc(100% - 70px*2);
   display: flex;
+  align-items: center;
   flex-flow: row nowrap;
   justify-content: space-between;
-  align-items: center;
+
+  width: calc(100% - 70px * 2);
+  min-height: 74px;
   padding: 0 70px;
+}
+
+.header__logo-link {
+  height: 38px;
 }
 
 .header__logo {
@@ -14,16 +19,19 @@
 }
 
 .header__link {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  text-align: right;
-  color: #fff;
-  text-decoration: none;
   margin-right: 30px;
-  transition: opacity .15s;
+
+  transition: opacity .2s;
+  text-align: right;
+  text-decoration: none;
+
+  color: #fff;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 16px;
 }
 
 .header__link:hover {
