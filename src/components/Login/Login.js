@@ -17,7 +17,7 @@ function Login() {
         <input
           type="email"
           className="spf__input"
-          placeholder="vitaly@email.com"
+          placeholder="email@yandex.com"
           id="email"
         />
       </label>
