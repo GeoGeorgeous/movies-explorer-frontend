@@ -6,6 +6,7 @@ import './Header.css';
 import logo from '../../images/logo.svg';
 
 function Header(props) {
+  // добавление active class для активной ссылки
   const location = useLocation();
   const moviesActive = location.pathname === '/movies' ? 'header__link-active' : '';
   const savedMoviesActive = location.pathname === '/saved-movies' ? 'header__link-active' : '';

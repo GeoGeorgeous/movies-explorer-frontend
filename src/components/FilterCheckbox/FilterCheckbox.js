@@ -1,7 +1,6 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import './FilterCheckbox.css'
+import './FilterCheckbox.css';
 
 function FilterCheckbox(props) {
   const { identificator } = props;
@@ -9,7 +8,7 @@ function FilterCheckbox(props) {
     identificator: PropTypes.string.isRequired,
   };
   return (
-      <input id={identificator} className="checkbox" type="checkbox"/>
+    <input id={identificator} className="checkbox" type="checkbox" />
   );
 }
 
