@@ -12,26 +12,27 @@ function Login() {
       hintLinkText="Регистрация"
       hintLinkUrl="/signup"
     >
-      <label htmlFor="email" className="spf__label">
-        E-mail
-        <input
-          type="email"
-          className="spf__input"
-          placeholder="email@yandex.com"
-          id="email"
-        />
-      </label>
+      <>
+        <label htmlFor="email" className="spf__label">
+          E-mail
+          <input
+            type="email"
+            className="spf__input"
+            placeholder="email@yandex.com"
+            id="email"
+          />
+        </label>
 
-      <label htmlFor="password" className="spf__label">
-        Пароль
-        <input
-          type="password"
-          className="spf__input"
-          id="password"
-          placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
-        />
-      </label>
-
+        <label htmlFor="password" className="spf__label">
+          Пароль
+          <input
+            type="password"
+            className="spf__input"
+            id="password"
+            placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+          />
+        </label>
+      </>
     </SinglePageForm>
   );
 }
