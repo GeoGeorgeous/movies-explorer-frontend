@@ -12,22 +12,41 @@ function Button(props) {
     size: PropTypes.string.isRequired, // Размер строки: small, medium, large
     formFactor: PropTypes.string.isRequired, // Форма кнопки: square, round, extra-round
     color: PropTypes.string.isRequired, // Цвет фона для кнопки: green, gray, blue
-    url: PropTypes.string.isRequired, // Адрес ссылки ('/..')
+    url: PropTypes.string, // Адрес ссылки ('/..')
+  };
+  Button.defaultProps = {
+    url: '',
   };
 
+  // Если передан url кнопка обёрнута в Link:
   return (
-    <Link to={url}>
-      <button
-        type="button"
-        className={`
-    button button_size_${size}
-    button_form-factor_${formFactor}
-    button_color_${color}
-    `}
-      >
-        {text}
-      </button>
-    </Link>
+    url
+      ? (
+        <Link to={url}>
+          <button
+            type="button"
+            className={`
+      button button_size_${size}
+      button_form-factor_${formFactor}
+      button_color_${color}
+      `}
+          >
+            {text}
+          </button>
+        </Link>
+      )
+      : (
+        <button
+          type="button"
+          className={`
+      button button_size_${size}
+      button_form-factor_${formFactor}
+      button_color_${color}
+      `}
+        >
+          {text}
+        </button>
+      )
   );
 }
 

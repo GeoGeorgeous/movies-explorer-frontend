@@ -9,7 +9,9 @@ import Footer from '../Footer/Footer';
 function Main() {
   return (
     <>
-      <Header />
+      <Header
+        loggedIn={false}
+      />
       <Hero />
       <AboutProject />
       <Techs />
