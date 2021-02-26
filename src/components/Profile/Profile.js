@@ -9,7 +9,7 @@ function Profile() {
   return (
     <>
       <Header
-        loggedIn="true"
+        loggedIn
       />
       <div className="profile">
         <h1 className="profile__header">Привет, Виталий!</h1>

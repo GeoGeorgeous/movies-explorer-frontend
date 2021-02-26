@@ -29,6 +29,7 @@ function Login() {
             type="password"
             className="spf__input"
             id="password"
+            autoComplete="on"
             placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
           />
         </label>
