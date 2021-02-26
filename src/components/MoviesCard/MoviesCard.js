@@ -8,7 +8,7 @@ function MoviesCard(props) {
     duration, cover, title, isFavourite, uniqueId,
   } = props;
 
-  const [saved, setSaved] = React.useState(isFavourite);
+  const [isChecked, setChecked] = React.useState(isFavourite);
 
   MoviesCard.propTypes = {
     uniqueId: PropTypes.string.isRequired, // Уникальный ID для добавления/удаления из сохранённых
@@ -30,8 +30,8 @@ function MoviesCard(props) {
     return `${hours}ч ${minutes}м`;
   }
 
-  function handleMovieClick() {
-    setSaved(!saved);
+  function onChange(e) {
+    setChecked(e.target.checked);
   }
 
   const inputId = `favourite${uniqueId}`;
@@ -43,7 +43,13 @@ function MoviesCard(props) {
       </label>
       <h4 className="movies-card__title">{title}</h4>
       <span className="movies-card__duration">{calcDuration(duration)}</span>
-      <input className="movied-card__save-button" type="checkbox" id={inputId} onClick={handleMovieClick} checked={saved} />
+      <input
+        className="movied-card__save-button"
+        type="checkbox"
+        id={inputId}
+        checked={isChecked}
+        onChange={(e) => onChange(e)}
+      />
     </article>
   );
 }

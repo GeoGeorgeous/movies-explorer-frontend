@@ -6,14 +6,24 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import ErrorPopup from '../ErrorPopup/ErrorPopup'
 
 function SavedMovies() {
+  const [showShortMovies, setShowShortMovies] = React.useState(false);
+
+  function onCheckBoxToggle(isCheckBoxChecked) {
+    // setShowShortMovies(isCheckBoxChecked);
+  }
+
   return (
     <>
       <ErrorPopup />
       <Header
-        loggedIn="true"
+        loggedIn="True"
       />
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm
+        onCheckBoxToggle={onCheckBoxToggle}/>
+      <MoviesCardList
+        onlyFavourite="True"
+        onlyFullMovies={showShortMovies}
+      />
     </>
   );
 }

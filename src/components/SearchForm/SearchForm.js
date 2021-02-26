@@ -1,11 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SearchForm.css';
 import Button from '../Button/Button';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm() {
+function SearchForm(props) {
+  const { onCheckBoxToggle } = props;
+  SearchForm.propTypes = {
+    onCheckBoxToggle: PropTypes.func.isRequired, // callback
+  };
   return (
     <>
       <div className="sf">
@@ -25,7 +30,10 @@ function SearchForm() {
           />
         </form>
         <label className="sf__filter" htmlFor="filter">
-          <FilterCheckbox identificator="filter" />
+          <FilterCheckbox
+            identificator="filter"
+            onCheckBoxToggle={onCheckBoxToggle}
+          />
           Короткометражки
         </label>
         <hr className="sf__line" />

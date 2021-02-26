@@ -6,6 +6,7 @@
 
   grid-template-columns: 1fr 1fr 1fr;
   gap: 59px 30px;
+
 }
 
 .movies-card-list__load-more {

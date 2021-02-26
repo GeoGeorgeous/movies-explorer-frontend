@@ -1,14 +1,33 @@
 import React from 'react';
 import './MoviesCardList.css';
+import PropTypes from 'prop-types';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import moviesDB from '../../utils/moviesDB';
 import Footer from '../Footer/Footer';
 
-function MoviesCardList() {
+function MoviesCardList(props) {
+  const { onlyFavourite, onlyFullMovies } = props;
+  MoviesCardList.propTypes = {
+    onlyFavourite: PropTypes.bool.isRequired, // Показывать только сохранённые фильмы? bool
+    onlyFullMovies: PropTypes.bool.isRequired, // Показывать только полноценные фильмы? bool
+  };
+  function keepOnlyFavourited(moviesArr) {
+    return moviesArr.filter((movie) => movie.isFavourite);
+  }
+  function keepOnlyFull(moviesArr) {
+    return moviesArr.filter((movie) => movie.duration >= 40);
+  }
+  const filteredByFavMovies = onlyFavourite
+    ? keepOnlyFavourited(moviesDB)
+    : moviesDB;
+  const filteredByFullMovies = onlyFullMovies
+    ? keepOnlyFull(filteredByFavMovies)
+    : filteredByFavMovies;
+
   return (
     <>
       <section className="movies-card-list">
-        {moviesDB && moviesDB.map((movie) => (
+        {filteredByFullMovies && filteredByFullMovies.map((movie) => (
           <MoviesCard
             key={movie._id}
             uniqueId={movie._id}
