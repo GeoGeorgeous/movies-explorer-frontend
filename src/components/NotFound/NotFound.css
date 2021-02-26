@@ -1,46 +1,54 @@
 .not-found {
-  height: 100%;
   display: flex;
-  flex-flow: column nowrap;
   align-items: center;
+  flex-flow: column nowrap;
   justify-content: center;
+
+  height: 100%;
 }
 
 .not-found__title {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 140px;
-  line-height: 169px;
-  text-align: center;
   margin: auto 0 0 0;
+
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 140px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 169px;
 }
 
 .not-found__text {
   margin: 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 19px;
+
   text-align: center;
+
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 19px;
 }
 
 .not-found__go-back-button {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  color: #4285F4;
   margin: auto 0 60px 0;
   padding: 0;
-  border: 0;
-  background-color: transparent;
-  outline: none;
-  transition: opacity .2s;
+
   cursor: pointer;
+  transition: opacity .2s;
+  text-align: center;
+
+  color: #4285F4;
+  border: 0;
+  outline: none;
+  background-color: transparent;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 17px;
 }
 
 .not-found__go-back-button:hover {
