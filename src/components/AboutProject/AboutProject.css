@@ -1,7 +1,7 @@
 .about-project__grid {
   display: grid;
 
-  padding-top: 69px;
+  padding-top: 70px;
   padding-bottom: 110px;
 
   grid-template-columns: 1fr 1fr;
@@ -119,4 +119,64 @@
 
   font-size: 14px;
   line-height: 17px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* Breakpoint: 768px — 1279px. Medium-screen devices */
+  .about-project__grid {
+    padding-bottom: 93px;
+
+    gap: 110px 30px;
+  }
+  .about-project__header {
+    margin: 0 0 22px 0;
+  }
+  .about-project__description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .about-project__grid {
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    grid-template-columns: 1fr;
+    gap: 56px 30px;
+  }
+  .about-project__header {
+    margin: 0 0 16px 0;
+
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .about-project__description {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-project__backend::before {
+    font-size: 11px;
+    line-height: 13px;
+  }
+  .about-project__backend::after {
+    transform: translate(-50%, -100%);
+
+    font-size: 11px;
+    line-height: 13px;
+  }
+  .about-project__frontend::before {
+    font-size: 11px;
+    line-height: 13px;
+  }
+  .about-project__frontend::after {
+    transform: translate(-50%, -100%);
+
+    font-size: 11px;
+    line-height: 13px;
+  }
+  .about-project__progress-bar {
+    grid-template-columns: 35% 65%;
+  }
 }

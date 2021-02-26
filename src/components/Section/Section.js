@@ -17,7 +17,7 @@ function Section(props) {
   return (
     <section className={sectionClass} id={anchor}>
       <h2 className="section__header">{title}</h2>
-      <hr className="section__line" />
+      <hr className="section__divider" />
       {children}
     </section>
   );
