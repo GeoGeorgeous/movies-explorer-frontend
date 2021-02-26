@@ -16,12 +16,12 @@ function SavedMovies() {
     <>
       <ErrorPopup />
       <Header
-        loggedIn="True"
+        loggedIn
       />
       <SearchForm
         onCheckBoxToggle={onCheckBoxToggle}/>
       <MoviesCardList
-        onlyFavourite="True"
+        onlyFavourite
         onlyFullMovies={showShortMovies}
       />
     </>
