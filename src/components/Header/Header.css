@@ -47,6 +47,9 @@
 }
 
 .header__link-item {
+  display: flex;
+  justify-content: center;
+  align-content: center;
   margin-right: 30px;
 }
 
@@ -60,5 +63,27 @@
 
 .header__link-active {
   color: #3DDC84;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* Breakpoint: 768px — 1279px. Medium-screen devices */
+  .header {
+    width: calc(100% - 30px * 2);
+    padding: 0 30px;
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .header {
+    width: calc(100% - 14px * 2);
+    padding: 0 14px;
+  }
+  .header__link {
+    font-size: 10px;
+  }
+  .header__link-item {
+    margin-right: 14px;
+  }
 }
 

@@ -22,3 +22,14 @@
 .navtab__achor-last-link {
   margin-right: 0;
 }
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .navtab {
+    margin-bottom: 10px;
+  }
+  
+  .navtab__achor-link {
+    margin-right: 6px;
+  }
+}
