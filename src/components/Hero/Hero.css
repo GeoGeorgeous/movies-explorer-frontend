@@ -63,6 +63,8 @@
   }
   .hero__banner-header {
     max-width: 680px;
+    /* better text-width on small screens */
+    max-width: 95%;
     margin: 220px 0 212px 0;
 
     font-size: 29px;

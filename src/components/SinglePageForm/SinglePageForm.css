@@ -149,3 +149,59 @@
 .spf__hint-link:hover {
   opacity: .8;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    /* Breakpoint: 768px — 1279px. Medium-screen devices */
+    .spf {
+      justify-content: center;
+
+      width: 396px;
+      padding: 0;
+    }
+    .spf__form {
+      margin-bottom: 100px;
+    }
+    .spf__logo-link {
+      margin: 0 0 40px 0;
+    }
+    .spf__button {
+      height: 45px;
+      margin-top: 0;
+    }
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .spf {
+    width: calc(100% - (30px * 2));
+    padding: 56px 0 30px 0;
+  }
+
+  .spf__form {
+    margin-bottom: 100px;
+  }
+
+  .spf__button {
+    height: 45px;
+    margin-top: 0;
+
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .spf__logo-link {
+    margin: 0 auto 50px auto;
+  }
+
+  .spf__header {
+    margin: 0 auto 80px auto;
+  }
+  .spf__hint {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .spf__hint-link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
