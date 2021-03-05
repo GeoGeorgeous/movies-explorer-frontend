@@ -1,6 +1,7 @@
 .portfolio__portfolio-header {
-  color: #8B8B8B;
   margin: 0;
+
+  color: #8B8B8B;
 
   font-family: Inter;
   font-size: 18px;
@@ -69,8 +70,9 @@
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   /* Breakpoint: 768px — 1279px. Medium-screen devices */
   .portfolio__project-button {
-    font-size: 28px;
     background-size: 16px;
+
+    font-size: 28px;
     font-size: 28px;
   }
   .portfolio__project-button-item {
@@ -88,8 +90,9 @@
     margin-top: 30px;
   }
   .portfolio__project-button {
-    font-size: 18px;
     background-size: 10px;
+
+    font-size: 18px;
     line-height: 28px;
   }
   .portfolio__project-button-item {

@@ -94,6 +94,7 @@
   margin-top: auto;
 
   cursor: pointer;
+  user-select: none;
   transition: opacity .2s;
   text-align: center;
 
@@ -107,7 +108,6 @@
   font-weight: 500;
   font-style: normal;
   line-height: 17px;
-  user-select: none;
 }
 
 .spf__button:hover {

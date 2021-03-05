@@ -48,8 +48,9 @@
 
 .header__link-item {
   display: flex;
-  justify-content: center;
   align-content: center;
+  justify-content: center;
+
   margin-right: 30px;
 }
 

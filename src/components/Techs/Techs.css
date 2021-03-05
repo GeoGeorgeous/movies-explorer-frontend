@@ -43,8 +43,8 @@
   padding: 0;
 
   list-style-type: none;
-  gap: 10px;
 
+  gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(min-content, 84px));
 }
 
@@ -106,9 +106,10 @@
     grid-template-columns: repeat(auto-fit, minmax(min-content, 89px));
   }
   .techs__icon {
-    font-size: 12px;
-    line-height: 15px;
     width: 84px;
     height: 57px;
+
+    font-size: 12px;
+    line-height: 15px;
   }
 }

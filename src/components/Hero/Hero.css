@@ -1,11 +1,13 @@
 .hero {
-  margin: 0 auto;
   display: flex;
   align-items: center;
   flex-flow: column nowrap;
   justify-content: flex-end;
-  margin-top: 20px;
+
   width: calc(100% - 40px * 2);
+  margin: 0 auto;
+  margin-top: 20px;
+
   background-color: #202020;
 }
 
@@ -22,9 +24,8 @@
 }
 
 .hero__banner-header {
-  margin: 160px 0 151px 0;
-
   max-width: 730px;
+  margin: 160px 0 151px 0;
 
   text-align: center;
   letter-spacing: -0.04em;
@@ -46,8 +47,9 @@
     min-height: 728px;
   }
   .hero__banner-header {
-    margin: 350px 0 314px 0;
     max-width: 680px;
+    margin: 350px 0 314px 0;
+
     font-size: 40px;
     line-height: 52px;
   }
@@ -60,8 +62,9 @@
     margin-top: 14px;
   }
   .hero__banner-header {
-    margin: 220px 0 212px 0;
     max-width: 680px;
+    margin: 220px 0 212px 0;
+
     font-size: 29px;
     line-height: 37px;
   }
