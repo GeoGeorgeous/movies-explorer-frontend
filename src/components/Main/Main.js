@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import Hero from '../Hero/Hero';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
-// import AboutMe from '../AboutMe/AboutMe';
+import AboutMe from '../AboutMe/AboutMe';
 // import Footer from '../Footer/Footer';
 
 function Main() {
@@ -15,8 +15,8 @@ function Main() {
       <Hero />
       <AboutProject />
       <Techs />
-      {/* <AboutMe />
-      <Footer /> */}
+      <AboutMe />
+      {/* <Footer /> */}
     </>
   );
 }

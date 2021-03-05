@@ -91,3 +91,36 @@
 
   object-fit: contain;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* Breakpoint: 768px — 1279px. Medium-screen devices */
+  .about-me__header {
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 16px;
+  }
+
+  .about-me__author {
+    max-width: 364px;
+  }
+
+  .about-me__subtitle {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 20px;
+  }
+
+  .about-me__description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-me__avatar {
+    width: 255px;
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+
+}
