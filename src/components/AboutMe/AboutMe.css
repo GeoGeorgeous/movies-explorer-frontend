@@ -149,6 +149,7 @@
 
   .about-me__avatar {
     width: 100%;
+    max-width: 292px;
     margin-bottom: 40px;
   }
 
