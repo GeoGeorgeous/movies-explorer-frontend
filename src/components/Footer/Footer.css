@@ -85,6 +85,10 @@
 
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   /* Breakpoint: 768px — 1279px. Medium-screen devices */
+  .footer {
+    width: calc(100% - (30px * 2));
+    padding: 79px 30px 20px 30px;
+  }
 }
 
 @media screen and (min-width: 0) and (max-width: 767px) {
