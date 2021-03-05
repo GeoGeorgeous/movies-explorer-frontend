@@ -118,9 +118,45 @@
   .about-me__avatar {
     width: 255px;
   }
+
+  .about-me__container {
+    margin: 66px 0 90px 0;
+  }
 }
 
 @media screen and (min-width: 0) and (max-width: 767px) {
   /* Breakpoint: 0px — 767px. Small-screen devices */
+  .about-me__container {
+    display: flex;
+    flex-flow: column-reverse nowrap;
+    align-items: center;
+    margin: 60px 0 69px 0;
+  }
 
+  .about-me__author {
+    max-width: 100%;
+  }
+
+  .about-me__header {
+    font-size: 30px;
+    line-height: 36px;
+    margin-bottom: 20px;
+  }
+
+  .about-me__avatar {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .about-me__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 20px;
+  }
+
+  .about-me__description {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 40px;
+  }
 }
