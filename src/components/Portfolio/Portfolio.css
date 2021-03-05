@@ -35,7 +35,7 @@
   width: 100%;
   height: 70px;
   margin: 0;
-  padding: 0 0 0px 0;
+  padding: 0 0 0 0;
 
   cursor: pointer;
   transition: opacity .2s;
@@ -78,8 +78,12 @@
 
 @media screen and (min-width: 0) and (max-width: 767px) {
   /* Breakpoint: 0px — 767px. Small-screen devices */
+  .portfolio__portfolio-header {
+    font-size: 14px;
+    line-height: 20px;
+  }
   .portfolio__project-buttons {
-    margin-top: 40px;
+    margin-top: 30px;
   }
   .portfolio__project-button {
     font-size: 18px;
@@ -87,5 +91,6 @@
   }
   .portfolio__project-button-item {
     border-bottom: 1px solid #E6E6E6;
+    margin-top: 0px;
   }
 }

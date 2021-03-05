@@ -9,34 +9,34 @@ function NavTab() {
     <nav className="navtab">
       <ul className="navtab__items">
 
-        <li>
+        <li className="navtab__item">
           <HashLink to="/#aboutProject" className="navtab__achor-link">
             <Button
               size="medium"
               color="gray"
-              formFactor="round"
+              formFactor="smooth-square"
               text="О проекте"
             />
           </HashLink>
         </li>
 
-        <li>
+        <li className="navtab__item">
           <HashLink to="/#techs" className="navtab__achor-link">
             <Button
               size="medium"
               color="gray"
-              formFactor="round"
+              formFactor="smooth-square"
               text="Технологии"
             />
           </HashLink>
         </li>
 
-        <li>
-          <HashLink to="/#aboutMe" className="navtab__achor-link navtab__achor-last-link">
+        <li className="navtab__item">
+          <HashLink to="/#aboutMe" className="navtab__achor-link">
             <Button
               size="medium"
               color="gray"
-              formFactor="round"
+              formFactor="smooth-square"
               text="Студент"
             />
           </HashLink>

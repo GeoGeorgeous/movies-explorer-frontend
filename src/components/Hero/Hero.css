@@ -56,7 +56,7 @@
 @media screen and (min-width: 0) and (max-width: 767px) {
   /* Breakpoint: 0px — 767px. Small-screen devices */
   .hero {
-    width: calc(100% - 12px * 2);
+    width: calc(100% - 14px * 2);
     margin-top: 14px;
   }
   .hero__banner-header {

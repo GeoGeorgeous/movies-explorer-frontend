@@ -43,9 +43,9 @@
   padding: 0;
 
   list-style-type: none;
+  gap: 10px;
 
   grid-template-columns: repeat(auto-fit, minmax(min-content, 84px));
-  grid-gap: 10px;
 }
 
 .techs__icon {
@@ -96,12 +96,19 @@
     font-size: 30px;
     line-height: 36px;
   }
+  .techs__subheader {
+    font-size: 11px;
+    line-height: 16px;
+  }
   .techs__icons {
     margin-top: 50px;
 
     grid-template-columns: repeat(auto-fit, minmax(min-content, 89px));
   }
   .techs__icon {
-    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 15px;
+    width: 84px;
+    height: 57px;
   }
 }

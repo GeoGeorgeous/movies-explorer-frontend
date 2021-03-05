@@ -41,6 +41,10 @@
   border-radius: 3px;
 }
 
+.button_form-factor_smooth-square {
+  border-radius: 6px;
+}
+
 .button_form-factor_round {
   border-radius: 10px;
 }
