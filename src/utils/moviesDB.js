@@ -11,7 +11,7 @@ import moviePic10 from '../images/movies/movie_pic_10.jpg';
 import moviePic11 from '../images/movies/movie_pic_11.jpg';
 import moviePic12 from '../images/movies/movie_pic_12.jpg';
 
-const MoviesDB = [
+const movies = [
   {
     _id: 'movie0',
     title: 'Бойцовский Клуб',
@@ -105,4 +105,4 @@ const MoviesDB = [
   },
 ];
 
-export default MoviesDB;
+export default movies;

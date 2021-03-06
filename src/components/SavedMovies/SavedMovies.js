@@ -3,7 +3,6 @@ import React from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import ErrorPopup from '../ErrorPopup/ErrorPopup'
 
 function SavedMovies() {
   const [showShortMovies, setShowShortMovies] = React.useState(false);
