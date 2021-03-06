@@ -42,8 +42,8 @@ function MobileNav(props) {
                 text="Аккаунт"
                 url="/signin"
               />
+              <button type="button" aria-label="Закрыть меню" className="mobile-nav__close-button" onClick={handlePopupClose} />
         </nav>
-        <button type="button" aria-label="Закрыть меню" className="mobile-nav__close-button" onClick={handlePopupClose} />
       </div>
     </>
   );
