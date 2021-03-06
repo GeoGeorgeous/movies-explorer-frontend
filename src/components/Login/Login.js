@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import '../SinglePageForm/SinglePageForm.css';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';

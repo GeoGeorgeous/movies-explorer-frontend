@@ -2,11 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './NotFound.css';
 
-function NotFound(props) {
-  // eslint-disable-next-line react/prop-types
-  const { apiProgressHandler } = props;
+function NotFound() {
   const history = useHistory();
-
 
   return (
     <div className="not-found">

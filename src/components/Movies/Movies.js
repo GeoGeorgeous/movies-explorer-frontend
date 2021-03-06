@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, {useEffect} from 'react';
+import React from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -10,7 +9,6 @@ function Movies() {
   function onCheckBoxToggle(isCheckBoxChecked) {
     setShowShortMovies(isCheckBoxChecked);
   }
-
 
   return (
     <>
