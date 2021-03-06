@@ -52,7 +52,7 @@ function Header(props) {
                 color="gray"
                 formFactor="extra-round"
                 text="Аккаунт"
-                url="/signin"
+                url="/profile"
               />
             </>
             )}

@@ -40,7 +40,7 @@ function MobileNav(props) {
                 color="gray"
                 formFactor="extra-round"
                 text="Аккаунт"
-                url="/signin"
+                url="/profile"
               />
               <button type="button" aria-label="Закрыть меню" className="mobile-nav__close-button" onClick={handlePopupClose} />
         </nav>
