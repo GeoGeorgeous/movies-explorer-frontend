@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import './Section.css';
 import PropTypes from 'prop-types';
@@ -8,12 +9,14 @@ function Section(props) {
   } = props;
   Section.propTypes = {
     title: PropTypes.string.isRequired,
-    theme: PropTypes.string.isRequired,
+    theme: PropTypes.string,
     anchor: PropTypes.string.isRequired,
     children: PropTypes.element.isRequired,
   };
   let sectionClass = 'section';
-  theme ? sectionClass += ` section__theme_${theme}` : '';
+  if (theme) {
+    sectionClass += ` section__theme_${theme}`;
+  }
 
   return (
     <section className={sectionClass} id={anchor}>

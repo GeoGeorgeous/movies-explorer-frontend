@@ -25,7 +25,7 @@ function SearchForm(props) {
             color="blue"
             formFactor="square"
             text="Найти"
-            url="/signin"
+            url="/movies"
           />
         </form>
         <label className="sf__filter" htmlFor="filter">
