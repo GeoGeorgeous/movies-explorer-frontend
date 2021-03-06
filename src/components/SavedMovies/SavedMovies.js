@@ -5,15 +5,14 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies() {
-  const [showShortMovies, setShowShortMovies] = React.useState(false);
+  const [showShortMovies, setShowShortMovies] = React.useState(true);
 
   function onCheckBoxToggle(isCheckBoxChecked) {
-    // setShowShortMovies(isCheckBoxChecked);
+    setShowShortMovies(isCheckBoxChecked);
   }
 
   return (
     <>
-      <ErrorPopup />
       <Header
         loggedIn
       />
@@ -21,7 +20,7 @@ function SavedMovies() {
         onCheckBoxToggle={onCheckBoxToggle}/>
       <MoviesCardList
         onlyFavourite
-        onlyFullMovies={showShortMovies}
+        showShortMovies={showShortMovies}
       />
     </>
   );

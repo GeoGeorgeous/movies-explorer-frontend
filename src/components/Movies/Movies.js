@@ -4,12 +4,11 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function Movies() {
-  const [showShortMovies, setShowShortMovies] = React.useState(false);
+  const [showShortMovies, setShowShortMovies] = React.useState(true);
 
   function onCheckBoxToggle(isCheckBoxChecked) {
     setShowShortMovies(isCheckBoxChecked);
   }
-
   return (
     <>
       <Header
@@ -20,7 +19,7 @@ function Movies() {
       />
       <MoviesCardList
         onlyFavourite={false}
-        onlyFullMovies={showShortMovies}
+        showShortMovies={showShortMovies}
       />
     </>
   );
