@@ -18,7 +18,7 @@
 .mobile-nav__popup_opened {
   visibility: visible;
 
-  transition: opacity .4s linear;
+  transition: opacity .3s linear;
 
   opacity: 1;
 }
@@ -47,14 +47,14 @@
   display: flex;
 
   -webkit-animation: slide-in 0.4s forwards;
-  animation: slide-in 0.5s forwards;
+  animation: slide-in 0.4s forwards;
 }
 
 .mobile-nav_hided {
   display: flex;
 
   -webkit-animation: slide-out 0.4s forwards;
-  animation: slide-out 0.5s forwards;
+  animation: slide-out 0.4s forwards;
 }
 
 @keyframes slide-in {

@@ -20,10 +20,10 @@ function Movies() {
       <SearchForm
         onCheckBoxToggle={onCheckBoxToggle}
       />
-      {/* <MoviesCardList
+      <MoviesCardList
         onlyFavourite={false}
         onlyFullMovies={showShortMovies}
-      /> */}
+      />
     </>
   );
 }
