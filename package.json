@@ -20,6 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "serve": "serve -s build",
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix",
     "csscomb": "./node_modules/.bin/csscomb src/components",
