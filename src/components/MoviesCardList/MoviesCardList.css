@@ -33,6 +33,15 @@
   font-weight: 500;
   font-style: normal;
   line-height: 16px;
+  transition: opacity .2s;
+}
+
+.movies-card-list__load-more:focus {
+  outline: none;
+}
+
+.movies-card-list__load-more:hover {
+  opacity: .8;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1279px) {

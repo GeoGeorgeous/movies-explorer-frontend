@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import moviesDB from '../../utils/moviesDB';
 import Footer from '../Footer/Footer';
+import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList(props) {
   const { onlyFavourite, onlyFullMovies } = props;
@@ -39,6 +40,7 @@ function MoviesCardList(props) {
         ))}
       </section>
       <button className="movies-card-list__load-more" type="button">Ещё</button>
+      <Preloader />
       <Footer />
     </>
   );
