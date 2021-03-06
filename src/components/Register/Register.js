@@ -1,12 +1,12 @@
 import React from 'react';
 import '../SinglePageForm/SinglePageForm.css';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
-import Error from '../Error/Error';
+// import Error from '../Error/Error';
 
 function Register() {
   return (
     <>
-      <Error />
+      {/* <Error /> */}
       <SinglePageForm
         header="Добро пожаловать!"
         buttonText="Зарегистрироваться"
