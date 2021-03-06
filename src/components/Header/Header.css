@@ -63,7 +63,35 @@
 }
 
 .header__link-active {
-  color: #3DDC84;
+  display: inline-block;
+
+  padding-bottom: 2px;
+
+  border-bottom: 2px solid #3DDC84;
+}
+
+.header__mobile-nav-button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  cursor: pointer;
+  user-select: none;
+  transition: opacity .2s;
+  text-align: center;
+
+  color: #000;
+  border: 0;
+  background-color: transparent;
+  background-image: url(../../images/menu-icon.svg);
+}
+
+.header__mobile-nav-button:hover {
+  opacity: .2s;
+}
+
+.header__mobile-nav-button:focus {
+  outline: 0;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1279px) {

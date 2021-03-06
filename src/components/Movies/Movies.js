@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable */
+import React, {useEffect} from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -9,18 +10,20 @@ function Movies() {
   function onCheckBoxToggle(isCheckBoxChecked) {
     setShowShortMovies(isCheckBoxChecked);
   }
+
+
   return (
     <>
       <Header
         loggedIn
       />
-      <SearchForm
+      {/* <SearchForm
         onCheckBoxToggle={onCheckBoxToggle}
       />
       <MoviesCardList
         onlyFavourite={false}
         onlyFullMovies={showShortMovies}
-      />
+      /> */}
     </>
   );
 }

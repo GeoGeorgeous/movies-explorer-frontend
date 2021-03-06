@@ -27,6 +27,11 @@
   height: 32px;
 }
 
+.button_size_wide {
+  width: 100px;
+  height: 32px;
+}
+
 .button_size_medium {
   width: 96px;
   height: 36px;
@@ -94,5 +99,9 @@
   .button_size_medium {
     width: 82px;
     height: 26px;
+  }
+
+  .button_size_wide {
+    font-size: 14px;
   }
 }
