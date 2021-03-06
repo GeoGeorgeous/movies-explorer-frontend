@@ -5,7 +5,7 @@
   justify-content: center;
 
   width: calc(100% - 70px*2);
-  padding: 80px 0 10px 70px;
+  padding: 80px 70px 10px 70px;
 }
 
 .sf__form {
@@ -60,10 +60,29 @@
   line-height: 18px;
 }
 
-.sf__line {
+.sf__divider {
   width: 100%;
   margin: 40px 0 10px 0;
   margin: 0;
 
   border-color: #424242;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* Breakpoint: 768px — 1279px. Medium-screen devices */
+  .sf {
+    width: calc(100% - 30px*2);
+    padding: 80px 30px 10px 30px;
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .sf {
+    width: calc(100% - 14px*2);
+    padding: 80px 14px 10px 14px;
+  }
+  .sf__divider {
+    margin-top: 4px;
+  }
 }

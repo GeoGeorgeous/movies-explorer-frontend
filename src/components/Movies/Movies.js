@@ -17,10 +17,10 @@ function Movies() {
       <Header
         loggedIn
       />
-      {/* <SearchForm
+      <SearchForm
         onCheckBoxToggle={onCheckBoxToggle}
       />
-      <MoviesCardList
+      {/* <MoviesCardList
         onlyFavourite={false}
         onlyFullMovies={showShortMovies}
       /> */}

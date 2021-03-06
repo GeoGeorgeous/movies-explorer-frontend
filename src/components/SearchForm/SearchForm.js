@@ -36,7 +36,7 @@ function SearchForm(props) {
           />
           Короткометражки
         </label>
-        <hr className="sf__line" />
+        <hr className="sf__divider" />
       </div>
     </>
   );
