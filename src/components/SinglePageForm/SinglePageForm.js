@@ -20,7 +20,6 @@ function SinglePageForm(props) {
   /* Симуляция нажатия на отправку формы для проверки статус бара */
   function handleSubmit(event) {
     event.preventDefault();
-    console.log('oops');
   }
 
   return (

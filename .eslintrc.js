@@ -22,7 +22,7 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'no-underscore-dangle': ['warn', { allow: ['_id'] }],
-    'no-unused-expressions': 'off',
+    'no-unused-expressions': 0,
   },
   settings: {
     react: {

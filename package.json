@@ -2,6 +2,7 @@
   "name": "movies-explorer-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -20,8 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "serve": "serve -s build",
-    "lint": "npx eslint .",
-    "lint:fix": "npx eslint . --fix",
+    "lint": "./node_modules/.bin/eslint src",
+    "lint:fix": "./node_modules/.bin/eslint --fix src",
     "csscomb": "./node_modules/.bin/csscomb src/components",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
