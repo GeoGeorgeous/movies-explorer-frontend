@@ -1,12 +1,12 @@
-/* normalize.css */
+/* Normalize.css */
 @import url(./vendor/normalize.css);
-/* fonts */
+/* Fonts */
 @import url(./vendor/fonts.css);
-/* smooth-scrolling */
+/* Smooth-scrolling */
 html {
   scroll-behavior: smooth;
 }
-/* body bg color */
+/* Body bg color */
 body, html {
   background-color: #202020;
   height: 100%;
@@ -14,14 +14,14 @@ body, html {
 /* root (public/index.html #root) */
 #root {
   height: 100%;
-  /* min/max-width для центрирования контента и адаптива */
+  /* Min/max-width для центрирования контента и адаптива */
   min-width: 320px;
   max-width: 1280px;
-  /* центрирование страницы */
+  /* Центрирование страницы */
   margin: 0 auto;
-  /* дефолтные цвета фона и текста*/
+  /* Дефолтные цвета фона и текста */
   color: #fff;
-  /* шрифты */
+  /* Шрифты */
   font-family: 'Inter', 'Arial', sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +29,7 @@ body, html {
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  /* sticky footer */
+  /* Sticky footer */
   display: flex;
   flex-direction: column;
   min-height: 100vh;

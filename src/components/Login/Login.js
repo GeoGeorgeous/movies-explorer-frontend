@@ -19,6 +19,7 @@ function Login() {
             className="spf__input"
             placeholder="email@yandex.com"
             id="email"
+            required
           />
         </label>
 
@@ -30,6 +31,8 @@ function Login() {
             id="password"
             autoComplete="on"
             placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+            required
+            minLength="4"
           />
         </label>
       </>

@@ -19,6 +19,8 @@ function Register() {
             className="spf__input"
             placeholder="Виталий"
             id="name"
+            autoComplete="on"
+            required
           />
         </label>
 
@@ -29,6 +31,8 @@ function Register() {
             className="spf__input"
             placeholder="email@yandex.com"
             id="email"
+            autoComplete="on"
+            required
           />
         </label>
 
@@ -40,6 +44,8 @@ function Register() {
             id="password"
             autoComplete="on"
             placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+            required
+            minLength="4"
           />
         </label>
       </>

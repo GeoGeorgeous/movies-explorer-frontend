@@ -21,6 +21,7 @@ function Profile() {
               type="text"
               id="name"
               value={name}
+              required
               onChange={(e) => { setName(e.target.value); }}
             />
           </label>
@@ -33,6 +34,7 @@ function Profile() {
               type="text"
               id="email"
               value={email}
+              required
               onChange={(e) => { setEmail(e.target.value); }}
             />
           </label>
