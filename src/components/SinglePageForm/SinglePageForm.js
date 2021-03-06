@@ -1,14 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LoadingBar from 'react-top-loading-bar';
 import './SinglePageForm.css';
 import PropTypes from 'prop-types';
 import logo from '../../images/logo-sm.svg';
 
 function SinglePageForm(props) {
-  const [progress, setProgress] = React.useState(0);
-  const [progressColor, setProgressColor] = React.useState('#979797');
-
   const {
     header, buttonText, hintText, hintLinkText, hintLinkUrl, children,
   } = props;
@@ -22,31 +18,13 @@ function SinglePageForm(props) {
   };
 
   /* Симуляция нажатия на отправку формы для проверки статус бара */
-  function handleProgress(success) {
-    if (success === true) {
-      setProgressColor('#3DDC84');
-      setProgress(progress + 100);
-    } else {
-      setProgressColor('#EE3465');
-      setProgress(progress + 100);
-    }
-  }
-  /* Симуляция нажатия на отправку формы для проверки статус бара */
   function handleSubmit(event) {
     event.preventDefault();
-    setProgress(10);
-    setTimeout(() => {
-      handleProgress(false);
-    }, 1000);
+    console.log('oops');
   }
 
   return (
     <>
-      <LoadingBar
-        color={progressColor}
-        progress={progress}
-        onLoaderFinished={() => setProgress(0)}
-      />
       <div className="spf">
         <Link className="spf__logo-link" to="/"><img className="spf__logo" src={logo} alt="Логотип Movies Explorer" /></Link>
         <h1 className="spf__header">{header}</h1>
