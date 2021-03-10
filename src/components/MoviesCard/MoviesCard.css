@@ -1,0 +1,169 @@
+.movies-card {
+  position: relative;
+
+  display: grid;
+
+  width: 360px;
+
+  border-radius: 6px;
+
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  gap: 14px 0;
+}
+
+.movies-card__cover {
+  width: 100%;
+  height: 201px;
+
+  cursor: pointer;
+
+  border-radius: 6px;
+
+  grid-column: span 2;
+}
+
+.movies-card__cover-image {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 6px;
+
+  object-fit: cover;
+  object-position: center top;
+}
+
+.movies-card__title {
+  width: 250px;
+  margin: 0 0 0 14px;
+
+  color: #FFFFFF;
+
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 16px;
+
+  grid-column: 1;
+  justify-self: flex-start;
+}
+
+.movies-card__duration {
+  display: grid;
+
+  width: 52px;
+  height: 18px;
+  margin: 0 14px 0 0;
+
+  text-align: center;
+
+  color: #8B8B8B;
+  border-radius: 3px;
+  background-color: #2F2F2F;
+
+  font-family: Inter;
+  font-size: 11px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 10px;
+
+  grid-column: 2;
+  justify-self: flex-end;
+  place-items: center;
+}
+
+/* Каркас кнопки сохранения фильма */
+.movied-card__save-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  pointer-events: none;
+
+  outline: none;
+
+  appearance: none;
+}
+
+/* Состояние кнопки для несохранненого фильма — «Сохранить» */
+.movied-card__save-button::after {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  width: 72px;
+  height: 21px;
+
+  content: 'Сохранить';
+  text-align: center;
+
+  color: #FFFFFF;
+  border-radius: 30px;
+  background-color: #313131;
+
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 9px;
+}
+
+/* Состояние кнопки для сохранненого фильма — «V» */
+.movied-card__save-button:checked::after {
+  display: flex;
+
+  width: 21px;
+  height: 21px;
+
+  content: '';
+  transition: background-color .2s;
+
+  border-radius: 50%;
+  background-color: #EE3465;
+  background-image: url(../../images/checked.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 9px 9px;
+}
+
+/* Наведение на cover показывает кнопку для несохранненого фильма — «Сохранить» */
+.movies-card__cover:hover ~ .movied-card__save-button::after {
+  display: flex;
+}
+
+
+.movies-card__cover:hover ~ .movied-card__save-button:checked::after {
+  background-color: #F5F5F5;
+  background-image: url(../../images/remove.svg);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* Breakpoint: 768px — 1279px. Medium-screen devices */
+  .movies-card {
+    width: 339px;
+
+    gap: 25px 0;
+  }
+  .movies-card__title {
+    margin: 0;
+  }
+  .movies-card__duration {
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .movies-card {
+    width: 300px;
+
+    gap: 16px 0;
+  }
+  .movies-card__title {
+    margin: 0;
+  }
+  .movies-card__duration {
+    margin: 0;
+  }
+}

@@ -1,0 +1,36 @@
+.navtab {
+  /* height: 36px; */
+  margin-bottom: 30px;
+
+  border-radius: 10px;
+}
+
+.navtab__items {
+  display: flex;
+  flex-flow: row nowrap;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.navtab__item {
+  margin-right: 10px;
+}
+
+.navtab__item:last-of-type {
+  margin-right: 0;
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .navtab {
+    margin-bottom: 17px;
+  }
+  .navtab__item {
+    margin-right: 6px;
+    /* min-height: 48px; */
+  }
+}
+

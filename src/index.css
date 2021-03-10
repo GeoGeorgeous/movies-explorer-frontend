@@ -1,0 +1,36 @@
+/* Normalize.css */
+@import url(./vendor/normalize.css);
+/* Fonts */
+@import url(./vendor/fonts.css);
+/* Smooth-scrolling */
+html {
+  scroll-behavior: smooth;
+}
+/* Body bg color */
+body, html {
+  background-color: #202020;
+  height: 100%;
+}
+/* root (public/index.html #root) */
+#root {
+  height: 100%;
+  /* Min/max-width для центрирования контента и адаптива */
+  min-width: 320px;
+  max-width: 1280px;
+  /* Центрирование страницы */
+  margin: 0 auto;
+  /* Дефолтные цвета фона и текста */
+  color: #fff;
+  /* Шрифты */
+  font-family: 'Inter', 'Arial', sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  /* Sticky footer */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

@@ -1,0 +1,107 @@
+.button {
+  height: 32px;
+  margin-right: 10px;
+  padding: 0;
+
+  cursor: pointer;
+  user-select: none;
+  transition: opacity .2s;
+  text-align: center;
+
+  color: #000;
+  border: 0;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 16px;
+}
+
+.button:last-of-type {
+  margin-right: 0;
+}
+
+.button_size_small {
+  width: 76px;
+  height: 32px;
+}
+
+.button_size_wide {
+  width: 100px;
+  height: 32px;
+}
+
+.button_size_medium {
+  width: 96px;
+  height: 36px;
+}
+
+.button_size_large {
+  height: 44px;
+  padding: 0 15px;
+}
+
+.button_form-factor_square {
+  border-radius: 3px;
+}
+
+.button_form-factor_smooth-square {
+  border-radius: 6px;
+}
+
+.button_form-factor_round {
+  border-radius: 10px;
+}
+
+.button_form-factor_extra-round {
+  border-radius: 20px;
+}
+
+.button_color_green {
+  background-color: #3DDC84;
+}
+
+.button_color_gray {
+  color: #fff;
+  background-color: #303030;
+}
+
+.button_color_blue {
+  color: #fff;
+  background-color: #4285F4;
+}
+
+.button:hover {
+  opacity: .8;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* Breakpoint: 768px — 1279px. Medium-screen devices */
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  /* Breakpoint: 0px — 767px. Small-screen devices */
+  .button {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .button_size_small {
+    width: 54px;
+    height: 26px;
+  }
+
+  .button_size_medium {
+    width: 82px;
+    height: 26px;
+  }
+
+  .button_size_wide {
+    font-size: 14px;
+  }
+}
