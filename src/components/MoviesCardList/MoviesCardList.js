@@ -23,6 +23,10 @@ function MoviesCardList(props) {
     setVisibleMoviesCount(visibleMoviesCount + 3);
   };
 
+  const handleFoundMoviesAmount = (foundMoviesCounter) => {
+    console.log(foundMoviesCounter);
+  }
+
   useEffect(() => { // Обновляем стейт при изменении пропа
     setNoShortMovies(showShortMovies);
   }, [props.showShortMovies]);
@@ -48,6 +52,7 @@ function MoviesCardList(props) {
               moviesPerPage={visibleMoviesCount} // Фильмов на странице
               noShortMovies={noShortMovies} // Скрывать короткометражки?
               searchKey={searchKey}
+              handleFoundMoviesAmount={handleFoundMoviesAmount}
             />
           </section>
           <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button></>

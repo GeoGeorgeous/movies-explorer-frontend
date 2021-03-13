@@ -4,14 +4,25 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MovieFilter(props) {
   const {
-    movies, moviesPerPage, noShortMovies, searchKey
+    movies, moviesPerPage, noShortMovies, searchKey, handleFoundMoviesAmount
   } = props;
 
   const [visibleMovies, setVisibleMovies] = React.useState(moviesPerPage);
+  const [filteredAndSlicedMovies, setFilteredAndSlicedMovies] = React.useState([]);
+
+  const prepareMovies = (dataArr) => {
+    let newDataArr = [...dataArr];
+    setFilteredAndSlicedMovies(
+      newDataArr
+        .filter(filterSearch)
+        .filter(filterDuration)
+        .slice(0, visibleMovies));
+    // handleFoundMoviesAmount(filteredAndSlicedMovies)
+  }
 
   const filterDuration = (movie) => {
     /* Возвращает true, если
-    movie.duration >= указанной  в durationCheck */
+    movie.duration больше или равно указанному */
     let durationCheck;
     noShortMovies
       ? durationCheck = 0
@@ -22,7 +33,6 @@ function MovieFilter(props) {
 
   const filterSearch = (movie) => {
     let regex = new RegExp(searchKey, "gi");
-
     const pass =
     regex.test(movie.description)
     || regex.test(movie.nameRU)
@@ -33,26 +43,27 @@ function MovieFilter(props) {
   useEffect(() => {
     /* Обновляем стейт при изменении moviesPerPage */
     setVisibleMovies(moviesPerPage);
-  }, [props.moviesPerPage]);
+  }, [props]);
+
+  useEffect(() => {
+    prepareMovies(movies)
+  }, [searchKey]);
 
   return (
     <>
-    { searchKey === ''
-      ? <p>Ничего не найдено :(</p>
-      : (movies
-        .filter(filterSearch)
-        .filter(filterDuration)
-        .slice(0, visibleMovies)
-        .map((movie) => (
-          <MoviesCard
-            key={movie.id}
-            uniqueId={movie.id}
-            duration={movie.duration}
-            cover={movie}
-            title={movie.nameRU}
-            isFavourite={movie.isFavourite}
-          />
-        )))
+    { (filteredAndSlicedMovies.length > 0)
+      ? filteredAndSlicedMovies
+      .map((movie) => (
+        <MoviesCard
+          key={movie.id}
+          uniqueId={movie.id}
+          duration={movie.duration}
+          cover={movie}
+          title={movie.nameRU}
+          isFavourite={movie.isFavourite}
+        />
+      ))
+      : <p>Ничего не найдено.</p>
     }
     </>
   );
