@@ -6,10 +6,18 @@ import Button from '../Button/Button';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm(props) {
-  const { onCheckBoxToggle } = props;
+  const { onCheckBoxToggle, onInputChange } = props;
+  const [userInput, setUserInput] = React.useState('');
   SearchForm.propTypes = {
     onCheckBoxToggle: PropTypes.func.isRequired, // callback
+    onInputChange: PropTypes.func.isRequired, // callback
   };
+
+  const handleUserInput = (e) => {
+    setUserInput(e.target.value);
+    onInputChange(e.target.value);
+  };
+
   return (
     <>
       <div className="sf">
@@ -19,6 +27,8 @@ function SearchForm(props) {
             className="sf__input"
             placeholder="Фильм"
             id="movie"
+            onChange={(e) => handleUserInput(e)}
+            value={userInput}
           />
           <Button
             size="large"

@@ -11,17 +11,13 @@ const moviesPerPage = 6; // Сколько фильмов отображать �
 const moviesPerAdding = 3; // Сколько фильмов добавляет кнопка «Ещё»
 
 function MoviesCardList(props) {
-  const { movies, showShortMovies } = props;
+  const { movies, showShortMovies, searchKey } = props;
   MoviesCardList.propTypes = {
     onlyFavourite: PropTypes.bool.isRequired, // Показывать только любимые фильмы?
     showShortMovies: PropTypes.bool.isRequired, // Показывать только полнометражные фильмы?
     // eslint-disable-next-line react/forbid-prop-types
     movies: PropTypes.any.isRequired,
   };
-  let arrayForHoldingMovies = []; // Массив для хранения фильмов
-  // Стейт для фильмов, которые отображаются на странице
-  const [moviesToShow, setMoviesToShow] = React.useState([]);
-  const [next, setNext] = React.useState(6); // Стейт для следующих фильмов
   const [isAdding, setAdding] = React.useState(false); // Стейт для показа прелоудера
   const [noShortMovies, setNoShortMovies] = React.useState(true);
   const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(6);
@@ -44,6 +40,7 @@ function MoviesCardList(props) {
           moviesPerPage={visibleMoviesCount} // Фильмов на странице
           moviesPerAdding={moviesPerAdding} // Фильмов при добавлении
           noShortMovies={noShortMovies}
+          searchKey={searchKey}
          />
 
       </section>

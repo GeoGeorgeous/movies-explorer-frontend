@@ -4,29 +4,43 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MovieFilter(props) {
   const {
-    movies, moviesPerPage, noShortMovies,
+    movies, moviesPerPage, noShortMovies, searchKey
   } = props;
 
   const [visibleMovies, setVisibleMovies] = React.useState(moviesPerPage);
 
   const filterDuration = (movie) => {
+    /* Возвращает true, если
+    movie.duration >= указанной  в durationCheck */
     let durationCheck;
-
     noShortMovies
       ? durationCheck = 0
       : durationCheck = 90;
-
     const pass = (movie.duration >= durationCheck);
     return pass;
   };
 
-  useEffect(() => { // Обновляем стейт при изменении пропа
+  const filterSearch = (movie) => {
+    let regex = new RegExp(searchKey, "gi");
+
+    const pass =
+    regex.test(movie.description)
+    || regex.test(movie.nameRU)
+    || regex.test(movie.nameEN);
+    return pass;
+  };
+
+  useEffect(() => {
+    /* Обновляем стейт при изменении moviesPerPage */
     setVisibleMovies(moviesPerPage);
-  }, [props]);
+  }, [props.moviesPerPage]);
 
   return (
     <>
-      {movies
+    { searchKey === ''
+      ? <p>Ничего не найдено :(</p>
+      : (movies
+        .filter(filterSearch)
         .filter(filterDuration)
         .slice(0, visibleMovies)
         .map((movie) => (
@@ -38,7 +52,8 @@ function MovieFilter(props) {
             title={movie.nameRU}
             isFavourite={movie.isFavourite}
           />
-        ))}
+        )))
+    }
     </>
   );
 }
