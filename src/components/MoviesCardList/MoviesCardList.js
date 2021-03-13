@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect } from 'react';
 import './MoviesCardList.css';
 import PropTypes from 'prop-types';
@@ -10,13 +9,13 @@ function MoviesCardList(props) {
   const { movies, showShortMovies, searchKey, isLoading } = props;
   MoviesCardList.propTypes = {
     showShortMovies: PropTypes.bool.isRequired, // Показывать только полнометражные фильмы?
-    // eslint-disable-next-line react/forbid-prop-types
     movies: PropTypes.any.isRequired,
     searchKey: PropTypes.string.isRequired,
   };
   // const [isAdding, setAdding] = React.useState(false); // Стейт для показа прелоудера
   const [noShortMovies, setNoShortMovies] = React.useState(true);
   const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(6);
+  const [shownEnough, setShownEnough] = React.useState(false);
 
   // Обработчик нажатия кнопки добавления фильмов «Ещё»
   const handleShowMoreMovies = () => {
@@ -24,12 +23,19 @@ function MoviesCardList(props) {
   };
 
   const handleFoundMoviesAmount = (foundMoviesCounter) => {
-    console.log(foundMoviesCounter);
+    foundMoviesCounter >= visibleMoviesCount
+    ? setShownEnough(false)
+    : setShownEnough(true)
   }
 
   useEffect(() => { // Обновляем стейт при изменении пропа
     setNoShortMovies(showShortMovies);
   }, [props.showShortMovies]);
+
+  useEffect(() => { // Обновляем стейт при изменении пропа
+    setVisibleMoviesCount(6);
+  }, [props.searchKey]);
+
 
   return (
     <>
@@ -45,18 +51,22 @@ function MoviesCardList(props) {
         : isLoading
           // Если ищем фильмы, то покажем прелоудер, пока они загружаются
             ? <Preloader />
-            : <><section className="movies-card-list">
-            <MovieFilter
-              // Фильтрует фильмы и возвращает разметку
-              movies={movies} // Массив фильмов
-              moviesPerPage={visibleMoviesCount} // Фильмов на странице
-              noShortMovies={noShortMovies} // Скрывать короткометражки?
-              searchKey={searchKey}
-              handleFoundMoviesAmount={handleFoundMoviesAmount}
-            />
-          </section>
-          <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button></>
-        }
+            : <>
+                <section className="movies-card-list">
+                <MovieFilter
+                  // Фильтрует фильмы и возвращает разметку
+                  movies={movies} // Массив фильмов
+                  moviesPerPage={visibleMoviesCount} // Фильмов на странице
+                  noShortMovies={noShortMovies} // Скрывать короткометражки?
+                  searchKey={searchKey}
+                  handleFoundMoviesAmount={handleFoundMoviesAmount}
+                />
+                </section>
+                {shownEnough
+                  ? ''
+                  : <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button>}
+              </>
+          }
       <Footer />
     </>
   );

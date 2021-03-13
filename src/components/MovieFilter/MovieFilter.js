@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { func } from 'prop-types';
 import React, {useEffect} from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
@@ -8,17 +9,7 @@ function MovieFilter(props) {
   } = props;
 
   const [visibleMovies, setVisibleMovies] = React.useState(moviesPerPage);
-  const [filteredAndSlicedMovies, setFilteredAndSlicedMovies] = React.useState([]);
-
-  const prepareMovies = (dataArr) => {
-    let newDataArr = [...dataArr];
-    setFilteredAndSlicedMovies(
-      newDataArr
-        .filter(filterSearch)
-        .filter(filterDuration)
-        .slice(0, visibleMovies));
-    // handleFoundMoviesAmount(filteredAndSlicedMovies)
-  }
+  const [filteredMoviesAmount, setFilteredMoviesAmount] = React.useState(0);
 
   const filterDuration = (movie) => {
     /* Возвращает true, если
@@ -40,31 +31,31 @@ function MovieFilter(props) {
     return pass;
   };
 
-  useEffect(() => {
-    /* Обновляем стейт при изменении moviesPerPage */
-    setVisibleMovies(moviesPerPage);
-  }, [props]);
+  function createArr() {
+    let filteredMovies = movies
+    .filter(filterSearch)
+    .filter(filterDuration)
+    handleFoundMoviesAmount(filteredMovies.length)
+    return filteredMovies
+      .slice(0, visibleMovies)
+      .map((movie) => (
+      <MoviesCard
+        key={movie.id}
+        uniqueId={movie.id}
+        duration={movie.duration}
+        cover={movie}
+        title={movie.nameRU}
+        isFavourite={movie.isFavourite}
+      />))
+  }
 
-  useEffect(() => {
-    prepareMovies(movies)
-  }, [searchKey]);
+  useEffect(() => { // Изменение количества отображаемых фильмов при изменении стейта
+    setVisibleMovies(moviesPerPage)
+  }, [moviesPerPage]);
 
   return (
     <>
-    { (filteredAndSlicedMovies.length > 0)
-      ? filteredAndSlicedMovies
-      .map((movie) => (
-        <MoviesCard
-          key={movie.id}
-          uniqueId={movie.id}
-          duration={movie.duration}
-          cover={movie}
-          title={movie.nameRU}
-          isFavourite={movie.isFavourite}
-        />
-      ))
-      : <p>Ничего не найдено.</p>
-    }
+    { createArr() }
     </>
   );
 }

@@ -49,6 +49,10 @@
   line-height: 16px;
 }
 
+.movies-card-list__load-more_hide {
+  display: none;
+}
+
 .movies-card-list__load-more:focus {
   outline: none;
 }
