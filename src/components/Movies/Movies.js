@@ -15,7 +15,8 @@ function Movies() {
   }
 
   function onFormSubmit(userInput) {
-    setSearchKeyWords(userInput);
+    console.log('moviesShown')
+    // setSearchKeyWords(userInput);
   }
 
   useEffect(() => {

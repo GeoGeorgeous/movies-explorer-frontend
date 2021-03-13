@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -8,36 +9,10 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 function SearchForm(props) {
   const { onCheckBoxToggle, onFormSubmit } = props;
   const [userInput, setUserInput] = React.useState('');
-  // Валидна ли форма? Изначально true, чтобы не показывать ошибки:
-  const [formValidity, setFormValidity] = React.useState(true);
+  const [isErrorShown, setErrorShown] = React.useState(false);
   SearchForm.propTypes = {
     onCheckBoxToggle: PropTypes.func.isRequired, // Коллбэк изменения чекбокса
     onFormSubmit: PropTypes.func.isRequired, // Коллбэк отправки формы
-  };
-
-  const handleChange = (e) => {
-    setUserInput(e.target.value);
-    setFormValidity(true);
-  };
-
-  const handleFocusOut = () => {
-    // Убираем ошибки валидации при focus out с инпута
-    setFormValidity(true);
-  };
-
-  const validateForm = (form) => {
-    setFormValidity(
-      form
-        .querySelector('.sf__input')
-        .validity
-        .valid,
-    );
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    validateForm(e.target);
-    onFormSubmit(userInput);
   };
 
   // Объект с классами для отображения ошибки
@@ -46,13 +21,41 @@ function SearchForm(props) {
     errorMsgClass: '',
   };
 
-  // Показать ошибки, если форма невалидна
-  if (!formValidity) {
-    errorClasses = {
+  const handleChange = (e) => {
+    setUserInput(e.target.value);
+    setErrorShown(false);
+  };
+
+  const handleFocusOut = () => {
+    // Убираем ошибки валидации при focus out с инпута
+    setErrorShown(false);
+  };
+
+  const validateForm = (form) => {
+    const isValid = form
+      .querySelector('.sf__input')
+      .validity
+      .valid;
+    setErrorShown(!isValid);
+    return isValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm(e.target)) {
+      onFormSubmit(userInput);
+    }
+  };
+
+  isErrorShown
+    ? errorClasses = {
       inputErrorClass: 'sf__input-error',
       errorMsgClass: 'sf__form-error_show',
+    }
+    : errorClasses = {
+      inputErrorClass: '',
+      errorMsgClass: '',
     };
-  }
 
   return (
     <>
