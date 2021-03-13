@@ -8,14 +8,14 @@ import moviesApi from '../../utils/MoviesApi';
 function Movies() {
   const [showShortMovies, setShowShortMovies] = React.useState(true);
   const [movies, setMovies] = React.useState([]);
-  const [userSearchInput, setUserSearchInput] = React.useState('');
+  const [searchKeyWords, setSearchKeyWords] = React.useState('');
 
   function onCheckBoxToggle(isCheckBoxChecked) {
     setShowShortMovies(isCheckBoxChecked);
   }
 
-  function onInputChange(input) {
-    setUserSearchInput(input);
+  function onFormSubmit(userInput) {
+    setSearchKeyWords(userInput);
   }
 
   useEffect(() => {
@@ -32,12 +32,12 @@ function Movies() {
       />
       <SearchForm
         onCheckBoxToggle={onCheckBoxToggle}
-        onInputChange={onInputChange}
+        onFormSubmit={onFormSubmit}
       />
       <MoviesCardList
         showShortMovies={showShortMovies}
         movies={movies}
-        searchKey={userSearchInput}
+        searchKey={searchKeyWords}
       />
     </>
   );
