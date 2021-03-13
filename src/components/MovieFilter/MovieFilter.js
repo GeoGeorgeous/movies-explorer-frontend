@@ -15,7 +15,7 @@ function MovieFilter(props) {
     let durationCheck;
     noShortMovies
       ? durationCheck = 0
-      : durationCheck = 90;
+      : durationCheck = 40;
     const pass = (movie.duration >= durationCheck);
     return pass;
   };
