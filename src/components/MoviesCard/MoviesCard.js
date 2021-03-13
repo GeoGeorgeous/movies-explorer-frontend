@@ -2,6 +2,7 @@
 import React from 'react';
 import './MoviesCard.css';
 import PropTypes from 'prop-types';
+import noCover from '../../images/no-cover.png';
 
 function MoviesCard(props) {
   const {
@@ -35,11 +36,12 @@ function MoviesCard(props) {
   }
 
   const inputId = `favourite${uniqueId}`;
+  const movieImage = cover.image ? `https://api.nomoreparties.co${cover.image.url}` : noCover;
 
   return (
     <article className="movies-card">
       <label htmlFor={inputId} className="movies-card__cover">
-        <img src={cover} className="movies-card__cover-image" alt={title} />
+        <img src={movieImage} className="movies-card__cover-image" alt={title} />
       </label>
       <h4 className="movies-card__title">{title}</h4>
       <span className="movies-card__duration">{calcDuration(duration)}</span>
