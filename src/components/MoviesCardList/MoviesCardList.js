@@ -28,7 +28,7 @@ function MoviesCardList(props) {
     })).isRequired,
     showShortMovies: PropTypes.bool.isRequired, // Показывать короткий метр? * Bool
     searchKey: PropTypes.string.isRequired, // Ключевые слова для поиска фильмов * String
-    isLoading: PropTypes.string.isRequired, // Промис pending? * Bool
+    isLoading: PropTypes.bool.isRequired, // Промис pending? * Bool
   };
 
   // Количество фильмов, показываемых изначально (до нажатия на кнопку загрузить ещё)
