@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable  */
 import React from 'react';
 import './MoviesCard.css';
 import PropTypes from 'prop-types';
@@ -6,17 +7,18 @@ import noCover from '../../images/no-cover.png';
 
 function MoviesCard(props) {
   const {
-    duration, cover, title, isFavourite, uniqueId,
+    duration, cover, title, trailerLink, uniqueId,
   } = props;
 
-  const [isChecked, setChecked] = React.useState(isFavourite);
+  const [isHovered, setHovered] = React.useState(false);
+  // const [isChecked, setChecked] = React.useState(isFavourite);
 
   MoviesCard.propTypes = {
-    uniqueId: PropTypes.string.isRequired, // Уникальный ID для добавления/удаления из сохранённых
+    uniqueId: PropTypes.number.isRequired, // Уникальный ID для добавления/удаления из сохранённых
     duration: PropTypes.number.isRequired, // Длительность в минутах
-    cover: PropTypes.string.isRequired, // Изображение карточки
+    cover: PropTypes.object.isRequired, // Изображение карточки
     title: PropTypes.string.isRequired, // Название фильма
-    isFavourite: PropTypes.bool.isRequired, // Добавлено в любимые? Bool
+    trailerLink: PropTypes.string.isRequired,
   };
 
   /*
@@ -31,26 +33,36 @@ function MoviesCard(props) {
     return `${hours}ч ${minutes}м`;
   }
 
-  function onChange(e) {
-    setChecked(e.target.checked);
-  }
+  // function onChange(e) {
+  //   setChecked(e.target.checked);
+  // }
+  // console.log(props);
+
+  let inputOpenClass;
+  isHovered
+  ? inputOpenClass = 'show'
+  : inputOpenClass = ''
 
   const inputId = `favourite${uniqueId}`;
   const movieImage = cover.image ? `https://api.nomoreparties.co${cover.image.url}` : noCover;
 
   return (
-    <article className="movies-card">
-      <label htmlFor={inputId} className="movies-card__cover">
+    <article
+    onMouseEnter={(e) => setHovered(true)}
+    onMouseLeave={(e) => setHovered(false)}
+    className="movies-card">
+      <a
+      href={trailerLink} target="_blank" className="movies-card__cover">
         <img src={movieImage} className="movies-card__cover-image" alt={title} />
-      </label>
+      </a>
       <h4 className="movies-card__title">{title}</h4>
       <span className="movies-card__duration">{calcDuration(duration)}</span>
       <input
-        className="movied-card__save-button"
+        className={`movies-card__save-button ${inputOpenClass}`}
         type="checkbox"
         id={inputId}
-        checked={isChecked}
-        onChange={(e) => onChange(e)}
+        // checked={isChecked}
+        // onChange={(e) => onChange(e)}
       />
     </article>
   );

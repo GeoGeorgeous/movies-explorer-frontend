@@ -77,7 +77,7 @@ function MovieFilter(props) {
           duration={movie.duration}
           cover={movie}
           title={movie.nameRU}
-          isFavourite={movie.isFavourite}
+          trailerLink={movie.trailerLink}
         />
       ));
   }
