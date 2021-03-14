@@ -5,7 +5,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MovieFilter(props) {
   const {
-    movies, moviesPerPage, noShortMovies, searchKey, handleFoundMoviesAmount
+    movies, moviesPerPage, showShortMovies, searchKey, handleFoundMoviesAmount
   } = props;
 
   const [visibleMovies, setVisibleMovies] = React.useState(moviesPerPage);
@@ -15,7 +15,7 @@ function MovieFilter(props) {
     /* Возвращает true, если
     movie.duration больше или равно указанному */
     let durationCheck;
-    noShortMovies
+    showShortMovies
       ? durationCheck = 0
       : durationCheck = 40;
     const pass = (movie.duration >= durationCheck);

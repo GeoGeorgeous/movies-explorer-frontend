@@ -6,15 +6,39 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList(props) {
-  const { movies, showShortMovies, searchKey, isLoading } = props;
+  const {
+    movies, showShortMovies, searchKey, isLoading,
+  } = props;
+
   MoviesCardList.propTypes = {
-    showShortMovies: PropTypes.bool.isRequired, // Показывать только полнометражные фильмы?
-    movies: PropTypes.any.isRequired,
-    searchKey: PropTypes.string.isRequired,
+    movies: PropTypes.arrayOf(PropTypes.shape({ // Массив объектов с фильмами * Object
+      country: PropTypes.string,
+      created_at: PropTypes.string,
+      description: PropTypes.string,
+      director: PropTypes.string,
+      duration: PropTypes.number,
+      id: PropTypes.number,
+      // eslint-disable-next-line react/forbid-prop-types
+      image: PropTypes.object,
+      nameEN: PropTypes.string,
+      nameRU: PropTypes.string,
+      trailerLink: PropTypes.string,
+      updated_at: PropTypes.string,
+      year: PropTypes.string,
+    })).isRequired,
+    showShortMovies: PropTypes.bool.isRequired, // Показывать короткий метр? * Bool
+    searchKey: PropTypes.string.isRequired, // Ключевые слова для поиска фильмов * String
+    isLoading: PropTypes.string.isRequired, // Промис pending? * Bool
   };
-  // const [isAdding, setAdding] = React.useState(false); // Стейт для показа прелоудера
-  const [noShortMovies, setNoShortMovies] = React.useState(true);
+
+  // Количество фильмов, показываемых изначально (до нажатия на кнопку загрузить ещё)
   const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(6);
+
+  /*
+    Показаны все фильмы, соответствующие запросы или можно загрузить ещё?
+    true — фильмов достаточно, false — можно загрузить ещё
+    Управляется функцией handleFoundMoviesAmount()
+  */
   const [shownEnough, setShownEnough] = React.useState(false);
 
   // Обработчик нажатия кнопки добавления фильмов «Ещё»
@@ -22,51 +46,59 @@ function MoviesCardList(props) {
     setVisibleMoviesCount(visibleMoviesCount + 3);
   };
 
+  // Задаём стейт shownEnough в зависимости от количество найденныхи показанных фильмов
   const handleFoundMoviesAmount = (foundMoviesCounter) => {
     foundMoviesCounter >= visibleMoviesCount
-    ? setShownEnough(false)
-    : setShownEnough(true)
-  }
+      ? setShownEnough(false)
+      : setShownEnough(true);
+  };
 
-  useEffect(() => { // Обновляем стейт при изменении пропа
-    setNoShortMovies(showShortMovies);
-  }, [props.showShortMovies]);
+  // Возвращает разметку при незаданном поиске
+  const returnUntouchedSearchMarkUp = () => (
+    <section className="movies-card-list__welcome-screen">
+      <p className="movies-card-list__welcome-screen-text">
+        Введите название или ключевые слова в строку поиска, чтобы найти фильмы.
+      </p>
+    </section>
+  );
 
-  useEffect(() => { // Обновляем стейт при изменении пропа
+  // Возвращает разметку заданного поиска
+  const returnSearchHandlingMarkUp = () => (
+    isLoading
+      // Если ищем фильмы, то покажем прелоудер, пока они загружаются
+      ? <Preloader />
+      // Если фильмы найдены, передадим компоненту MovieFilter нужные пропсы
+      : (
+        <>
+          <section className="movies-card-list">
+            <MovieFilter // Фильтрует фильмы и возвращает разметку
+              movies={movies} // Массив фильмов * Object
+              moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
+              showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
+              searchKey={searchKey} // Ключевые слова * String
+              handleFoundMoviesAmount={handleFoundMoviesAmount}
+              // Коллбэк изменения количества фильмов * func
+            />
+          </section>
+          {shownEnough // Логика показывания / скрывания кнопки «Ещё»
+            ? ''
+            : <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button>}
+        </>
+      )
+  );
+
+  useEffect(() => {
+    // Сбрасываем количество фильмов на странице при изменении ключевого слова
     setVisibleMoviesCount(6);
-  }, [props.searchKey]);
-
+  }, [searchKey]);
 
   return (
     <>
-      {searchKey === ''
-      // Если ещё ничего не искали, то показать welcome-screen
-        ? (
-          <section className="movies-card-list__welcome-screen">
-            <p className="movies-card-list__welcome-screen-text">
-              Введите название или ключевые слова в строку поиска, чтобы найти фильмы.
-            </p>
-          </section>
-        )
-        : isLoading
-          // Если ищем фильмы, то покажем прелоудер, пока они загружаются
-            ? <Preloader />
-            : <>
-                <section className="movies-card-list">
-                <MovieFilter
-                  // Фильтрует фильмы и возвращает разметку
-                  movies={movies} // Массив фильмов
-                  moviesPerPage={visibleMoviesCount} // Фильмов на странице
-                  noShortMovies={noShortMovies} // Скрывать короткометражки?
-                  searchKey={searchKey}
-                  handleFoundMoviesAmount={handleFoundMoviesAmount}
-                />
-                </section>
-                {shownEnough
-                  ? ''
-                  : <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button>}
-              </>
-          }
+      {
+        searchKey === ''
+          ? returnUntouchedSearchMarkUp() // Если ещё ничего не искали, то показать welcome-screen
+          : returnSearchHandlingMarkUp() // А если искали, то работаем с фильмами дальше
+      }
       <Footer />
     </>
   );
