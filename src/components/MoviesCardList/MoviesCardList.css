@@ -12,22 +12,25 @@
 }
 
 .movies-card-list__welcome-screen {
-  width: calc(100% - 70px * 2);
-  margin: 70px auto 28px auto;
   display: flex;
   flex-flow: row;
   justify-content: center;
+
+  width: calc(100% - 70px * 2);
+  margin: 70px auto 28px auto;
 }
 
 .movies-card-list__welcome-screen-text {
-  padding: 0 25px;
   margin: 0;
+  padding: 0 25px;
 }
 
 .movies-card-list__welcome-screen-text-low {
   margin: 15px auto;
-  font-size: 13px;
+
   opacity: .5;
+
+  font-size: 13px;
 }
 
 .movies-card-list__load-more {
