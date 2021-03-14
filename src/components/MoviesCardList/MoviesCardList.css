@@ -24,6 +24,12 @@
   margin: 0;
 }
 
+.movies-card-list__welcome-screen-text-low {
+  margin: 15px auto;
+  font-size: 13px;
+  opacity: .5;
+}
+
 .movies-card-list__load-more {
   align-items: center;
 

@@ -23,7 +23,7 @@ function MovieFilter(props) {
       updated_at: PropTypes.string,
       year: PropTypes.string,
     })).isRequired,
-    moviesPerPage: PropTypes.string.isRequired, // Фильмов на странице * Number
+    moviesPerPage: PropTypes.number.isRequired, // Фильмов на странице * Number
     showShortMovies: PropTypes.bool.isRequired, // Показывать короткометражки? * Bool
     searchKey: PropTypes.string.isRequired, // Ключевые слова для поиска фильмов * String
     // Обработчик нажатия кнопки добавления фильмов «Ещё» * Func:

@@ -39,18 +39,34 @@ function MoviesCardList(props) {
     true — фильмов достаточно, false — можно загрузить ещё
     Управляется функцией handleFoundMoviesAmount()
   */
-  const [shownEnough, setShownEnough] = React.useState(false);
+  const [moviesFound, setMoviesFoundAmount] = React.useState(0);
 
   // Обработчик нажатия кнопки добавления фильмов «Ещё»
   const handleShowMoreMovies = () => {
     setVisibleMoviesCount(visibleMoviesCount + 3);
   };
 
+  const handleButtonAppear = () => {
+    if (moviesFound >= visibleMoviesCount) { // Логика показывания / скрывания кнопки «Ещё»
+      return <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button>;
+    }
+    if (moviesFound === 0) {
+      return (
+        <p className="movies-card-list__welcome-screen-text">
+          Ничего не найдено.
+        </p>
+      );
+    }
+    return (
+      <p className="movies-card-list__welcome-screen-text movies-card-list__welcome-screen-text-low">
+        Показаны все найденные фильмы.
+      </p>
+    );
+  };
+
   // Задаём стейт shownEnough в зависимости от количество найденныхи показанных фильмов
   const handleFoundMoviesAmount = (foundMoviesCounter) => {
-    foundMoviesCounter >= visibleMoviesCount
-      ? setShownEnough(false)
-      : setShownEnough(true);
+    setMoviesFoundAmount(foundMoviesCounter);
   };
 
   // Возвращает разметку при незаданном поиске
@@ -80,9 +96,7 @@ function MoviesCardList(props) {
               // Коллбэк изменения количества фильмов * func
             />
           </section>
-          {shownEnough // Логика показывания / скрывания кнопки «Ещё»
-            ? ''
-            : <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button>}
+          { handleButtonAppear() }
         </>
       )
   );
