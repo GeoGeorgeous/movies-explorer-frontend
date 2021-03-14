@@ -1,8 +1,10 @@
+/*eslint-disable */
 import React from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
 
 function Movies() {
   const [showShortMovies, setShowShortMovies] = React.useState(true);
@@ -32,6 +34,18 @@ function Movies() {
     setSearchKeyWords(userInput); // Ключевые слова для фильтрации
   };
 
+  const handleMovieLike = (movie) => {
+    // mainApi.getFavouriteMovies()
+    //   .then((favouriteMovies) => {
+    //     console.log(favouriteMovies);
+    //   });
+
+    mainApi.likeMovie(movie)
+      .then((feedback) => {
+        console.log(feedback)
+      })
+  };
+
   return (
     <>
       <Header
@@ -46,6 +60,7 @@ function Movies() {
         movies={movies}
         searchKey={searchKeyWords}
         isLoading={loading}
+        handleMovieLike={handleMovieLike}
       />
     </>
   );

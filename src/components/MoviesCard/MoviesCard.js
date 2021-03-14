@@ -7,11 +7,11 @@ import noCover from '../../images/no-cover.png';
 
 function MoviesCard(props) {
   const {
-    duration, cover, title, trailerLink, uniqueId,
+    duration, cover, title, trailerLink, uniqueId, handleMovieLike, wholeMovie
   } = props;
 
   const [isHovered, setHovered] = React.useState(false);
-  // const [isChecked, setChecked] = React.useState(isFavourite);
+  const [isChecked, setChecked] = React.useState(false);
 
   MoviesCard.propTypes = {
     uniqueId: PropTypes.number.isRequired, // Уникальный ID для добавления/удаления из сохранённых
@@ -33,10 +33,10 @@ function MoviesCard(props) {
     return `${hours}ч ${minutes}м`;
   }
 
-  // function onChange(e) {
-  //   setChecked(e.target.checked);
-  // }
-  // console.log(props);
+  function onChange(e) {
+    setChecked(e.target.checked);
+    handleMovieLike(wholeMovie);
+  }
 
   let inputOpenClass;
   isHovered
@@ -61,8 +61,8 @@ function MoviesCard(props) {
         className={`movies-card__save-button ${inputOpenClass}`}
         type="checkbox"
         id={inputId}
-        // checked={isChecked}
-        // onChange={(e) => onChange(e)}
+        checked={isChecked}
+        onChange={(e) => onChange(e)}
       />
     </article>
   );

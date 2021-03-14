@@ -7,7 +7,7 @@ import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList(props) {
   const {
-    movies, showShortMovies, searchKey, isLoading,
+    movies, showShortMovies, searchKey, isLoading, handleMovieLike, favouriteOnly,
   } = props;
 
   MoviesCardList.propTypes = {
@@ -29,6 +29,12 @@ function MoviesCardList(props) {
     showShortMovies: PropTypes.bool.isRequired, // Показывать короткий метр? * Bool
     searchKey: PropTypes.string.isRequired, // Ключевые слова для поиска фильмов * String
     isLoading: PropTypes.bool.isRequired, // Промис pending? * Bool
+    handleMovieLike: PropTypes.func.isRequired,
+    favouriteOnly: PropTypes.bool,
+  };
+
+  MoviesCardList.defaultProps = {
+    favouriteOnly: false,
   };
 
   // Количество фильмов, показываемых изначально (до нажатия на кнопку загрузить ещё)
@@ -47,19 +53,19 @@ function MoviesCardList(props) {
   };
 
   const handleButtonAppear = () => {
-    if (moviesFound >= visibleMoviesCount) { // Логика показывания / скрывания кнопки «Ещё»
+    if (moviesFound > visibleMoviesCount) { // Логика показывания / скрывания кнопки «Ещё»
       return <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button>;
     }
     if (moviesFound === 0) {
       return (
         <p className="movies-card-list__message">
-          Ничего не найдено.
+          {favouriteOnly ? 'Вы ещё не сохранили ни одного фильма.' : 'Ничего не найдено.'}
         </p>
       );
     }
     return (
       <p className="movies-card-list__message">
-        Показаны все найденные фильмы.
+        {`Показаны все (${moviesFound}) найденные фильмы по запросу «${searchKey}»`}
       </p>
     );
   };
@@ -72,7 +78,7 @@ function MoviesCardList(props) {
   // Возвращает разметку при незаданном поиске
   const returnUntouchedSearchMarkUp = () => (
     <section className="movies-card-list__welcome-screen">
-      <p className="movies-card-list__welcome-screen-text">
+      <p className="movies-card-list__message">
         Введите название или ключевые слова в строку поиска, чтобы найти фильмы.
       </p>
     </section>
@@ -93,6 +99,7 @@ function MoviesCardList(props) {
               showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
               searchKey={searchKey} // Ключевые слова * String
               handleFoundMoviesAmount={handleFoundMoviesAmount}
+              handleMovieLike={handleMovieLike}
               // Коллбэк изменения количества фильмов * func
             />
           </section>
@@ -109,7 +116,7 @@ function MoviesCardList(props) {
   return (
     <>
       {
-        searchKey === ''
+        searchKey === '' && !favouriteOnly
           ? returnUntouchedSearchMarkUp() // Если ещё ничего не искали, то показать welcome-screen
           : returnSearchHandlingMarkUp() // А если искали, то работаем с фильмами дальше
       }

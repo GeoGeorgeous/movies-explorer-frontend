@@ -5,7 +5,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MovieFilter(props) {
   const {
-    movies, moviesPerPage, showShortMovies, searchKey, handleFoundMoviesAmount,
+    movies, moviesPerPage, showShortMovies, searchKey, handleFoundMoviesAmount, handleMovieLike,
   } = props;
 
   MovieFilter.propTypes = {
@@ -28,6 +28,7 @@ function MovieFilter(props) {
     searchKey: PropTypes.string.isRequired, // Ключевые слова для поиска фильмов * String
     // Обработчик нажатия кнопки добавления фильмов «Ещё» * Func:
     handleFoundMoviesAmount: PropTypes.func.isRequired,
+    handleMovieLike: PropTypes.func.isRequired,
   };
 
   // Стейт количества отображаемых фильмов
@@ -78,6 +79,8 @@ function MovieFilter(props) {
           cover={movie}
           title={movie.nameRU}
           trailerLink={movie.trailerLink}
+          handleMovieLike={handleMovieLike}
+          wholeMovie={movie}
         />
       ));
   }
