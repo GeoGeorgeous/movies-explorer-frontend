@@ -52,13 +52,13 @@ function MoviesCardList(props) {
     }
     if (moviesFound === 0) {
       return (
-        <p className="movies-card-list__welcome-screen-text">
+        <p className="movies-card-list__message">
           Ничего не найдено.
         </p>
       );
     }
     return (
-      <p className="movies-card-list__welcome-screen-text movies-card-list__welcome-screen-text-low">
+      <p className="movies-card-list__message">
         Показаны все найденные фильмы.
       </p>
     );
