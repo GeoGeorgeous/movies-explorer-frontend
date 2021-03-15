@@ -73,7 +73,9 @@
 .spf__label {
   display: flex;
   flex-direction: column;
-
+  position: relative;
+  top: 0;
+  left: 0;
   margin-bottom: 20px;
 
   color: #8B8B8B;
@@ -149,6 +151,28 @@
 .spf__hint-link:hover {
   opacity: .8;
 }
+
+.spf__error {
+  box-shadow: 0px 0px 0px 1px #EE3465 inset;
+}
+
+.spf__error:focus {
+  box-shadow: 0px 0px 0px 1px #EE3465 inset;
+}
+
+.spf__error-message {
+  display: none;
+  color: #EE3465;
+  position: absolute;
+  transform: translate(-5px, 15px);
+  bottom: 0;
+  right: 0;
+}
+
+.spf__error-message_shown {
+  display: block;
+}
+
 
 @media screen and (min-width: 768px) and (max-width: 1279px) {
     /* Breakpoint: 768px — 1279px. Medium-screen devices */

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './SinglePageForm.css';
 import PropTypes from 'prop-types';
@@ -22,12 +22,16 @@ function SinglePageForm(props) {
     event.preventDefault();
   }
 
+  useEffect(() => {
+    console.log('новый рендер! :)');
+  }, []);
+
   return (
     <>
       <div className="spf">
         <Link className="spf__logo-link" to="/"><img className="spf__logo" src={logo} alt="Логотип Movies Explorer" /></Link>
         <h1 className="spf__header">{header}</h1>
-        <form className="spf__form" id="spf" onSubmit={handleSubmit}>
+        <form className="spf__form" id="spf" onSubmit={handleSubmit} noValidate>
           {children}
         </form>
         <button

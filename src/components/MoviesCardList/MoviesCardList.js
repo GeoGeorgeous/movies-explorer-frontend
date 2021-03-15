@@ -39,13 +39,14 @@ function MoviesCardList(props) {
 
   // Количество фильмов, показываемых изначально (до нажатия на кнопку загрузить ещё)
   const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(6);
-
+  let foundMovies = 0; // Количество найденных фильмов
   /*
-    Показаны все фильмы, соответствующие запросы или можно загрузить ещё?
-    true — фильмов достаточно, false — можно загрузить ещё
-    Управляется функцией handleFoundMoviesAmount()
+    Warning: Cannot update a component (`MoviesCardList`)
+    while rendering a different component (`MovieFilter`).
+    To locate the bad setState() call inside `MovieFilter`,
+    follow the stack trace as described in https://reactjs.org/link/setstate-in-render
   */
-  const [moviesFound, setMoviesFoundAmount] = React.useState(0);
+  const [moviesFound, setMoviesFoundAmount] = React.useState(0); // Стейт найденных
 
   // Обработчик нажатия кнопки добавления фильмов «Ещё»
   const handleShowMoreMovies = () => {
@@ -72,7 +73,7 @@ function MoviesCardList(props) {
 
   // Задаём стейт shownEnough в зависимости от количество найденныхи показанных фильмов
   const handleFoundMoviesAmount = (foundMoviesCounter) => {
-    setMoviesFoundAmount(foundMoviesCounter);
+    foundMovies = foundMoviesCounter;
   };
 
   // Возвращает разметку при незаданном поиске
@@ -112,6 +113,10 @@ function MoviesCardList(props) {
     // Сбрасываем количество фильмов на странице при изменении ключевого слова
     setVisibleMoviesCount(6);
   }, [searchKey]);
+
+  useEffect(() => {
+    setMoviesFoundAmount(foundMovies);
+  }, [handleFoundMoviesAmount]);
 
   return (
     <>
