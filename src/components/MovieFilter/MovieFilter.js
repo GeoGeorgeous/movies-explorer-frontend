@@ -63,12 +63,14 @@ function MovieFilter(props) {
     return pass;
   };
 
-  function createArr() {
+  function createFilteredMoviesMarkUp() {
     // Фильтрует массив и возвращает разметку
+
     const filteredMovies = movies
       .filter(filterSearch) // Фильтр по ключевому слову
       .filter(filterDuration); // Фильтр по длительности
     handleFoundMoviesAmount(filteredMovies.length); // Обработчик количество найденных фильмов
+
     return filteredMovies
       .slice(0, visibleMovies) // Обрезаем массив до нужного количества
       .map((movie) => ( // Создаём карточки с фильмом
@@ -91,7 +93,7 @@ function MovieFilter(props) {
 
   return (
     <>
-      { createArr() }
+      { createFilteredMoviesMarkUp() }
     </>
   );
 }
