@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './SinglePageForm.css';
@@ -6,7 +7,7 @@ import logo from '../../images/logo-sm.svg';
 
 function SinglePageForm(props) {
   const {
-    header, buttonText, hintText, hintLinkText, hintLinkUrl, children,
+    header, buttonText, hintText, hintLinkText, hintLinkUrl, children, onSubmit, inputData, isFormValid
   } = props;
   SinglePageForm.propTypes = {
     header: PropTypes.string.isRequired, // Заголовок формы
@@ -15,29 +16,28 @@ function SinglePageForm(props) {
     hintLinkText: PropTypes.string.isRequired, // Текст ссылки в подсказке (вход / регистрация)
     children: PropTypes.element.isRequired, // Дочерние импуты формы
     hintLinkUrl: PropTypes.string.isRequired, // Адрес ссылки в подсказке
+    onSubmit: PropTypes.func.isRequired,
   };
 
   /* Симуляция нажатия на отправку формы для проверки статус бара */
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    onSubmit(inputData);
   }
-
-  useEffect(() => {
-    console.log('новый рендер! :)');
-  }, []);
 
   return (
     <>
       <div className="spf">
         <Link className="spf__logo-link" to="/"><img className="spf__logo" src={logo} alt="Логотип Movies Explorer" /></Link>
         <h1 className="spf__header">{header}</h1>
-        <form className="spf__form" id="spf" onSubmit={handleSubmit} noValidate>
+        <form className="spf__form" id="spf" onSubmit={(e) => handleFormSubmit(e)} noValidate>
           {children}
         </form>
         <button
           form="spf"
           className="spf__button"
           type="submit"
+          disabled={isFormValid == 0}
         >
           {buttonText}
         </button>

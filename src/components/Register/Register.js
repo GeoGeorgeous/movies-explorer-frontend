@@ -1,27 +1,110 @@
-/* eslint-disable */
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../SinglePageForm/SinglePageForm.css';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
+// import mainApi from '../../utils/MainApi';
 // import Error from '../Error/Error';
 
 function Register() {
+  const [inputData, setInputData] = React.useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+  const [isFormValid, setFormValidty] = React.useState(false);
 
-  const [] = React.useState()
+  const combineValidInputStates = (input) => {
+    /* Записывает валидные данные формы в стейт */
+    const inputId = input.id;
+    const inputValue = input.value;
+    setInputData(
+      {
+        ...inputData,
+        [`${inputId}`]: inputValue,
+      },
+    );
+  };
 
-  const handleInputError = (input, message = 'Поле заполнено неверно', showError) => {
-    const inputError = document.getElementById(`${input.id}Error`)
-    input.classList.toggle('spf__error', showError);
+  const handleSubmit = (validData) => {
+    /* Логика сабмита форма регистрации */
+    console.log(validData);
+    // mainApi.signUpUser(email, password)
+    //   .then((res) => {
+    //     if (res) {
+    //       // handleToolTipOpen({ success: true });
+    //       console.log('все хорошо:',res)
+    //       history.push('/sign-in');
+    //     } else {
+    //       // handleToolTipOpen({
+    //       //   success: false,
+    //       // });
+    //       console.log('показать ошибку')
+    //     }
+    //   });
+  };
+
+  const handleInputError = (input, message, isError) => {
+    /* Логика отображения ошибки для инпута */
+    const inputError = document.getElementById(`${input.id}Error`);
+    input.classList.toggle('spf__error', isError);
     inputError.textContent = message;
-    inputError.classList.toggle('spf__error-message_shown', showError)
-  }
+    inputError.classList.toggle('spf__error-message_shown', isError);
+  };
 
-  const validateInputOnChange = (e, message) => {
+  const checkFormValidity = () => {
+    const inputs = Array.from(document.getElementsByTagName('input'));
+    const areAllInputsValid = inputs.every((input) => input.validity.valid);
+    setFormValidty(areAllInputsValid);
+  };
+
+  const validateInputOnChange = (e) => {
     const input = e.target;
-    const validity = input.validity.valid;
-    validity
-    ? handleInputError(input, message, false)
-    : handleInputError(input, message, true)
-  }
+
+    if (input.validity.valid) {
+      handleInputError(input, input.validationMessage, false);
+      combineValidInputStates(input);
+    } else {
+      input.dataset.valid = false;
+      handleInputError(input, input.validationMessage, true);
+    }
+    checkFormValidity();
+  };
+
+  const setIputListeners = () => {
+    const nameInput = document.getElementById('name');
+    nameInput.addEventListener('input', () => {
+      if (nameInput.validity.patternMismatch) {
+        nameInput.setCustomValidity('Имя может содержать только буквы, пробел и тире.');
+      } else if (nameInput.validity.tooShort) {
+        nameInput.setCustomValidity('Имя слишком короткое.');
+      } else if (nameInput.validity.valueMissing) {
+        nameInput.setCustomValidity('Введите ваше имя на латинице или кириллице.');
+      } else {
+        nameInput.setCustomValidity('');
+      }
+    });
+
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('input', () => {
+      if (emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
+        emailInput.setCustomValidity('Это не похоже на настоящий email.');
+      } else {
+        emailInput.setCustomValidity('');
+      }
+    });
+
+    const passwordInput = document.getElementById('password');
+    passwordInput.addEventListener('input', () => {
+      if (passwordInput.validity.tooShort) {
+        passwordInput.setCustomValidity(`Слишком простой пароль, минимум 8 символов: [${passwordInput.value.length}/8].`);
+      } else {
+        passwordInput.setCustomValidity('');
+      }
+    });
+  };
+
+  useEffect(() => {
+    setIputListeners();
+  }, []);
 
   return (
     <>
@@ -32,6 +115,9 @@ function Register() {
         hintText="Уже зарегистрированы?"
         hintLinkText="Войти"
         hintLinkUrl="/signin"
+        onSubmit={handleSubmit}
+        inputData={inputData}
+        isFormValid={isFormValid}
       >
         <>
           <label htmlFor="name" className="spf__label">
@@ -42,7 +128,11 @@ function Register() {
               placeholder="Виталий"
               id="name"
               autoComplete="on"
-              onChange={e => validateInputOnChange(e, 'Имя указано неверно')}
+              onChange={(e) => validateInputOnChange(e)}
+              data-valid="false"
+              maxLength="25"
+              minLength="2"
+              pattern="^(?! )[A-Za-zА-Яа-яЁё\- ]*[^\s]"
               required
             />
             <span className="spf__error-message" id="nameError">Ошибка.</span>
@@ -56,7 +146,9 @@ function Register() {
               placeholder="email@yandex.com"
               id="email"
               autoComplete="on"
-              onChange={e => validateInputOnChange(e, 'Адрес электронной почты указан неверно')}
+              pattern="^\S+@\S+\.\S+$"
+              minLength="2"
+              onChange={(e) => validateInputOnChange(e)}
               required
             />
             <span className="spf__error-message" id="emailError">Ошибка.</span>
@@ -71,8 +163,8 @@ function Register() {
               autoComplete="on"
               placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
               required
-              onChange={e => validateInputOnChange(e, 'Пароль не должен быть слишком простым')}
-              minLength="4"
+              onChange={(e) => validateInputOnChange(e)}
+              minLength="8"
             />
             <span className="spf__error-message" id="passwordError">Ошибка.</span>
           </label>

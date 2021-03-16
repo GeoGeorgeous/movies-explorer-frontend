@@ -1,6 +1,11 @@
+/*eslint-disable*/
 class MainApi {
   constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
+  }
+
+  signUpUser(formData) {
+    console.log(formData);
   }
 
   getFavouriteMovies() {
