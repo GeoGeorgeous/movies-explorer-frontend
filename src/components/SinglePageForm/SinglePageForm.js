@@ -7,7 +7,7 @@ import logo from '../../images/logo-sm.svg';
 
 function SinglePageForm(props) {
   const {
-    header, buttonText, hintText, hintLinkText, hintLinkUrl, children, onSubmit, inputData, isFormValid
+    header, buttonText, hintText, hintLinkText, hintLinkUrl, children, onSubmit, isFormValid, submitErrorText
   } = props;
   SinglePageForm.propTypes = {
     header: PropTypes.string.isRequired, // Заголовок формы
@@ -22,7 +22,7 @@ function SinglePageForm(props) {
   /* Симуляция нажатия на отправку формы для проверки статус бара */
   function handleFormSubmit(e) {
     e.preventDefault();
-    onSubmit(inputData);
+    onSubmit();
   }
 
   return (
@@ -32,6 +32,7 @@ function SinglePageForm(props) {
         <h1 className="spf__header">{header}</h1>
         <form className="spf__form" id="spf" onSubmit={(e) => handleFormSubmit(e)} noValidate>
           {children}
+          <span className={`spf__submit-error ${submitErrorText ? 'spf__submit-error_show' : ''} `}>{submitErrorText}</span>
         </form>
         <button
           form="spf"

@@ -3,36 +3,31 @@ import { useHistory } from 'react-router-dom';
 import '../SinglePageForm/SinglePageForm.css';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
 import mainApi from '../../utils/MainApi';
-// import Error from '../Error/Error';
 
 function Register() {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [name, setName] = React.useState(''); // Стейт для имени
+  const [email, setEmail] = React.useState(''); // Стейт для почты
+  const [password, setPassword] = React.useState(''); // Стейт для пароля
 
-  const [isFormValid, setFormValidty] = React.useState(false);
+  const [isFormValid, setFormValidity] = React.useState(false); // Стейт валидности всей формы
+  const [submitErrorText, setSubmitErrorText] = React.useState(''); // Текст ошибки API
 
   const history = useHistory();
 
-  const handleSubmit = (validData) => {
+  const handleSubmit = () => {
     /* Логика сабмита форма регистрации */
     mainApi.signUpUser(
-      {
-        name: validData.name,
-        email: validData.email,
-        password: validData.password,
-      },
+      { name, email, password },
     )
-      .then((res) => {
-        if (res) {
-          // handleToolTipOpen({ success: true });
-          history.push('/signin');
-        } else {
-          // handleToolTipOpen({
-          //   success: false,
-          // });
-          // console.log('показать ошибку');
-        }
+      .then(() => { // API вернул статус 200 при регистрации
+        setSubmitErrorText(''); // Убрали ошибку формы
+        history.push('/signin'); // Переадресация на логин
+        /* Переадресация на логин позволит отправить запрос на авторизацию,
+        получить токен и после этого переадресовать на /movies */
+      })
+      .catch((error) => { // API вернулся с ошибкой
+        setSubmitErrorText(error.message); // Показываем ошибку
+        setFormValidity(false); // Делаем форму невалидной
       });
   };
 
@@ -45,12 +40,14 @@ function Register() {
   };
 
   const checkFormValidity = () => {
+    /* Логика проверки валидности формы на основе валидности её инпутов */
     const inputs = Array.from(document.getElementsByTagName('input'));
     const areAllInputsValid = inputs.every((input) => input.validity.valid);
-    setFormValidty(areAllInputsValid);
+    setFormValidity(areAllInputsValid);
   };
 
   const validateInputOnChange = (e) => {
+    // Live-валидация
     const input = e.target;
 
     if (input.validity.valid) {
@@ -63,6 +60,7 @@ function Register() {
   };
 
   const setIputListeners = () => {
+    // Слушатели для кастомных текстов ошибок инпутов
     const nameInput = document.getElementById('name');
     nameInput.addEventListener('input', () => {
       if (nameInput.validity.patternMismatch) {
@@ -96,12 +94,12 @@ function Register() {
   };
 
   useEffect(() => {
+    // Ставим слушатели при монтировании
     setIputListeners();
   }, []);
 
   return (
     <>
-      {/* <Error /> */}
       <SinglePageForm
         header="Добро пожаловать!"
         buttonText="Зарегистрироваться"
@@ -109,8 +107,8 @@ function Register() {
         hintLinkText="Войти"
         hintLinkUrl="/signin"
         onSubmit={handleSubmit}
-        inputData={{ name, email, password }}
         isFormValid={isFormValid}
+        submitErrorText={submitErrorText}
       >
         <>
           <label htmlFor="name" className="spf__label">

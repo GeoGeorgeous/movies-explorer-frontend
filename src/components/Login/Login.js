@@ -17,11 +17,11 @@ function Login(props) {
   const [password, setPassword] = React.useState('');
 
   const [isFormValid, setFormValidty] = React.useState(false);
+  const [submitErrorText, setSubmitErrorText] = React.useState('');
 
   const history = useHistory();
 
   const handleSubmit = (validData) => {
-    console.log('тык');
     /* Логика сабмита форма регистрации */
     mainApi.authorize(
       {
@@ -105,6 +105,7 @@ function Login(props) {
       onSubmit={handleSubmit}
       inputData={{ email, password }}
       isFormValid={isFormValid}
+      submitErrorText={submitErrorText}
     >
       <>
         <label htmlFor="email" className="spf__label">

@@ -4,22 +4,27 @@ class MainApi {
     this._baseUrl = baseUrl;
   }
 
+  _fetchAndCatch(url, payload) {
+    const checkStatus = async (response) => {
+      if (response.status >= 200 && response.status < 300)
+        return await response.json()
+
+      throw await response.json()
+    }
+
+    return fetch(url, payload)
+      .then(checkStatus)
+  }
+
+
   signUpUser(formData) {
-    return fetch(`${this._baseUrl}/signup`, {
+    return this._fetchAndCatch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlM2FmN2E1MTBiZWVjNWEwZjAxODciLCJpYXQiOjE2MTU3Mzk2NDQsImV4cCI6MTYxNjM0NDQ0NH0.LeedYaM0URVUJPPvG_yGrci-Gb3AV8c3Qp3wjcH0kDE',
       },
       body: JSON.stringify(formData)
     })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(new Error(`${response.status}`));
-    })
-    .catch((err) => { console.log(err); });
   }
 
   authorize(formData) {
@@ -33,11 +38,12 @@ class MainApi {
     })
     .then((response) => {
       if (response.ok) {
-        return response.json();
+        return response;
       }
-      return Promise.reject(new Error(`${response.status}`));
+      return Promise.reject(response);
     })
-    .catch((err) => { console.log(err); });
+    .catch((response) => { return response.body.getReader();})
+    .catch(body => {console.log(body)})
   }
 
   getUser(jwt) {
@@ -54,7 +60,7 @@ class MainApi {
       }
       return Promise.reject(new Error(`${response.status}`));
     })
-    .catch((err) => { console.log(err); });
+    .catch((response) => { console.log(response)})
   }
 
   updateUser(newData, jwt) {
