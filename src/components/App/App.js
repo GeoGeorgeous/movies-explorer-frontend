@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
@@ -16,39 +17,52 @@ function App() {
   // const history = useHistory();
 
   const tokenCheck = () => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      mainApi.getUser('2')
-        .then((userData) => {
-          if (userData) {
-            console.log(userData);
+    /*
+      Функция проверяет наличие токена в localStorage
+      и возвращает статус проверки токена (tokenIsValid = true/false),
+      а также меняет стейт переменную в зависимости от проверки.
+    */
+    let tokenIsValid = false;
+    const jwt = localStorage.getItem('jwt'); // Есть ли токен в localStorage?
+    if (jwt) { // Если токен есть, проверяем его на API
+      mainApi.getUser(jwt) // Отправляем токен на сервер
+        .then((res) => { // Получаем ответ от сервера
+          if (res) { // Если токен правильный:
             setLoggedIn(true);
-          } else {
+            tokenIsValid = true;
+          } else { // Если токен неправильный:
             console.error('Неправильный JWT Token')
+            setLoggedIn(false);
+            tokenIsValid = false
           }
           // setEmail(user.email);
           // setCurrentUser(user);
           // fetchCards(jwt);
         })
-        .catch((err) => console.error('Инфы нет'));
+        .catch((err) => console.error(err));
     }
+    return tokenIsValid;
   };
 
   const handleLogin = (jwt) => {
+    /*
+      Функция авторизации принимает строку с JWT токеном,
+      проверяет токен и возвращает true/false в зависимости валидности токена.
+    */
     localStorage.setItem('jwt', jwt);
-    tokenCheck();
+    return tokenCheck();
   }
 
   useEffect(() => {
     tokenCheck();
-    console.log(isLoggedIn);
   }, []);
 
   return (
     <>
       <Switch>
         <Route exact path="/">
-          <Main />
+          <Main
+          isLoggedIn={isLoggedIn} />
         </Route>
         <Route exact path="/signup">
           <Register />
@@ -56,15 +70,21 @@ function App() {
         <Route exact path="/signin">
           <Login handleLogin={handleLogin}/>
         </Route>
-        <Route exact path="/movies">
-          <Movies />
-        </Route>
-        <Route exact path="/saved-movies">
-          <SavedMovies />
-        </Route>
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
+        <ProtectedRoute
+          path="/movies"
+          component={Movies}
+          isLoggedIn={isLoggedIn}
+        />
+        <ProtectedRoute
+          path="/saved-movies"
+          component={SavedMovies}
+          isLoggedIn={isLoggedIn}
+        />
+        <ProtectedRoute
+          path="/profile"
+          component={Profile}
+          isLoggedIn={isLoggedIn}
+        />
         <Route path="*">
           <NotFound />
         </Route>
