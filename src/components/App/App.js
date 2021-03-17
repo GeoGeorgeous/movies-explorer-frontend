@@ -17,7 +17,6 @@ function App() {
   const [user, setUser] = React.useState({
     name: '',
     email: '',
-    id: '',
   })
   const [APIError, setAPIError] = React.useState('');
 
@@ -30,6 +29,7 @@ function App() {
     )
       .then((response) => { // API вернул статус 2xx при авторизации
         localStorage.setItem('jwt', response.token); // Записали токен в LocalStorage
+        getUserData();
         setAPIError('') // Убрали ошибку формы
         setLoggedIn(true);
         history.push('/movies'); // Переадресация на movies
@@ -57,15 +57,17 @@ function App() {
   }
 
   const updateUserData = (newData) => {
+    /* Обновление данных пользователя */
     console.log(newData)
     const jwt = localStorage.getItem('jwt');
     mainApi.updateUser(newData, jwt)
     .then((res) => {
-      console.log(res)
+      getUserData();
     })
   }
 
   const logout = () => {
+    /* Выход из аккаунта */
     localStorage.removeItem('jwt');
     setLoggedIn(false);
     history.push('/signin');
@@ -76,32 +78,33 @@ function App() {
     })
   }
 
-  const getUserData = (jwt) => {
-    mainApi.getUser(jwt) // Отправляем токен на сервер
-    .then((res) => { // Получаем ответ от сервера
-      if (res) { // Если токен правильный:
-        setLoggedIn(true);
-        setUser({
-          name: res.name,
-          email: res.email,
-        })
-      } else { // Если токен неправильный:
-        setLoggedIn(false);
-      }
-    })
-    .catch((err) => console.error(err));
+  const getUserData = () => {
+    /* Получение данных пользователя */
+    let jwt = tokenCheck();
+    if (jwt) {
+      mainApi.getUser(jwt) // Отправляем токен на сервер
+      .then((res) => { // Получаем ответ от сервера
+        if (res) { // Если токен правильный:
+          setLoggedIn(true);
+          setUser({ ...user,
+            name: res.name,
+            email: res.email,
+          })
+        } else { // Если токен неправильный:
+          setLoggedIn(false);
+        }
+      })
+      .catch((err) => console.error(err));
+    }
   }
 
   const tokenCheck = () => {
-
-    const jwt = localStorage.getItem('jwt'); // Есть ли токен в localStorage?
-    if (jwt) { // Если токен есть, проверяем его на API
-      getUserData(jwt)
-    }
+    /* Проверка токена в LocalStorage */
+    return localStorage.getItem('jwt'); // Есть ли токен в localStorage?
   };
 
   useEffect(() => {
-    tokenCheck();
+    getUserData();
   }, []);
 
   return (
