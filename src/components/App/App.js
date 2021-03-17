@@ -1,5 +1,6 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+/*eslint-disable*/
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
@@ -7,8 +8,38 @@ import NotFound from '../NotFound/NotFound';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
+import mainApi from '../../utils/MainApi';
 
 function App() {
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
+
+  // const history = useHistory();
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      mainApi.getUser(jwt)
+        .then((userData) => {
+          console.log(userData);
+          setLoggedIn(true);
+          // setEmail(user.email);
+          // setCurrentUser(user);
+          // fetchCards(jwt);
+        })
+        .catch((err) => console.error(err));
+    }
+  };
+
+  const handleLogin = (jwt) => {
+    localStorage.setItem('jwt', jwt);
+    tokenCheck();
+  }
+
+  useEffect(() => {
+    tokenCheck();
+    console.log(isLoggedIn);
+  }, []);
+
   return (
     <>
       <Switch>
@@ -19,7 +50,7 @@ function App() {
           <Register />
         </Route>
         <Route exact path="/signin">
-          <Login />
+          <Login handleLogin={handleLogin}/>
         </Route>
         <Route exact path="/movies">
           <Movies />
