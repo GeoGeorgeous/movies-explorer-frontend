@@ -81,7 +81,7 @@ function Profile(props) {
         loggedIn
       />
       <div className="profile">
-        <h1 className="profile__header">Привет, Виталий!</h1>
+        <h1 className="profile__header">Привет, {name}!</h1>
         <form className="profile__form" id="profile" onSubmit={(e) => handleFormSubmit(e)} noValidate>
           <label className="profile__label" htmlFor="name">
             Имя

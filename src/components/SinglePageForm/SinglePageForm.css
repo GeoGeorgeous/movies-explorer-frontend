@@ -93,11 +93,11 @@
 
 .spf__submit-error {
   display: none;
-  margin: 10px auto -22px auto;
+  margin: 30px auto -52px auto;
   font-family: Inter;
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 12px;
   color: #EE3465;
 }

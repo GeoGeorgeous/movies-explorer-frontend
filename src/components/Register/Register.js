@@ -1,34 +1,32 @@
+/*eslint-disable*/
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../SinglePageForm/SinglePageForm.css';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
-import mainApi from '../../utils/MainApi';
 
-function Register() {
+function Register(props) {
+  const { signup, APIError} = props;
   const [name, setName] = React.useState(''); // Стейт для имени
   const [email, setEmail] = React.useState(''); // Стейт для почты
   const [password, setPassword] = React.useState(''); // Стейт для пароля
 
   const [isFormValid, setFormValidity] = React.useState(false); // Стейт валидности всей формы
-  const [submitErrorText, setSubmitErrorText] = React.useState(''); // Текст ошибки API
 
   const history = useHistory();
 
   const handleSubmit = () => {
     /* Логика сабмита форма регистрации */
-    mainApi.signUpUser(
-      { name, email, password },
-    )
-      .then(() => { // API вернул статус 200 при регистрации
-        setSubmitErrorText(''); // Убрали ошибку формы
-        history.push('/signin'); // Переадресация на логин
-        /* Переадресация на логин позволит отправить запрос на авторизацию,
-        получить токен и после этого переадресовать на /movies */
-      })
-      .catch((error) => { // API вернулся с ошибкой
-        setSubmitErrorText(error.message); // Показываем ошибку
-        setFormValidity(false); // Делаем форму невалидной
-      });
+
+    // Отправляем запрос:
+    signup(name, email, password);
+
+    // Сбрасываем стейты:
+    setName('');
+    setEmail('');
+    setPassword('');
+
+    // Делаем форму невалидной:
+    setFormValidity(false);
   };
 
   const handleInputError = (input, message, isError) => {
@@ -108,7 +106,7 @@ function Register() {
         hintLinkUrl="/signin"
         onSubmit={handleSubmit}
         isFormValid={isFormValid}
-        submitErrorText={submitErrorText}
+        submitErrorText={APIError}
       >
         <>
           <label htmlFor="name" className="spf__label">
@@ -123,6 +121,7 @@ function Register() {
                 setName(e.target.value);
                 validateInputOnChange(e);
               }}
+              value={name}
               maxLength="25"
               minLength="2"
               pattern="^(?! )[A-Za-zА-Яа-яЁё\- ]*[^\s]"
@@ -145,6 +144,7 @@ function Register() {
                 setEmail(e.target.value);
                 validateInputOnChange(e);
               }}
+              value={email}
               required
             />
             <span className="spf__error-message" id="emailError">Ошибка.</span>
@@ -163,6 +163,7 @@ function Register() {
                 setPassword(e.target.value);
                 validateInputOnChange(e);
               }}
+              value={password}
               minLength="8"
             />
             <span className="spf__error-message" id="passwordError">Ошибка.</span>

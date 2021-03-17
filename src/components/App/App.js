@@ -19,8 +19,42 @@ function App() {
     email: '',
     id: '',
   })
+  const [APIError, setAPIError] = React.useState('');
 
   const history = useHistory();
+
+  const login = (email, password) => {
+    /* Авторизация */
+    mainApi.signInUser(
+      { email, password },
+    )
+      .then((response) => { // API вернул статус 2xx при авторизации
+        localStorage.setItem('jwt', response.token); // Записали токен в LocalStorage
+        setAPIError('') // Убрали ошибку формы
+        setLoggedIn(true);
+        history.push('/movies'); // Переадресация на movies
+      })
+      .catch((error) => { // API вернулся с ошибкой
+        console.log(error.message)
+        setLoggedIn(false);
+        setAPIError(error.message); // Показываем ошибку
+      });
+  }
+
+  const signup = (name, email, password) => {
+    /* Регистрация */
+    mainApi.signUpUser(
+      { name, email, password },
+    )
+      .then(() => { // API вернул статус 2xx при регистрации
+        setAPIError('') // Убрали ошибку формы
+        history.push('/signin'); // Переадресация на логин
+        login(email, password )
+      })
+      .catch((error) => { // API вернулся с ошибкой
+        setAPIError(error.message); // Показываем ошибку
+      });
+  }
 
   const updateUserData = (newData) => {
     console.log(newData)
@@ -35,48 +69,36 @@ function App() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
     history.push('/signin');
+    setUser({
+      name: '',
+      email: '',
+      id: '',
+    })
+  }
+
+  const getUserData = (jwt) => {
+    mainApi.getUser(jwt) // Отправляем токен на сервер
+    .then((res) => { // Получаем ответ от сервера
+      if (res) { // Если токен правильный:
+        setLoggedIn(true);
+        setUser({
+          name: res.name,
+          email: res.email,
+        })
+      } else { // Если токен неправильный:
+        setLoggedIn(false);
+      }
+    })
+    .catch((err) => console.error(err));
   }
 
   const tokenCheck = () => {
-    /*
-      Функция проверяет наличие токена в localStorage
-      и возвращает статус проверки токена (tokenIsValid = true/false),
-      а также меняет стейт переменную в зависимости от проверки.
-    */
-    let tokenIsValid = false;
+
     const jwt = localStorage.getItem('jwt'); // Есть ли токен в localStorage?
     if (jwt) { // Если токен есть, проверяем его на API
-      mainApi.getUser(jwt) // Отправляем токен на сервер
-        .then((res) => { // Получаем ответ от сервера
-          if (res) { // Если токен правильный:
-            setLoggedIn(true);
-            setUser({
-              name: res.name,
-              email: res.email,
-            })
-            tokenIsValid = true;
-          } else { // Если токен неправильный:
-            console.error('Неправильный JWT Token')
-            setLoggedIn(false);
-            tokenIsValid = false
-          }
-          // setEmail(user.email);
-          // setCurrentUser(user);
-          // fetchCards(jwt);
-        })
-        .catch((err) => console.error(err));
+      getUserData(jwt)
     }
-    return tokenIsValid;
   };
-
-  const handleLogin = (jwt) => {
-    /*
-      Функция авторизации принимает строку с JWT токеном,
-      проверяет токен и возвращает true/false в зависимости валидности токена.
-    */
-    localStorage.setItem('jwt', jwt);
-    return tokenCheck();
-  }
 
   useEffect(() => {
     tokenCheck();
@@ -91,10 +113,14 @@ function App() {
           isLoggedIn={isLoggedIn} />
         </Route>
           <Route exact path="/signup">
-            <Register />
+            <Register
+              signup={signup}
+              APIError={APIError} />
          </Route>
           <Route exact path="/signin">
-            <Login handleLogin={handleLogin}/>
+            <Login
+              login={login}
+            />
         </Route>
           <ProtectedRoute
           path="/movies"

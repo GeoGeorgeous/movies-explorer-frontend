@@ -7,7 +7,7 @@ import mainApi from '../../utils/MainApi';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
 
 function Login(props) {
-  const { handleLogin } = props;
+  const { handleLogin, login, APIError } = props;
 
   Login.propTypes = {
     handleLogin: PropTypes.func.isRequired, // Заголовок формы
@@ -21,28 +21,9 @@ function Login(props) {
 
   const history = useHistory();
 
-  const handleSubmit = (validData) => {
+  const handleSubmit = () => {
     /* Логика сабмита форма регистрации */
-    mainApi.authorize(
-      {
-        email: validData.email,
-        password: validData.password,
-      },
-    )
-      .then((res) => {
-        if (res) {
-          setEmail('');
-          setPassword('');
-          // handleToolTipOpen({ success: true });
-          console.log(handleLogin(res.token))
-          history.push('/movies');
-        } else {
-          // handleToolTipOpen({
-          //   success: false,
-          // });
-          // console.log('показать ошибку');
-        }
-      });
+    login(email, password);
   };
 
   const handleInputError = (input, message, isError) => {
