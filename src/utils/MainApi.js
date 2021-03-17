@@ -5,7 +5,21 @@ class MainApi {
   }
 
   signUpUser(formData) {
-    console.log(formData);
+    return fetch(`${this._baseUrl}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlM2FmN2E1MTBiZWVjNWEwZjAxODciLCJpYXQiOjE2MTU3Mzk2NDQsImV4cCI6MTYxNjM0NDQ0NH0.LeedYaM0URVUJPPvG_yGrci-Gb3AV8c3Qp3wjcH0kDE',
+      },
+      body: JSON.stringify(formData)
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(new Error(`${response.status}`));
+    })
+    .catch((err) => { console.log(err); });
   }
 
   getFavouriteMovies() {
@@ -15,7 +29,14 @@ class MainApi {
         'Content-Type': 'application/json',
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlM2FmN2E1MTBiZWVjNWEwZjAxODciLCJpYXQiOjE2MTU3Mzk2NDQsImV4cCI6MTYxNjM0NDQ0NH0.LeedYaM0URVUJPPvG_yGrci-Gb3AV8c3Qp3wjcH0kDE',
       },
-    });
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(new Error(`${response.status}`));
+    })
+    .catch((err) => { console.log(err); });
   }
 
   likeMovie(movie) {

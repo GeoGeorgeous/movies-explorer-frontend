@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../SinglePageForm/SinglePageForm.css';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
-// import mainApi from '../../utils/MainApi';
+import mainApi from '../../utils/MainApi';
 // import Error from '../Error/Error';
 
 function Register() {
@@ -11,6 +12,8 @@ function Register() {
     password: '',
   });
   const [isFormValid, setFormValidty] = React.useState(false);
+
+  const history = useHistory();
 
   const combineValidInputStates = (input) => {
     /* Записывает валидные данные формы в стейт */
@@ -26,20 +29,24 @@ function Register() {
 
   const handleSubmit = (validData) => {
     /* Логика сабмита форма регистрации */
-    console.log(validData);
-    // mainApi.signUpUser(email, password)
-    //   .then((res) => {
-    //     if (res) {
-    //       // handleToolTipOpen({ success: true });
-    //       console.log('все хорошо:',res)
-    //       history.push('/sign-in');
-    //     } else {
-    //       // handleToolTipOpen({
-    //       //   success: false,
-    //       // });
-    //       console.log('показать ошибку')
-    //     }
-    //   });
+    mainApi.signUpUser(
+      {
+        name: validData.name,
+        email: validData.email,
+        password: validData.password,
+      },
+    )
+      .then((res) => {
+        if (res) {
+          // handleToolTipOpen({ success: true });
+          history.push('/signin');
+        } else {
+          // handleToolTipOpen({
+          //   success: false,
+          // });
+          // console.log('показать ошибку');
+        }
+      });
   };
 
   const handleInputError = (input, message, isError) => {
