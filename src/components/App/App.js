@@ -22,6 +22,15 @@ function App() {
 
   // const history = useHistory();
 
+  const updateUserData = (newData) => {
+    console.log(newData)
+    const jwt = localStorage.getItem('jwt');
+    mainApi.updateUser(newData, jwt)
+    .then((res) => {
+      console.log(res)
+    })
+  }
+
   const tokenCheck = () => {
     /*
       Функция проверяет наличие токена в localStorage
@@ -95,6 +104,7 @@ function App() {
           path="/profile"
           component={Profile}
           isLoggedIn={isLoggedIn}
+          updateUserData={updateUserData}
         />
         <Route path="*">
           <NotFound />

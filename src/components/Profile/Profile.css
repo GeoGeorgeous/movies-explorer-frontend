@@ -120,6 +120,10 @@
   line-height: 16px;
 }
 
+.profile__button:focus {
+  outline: 0;
+}
+
 .profile__button:hover {
   opacity: .8;
 }

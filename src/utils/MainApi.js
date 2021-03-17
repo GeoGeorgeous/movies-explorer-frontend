@@ -57,6 +57,24 @@ class MainApi {
     .catch((err) => { console.log(err); });
   }
 
+  updateUser(newData, jwt) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify(newData),
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(new Error(`${response.status}`));
+    })
+    .catch((err) => { console.log(err); });
+  }
+
   getFavouriteMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'GET',
