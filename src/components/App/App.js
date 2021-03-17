@@ -18,15 +18,19 @@ function App() {
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      mainApi.getUser(jwt)
+      mainApi.getUser('2')
         .then((userData) => {
-          console.log(userData);
-          setLoggedIn(true);
+          if (userData) {
+            console.log(userData);
+            setLoggedIn(true);
+          } else {
+            console.error('Неправильный JWT Token')
+          }
           // setEmail(user.email);
           // setCurrentUser(user);
           // fetchCards(jwt);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error('Инфы нет'));
     }
   };
 

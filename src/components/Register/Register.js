@@ -6,26 +6,13 @@ import mainApi from '../../utils/MainApi';
 // import Error from '../Error/Error';
 
 function Register() {
-  const [inputData, setInputData] = React.useState({
-    name: '',
-    email: '',
-    password: '',
-  });
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
   const [isFormValid, setFormValidty] = React.useState(false);
 
   const history = useHistory();
-
-  const combineValidInputStates = (input) => {
-    /* Записывает валидные данные формы в стейт */
-    const inputId = input.id;
-    const inputValue = input.value;
-    setInputData(
-      {
-        ...inputData,
-        [`${inputId}`]: inputValue,
-      },
-    );
-  };
 
   const handleSubmit = (validData) => {
     /* Логика сабмита форма регистрации */
@@ -68,7 +55,6 @@ function Register() {
 
     if (input.validity.valid) {
       handleInputError(input, input.validationMessage, false);
-      combineValidInputStates(input);
     } else {
       input.dataset.valid = false;
       handleInputError(input, input.validationMessage, true);
@@ -123,7 +109,7 @@ function Register() {
         hintLinkText="Войти"
         hintLinkUrl="/signin"
         onSubmit={handleSubmit}
-        inputData={inputData}
+        inputData={{ name, email, password }}
         isFormValid={isFormValid}
       >
         <>
@@ -135,7 +121,10 @@ function Register() {
               placeholder="Виталий"
               id="name"
               autoComplete="on"
-              onChange={(e) => validateInputOnChange(e)}
+              onChange={(e) => {
+                setName(e.target.value);
+                validateInputOnChange(e);
+              }}
               data-valid="false"
               maxLength="25"
               minLength="2"
@@ -155,7 +144,10 @@ function Register() {
               autoComplete="on"
               pattern="^\S+@\S+\.\S+$"
               minLength="2"
-              onChange={(e) => validateInputOnChange(e)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                validateInputOnChange(e);
+              }}
               required
             />
             <span className="spf__error-message" id="emailError">Ошибка.</span>
@@ -170,7 +162,10 @@ function Register() {
               autoComplete="on"
               placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
               required
-              onChange={(e) => validateInputOnChange(e)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                validateInputOnChange(e);
+              }}
               minLength="8"
             />
             <span className="spf__error-message" id="passwordError">Ошибка.</span>
