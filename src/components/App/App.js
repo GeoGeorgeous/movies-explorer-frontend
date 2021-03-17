@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import { UserContext, user } from '../../contexts/userContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -13,6 +14,11 @@ import mainApi from '../../utils/MainApi';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [user, setUser] = React.useState({
+    name: '',
+    email: '',
+    id: '',
+  })
 
   // const history = useHistory();
 
@@ -29,6 +35,10 @@ function App() {
         .then((res) => { // Получаем ответ от сервера
           if (res) { // Если токен правильный:
             setLoggedIn(true);
+            setUser({
+              name: res.name,
+              email: res.email,
+            })
             tokenIsValid = true;
           } else { // Если токен неправильный:
             console.error('Неправильный JWT Token')
@@ -59,18 +69,19 @@ function App() {
 
   return (
     <>
+    <UserContext.Provider value={user}>
       <Switch>
         <Route exact path="/">
           <Main
           isLoggedIn={isLoggedIn} />
         </Route>
-        <Route exact path="/signup">
-          <Register />
+          <Route exact path="/signup">
+            <Register />
+         </Route>
+          <Route exact path="/signin">
+            <Login handleLogin={handleLogin}/>
         </Route>
-        <Route exact path="/signin">
-          <Login handleLogin={handleLogin}/>
-        </Route>
-        <ProtectedRoute
+          <ProtectedRoute
           path="/movies"
           component={Movies}
           isLoggedIn={isLoggedIn}
@@ -89,6 +100,7 @@ function App() {
           <NotFound />
         </Route>
       </Switch>
+    </UserContext.Provider>
     </>
   );
 }

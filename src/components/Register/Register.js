@@ -125,7 +125,6 @@ function Register() {
                 setName(e.target.value);
                 validateInputOnChange(e);
               }}
-              data-valid="false"
               maxLength="25"
               minLength="2"
               pattern="^(?! )[A-Za-zА-Яа-яЁё\- ]*[^\s]"

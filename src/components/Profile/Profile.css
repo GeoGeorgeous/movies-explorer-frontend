@@ -38,6 +38,7 @@
   align-items: center;
   flex-flow: row nowrap;
   justify-content: space-between;
+  position: relative;
 
   width: 100%;
 
@@ -55,8 +56,7 @@
 .profile__input {
   padding: 0 0;
 
-  transition: box-shadow .4s;
-  transition: padding .2s, background-color .2s;
+  transition: padding .2s, background-color .2s, box-shadow .4s;
   text-align: right;
 
   color: #fff;
@@ -76,8 +76,13 @@
 
 .profile__input:focus {
   padding: 16px 16px;
+  font-size: 13px;
 
   background-color: #2F2F2F;
+}
+
+.profile__input:valid:focus {
+  box-shadow: 0px 0px 0px 1px #3DDC84 inset;
 }
 
 .profile__divider {
@@ -123,9 +128,60 @@
   color: #fff;
 }
 
+.profile__button_type_submit:disabled {
+  cursor: not-allowed;
+  opacity: .3;
+}
+
 .profile__button_type_logout {
   color: #EE3465;
 }
+
+.profile__error {
+  box-shadow: 0px 0px 0px 1px #EE3465 inset;
+  padding: 16px 16px;
+  font-size: 13px;
+}
+
+.profile__error:focus {
+  box-shadow: 0px 0px 0px 1px #EE3465 inset;
+}
+
+.profile__error-message {
+  display: block;
+  color: #EE3465;
+  position: absolute;
+  transform: translate(-5px, 15px);
+  bottom: 0;
+  right: 0;
+}
+
+.profile__error-message_shown {
+  display: block;
+}
+
+/* .profile__form-error {
+  visibility: hidden;
+  align-self: baseline;
+
+  margin-top: 10px;
+  margin-bottom: -23px;
+  margin-left: 10px;
+
+  transition: visibility .4s, opacity .4s;
+  transition-delay: .2s;
+
+  opacity: 0;
+  color: #EE3465;
+
+  font-size: 12px;
+}
+
+.profile__form-error_show {
+  visibility: visible;
+
+  opacity: 1;
+} */
 
 @media screen and (min-width: 0) and (max-width: 767px) {
   /* Breakpoint: 0px — 767px. Small-screen devices */
@@ -133,7 +189,7 @@
     width: 300px;
     padding: 70px 0;
   }
-  
+
   .profile__form {
     width: 260px;
     margin: 80px auto 80px auto;

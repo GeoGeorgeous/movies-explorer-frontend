@@ -34,7 +34,7 @@ function Login(props) {
           setEmail('');
           setPassword('');
           // handleToolTipOpen({ success: true });
-          handleLogin(res.token)
+          console.log(handleLogin(res.token))
           history.push('/movies');
         } else {
           // handleToolTipOpen({
@@ -124,7 +124,7 @@ function Login(props) {
             value={email}
             required
           />
-          <span className="spf__error-message" id="emailError">Ошибка.</span>
+          <span className="spf__error-message" id="emailError"></span>
         </label>
 
         <label htmlFor="password" className="spf__label">
@@ -143,7 +143,7 @@ function Login(props) {
             value={password}
             minLength="8"
           />
-          <span className="spf__error-message" id="passwordError">Ошибка.</span>
+          <span className="spf__error-message" id="passwordError"></span>
         </label>
       </>
     </SinglePageForm>
