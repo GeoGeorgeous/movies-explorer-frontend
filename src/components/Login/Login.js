@@ -12,10 +12,10 @@ function Login(props) {
     APIError: PropTypes.func.isRequired, // Текст ошибки формы
   };
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState(''); // Стейт для почты
+  const [password, setPassword] = React.useState(''); // Стейт для пароля
 
-  const [isFormValid, setFormValidity] = React.useState(false);
+  const [isFormValid, setFormValidity] = React.useState(false); // Стейт валидности всей форм
 
   const handleSubmit = () => {
     /* Логика сабмита формы авторизации */

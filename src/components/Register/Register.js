@@ -1,18 +1,20 @@
-/*eslint-disable*/
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import '../SinglePageForm/SinglePageForm.css';
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
 
 function Register(props) {
-  const { signup, APIError} = props;
+  const { signup, APIError } = props;
+
+  Register.propTypes = {
+    signup: PropTypes.string.isRequired, // Функция регистрации
+    APIError: PropTypes.func.isRequired, // Текст ошибки формы
+  };
   const [name, setName] = React.useState(''); // Стейт для имени
   const [email, setEmail] = React.useState(''); // Стейт для почты
   const [password, setPassword] = React.useState(''); // Стейт для пароля
 
-  const [isFormValid, setFormValidity] = React.useState(false); // Стейт валидности всей формы
-
-  const history = useHistory();
+  const [isFormValid, setFormValidity] = React.useState(false); // Стейт валидности всей форм
 
   const handleSubmit = () => {
     /* Логика сабмита формы регистрации */
@@ -126,7 +128,7 @@ function Register(props) {
               pattern="^[А-Яа-яa-zA-Z]+(([' -][А-Яа-яa-zA-Z ])?[А-Яа-яa-zA-Z]*)*$"
               required
             />
-            <span className="spf__error-message" id="nameError">Ошибка.</span>
+            <span className="spf__error-message" id="nameError">Ошибка ввода.</span>
           </label>
 
           <label htmlFor="email" className="spf__label">
@@ -146,7 +148,7 @@ function Register(props) {
               value={email}
               required
             />
-            <span className="spf__error-message" id="emailError"></span>
+            <span className="spf__error-message" id="emailError">Ошибка ввода.</span>
           </label>
 
           <label htmlFor="password" className="spf__label">
@@ -165,7 +167,7 @@ function Register(props) {
               value={password}
               minLength="8"
             />
-            <span className="spf__error-message" id="passwordError"></span>
+            <span className="spf__error-message" id="passwordError">Ошибка ввода.</span>
           </label>
         </>
       </SinglePageForm>
