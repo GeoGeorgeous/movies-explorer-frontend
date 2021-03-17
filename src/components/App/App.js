@@ -22,6 +22,11 @@ function App() {
 
   const history = useHistory();
 
+  const setAPIErrorWithTimer = (error) => {
+    setAPIError(error);
+    setTimeout(() => setAPIError(''), 5000)
+  }
+
   const login = (email, password) => {
     /* Авторизация */
     mainApi.signInUser(
@@ -37,7 +42,7 @@ function App() {
       .catch((error) => { // API вернулся с ошибкой
         console.log(error.message)
         setLoggedIn(false);
-        setAPIError(error.message); // Показываем ошибку
+        setAPIErrorWithTimer(error.message); // Показываем ошибку
       });
   }
 
@@ -52,7 +57,7 @@ function App() {
         login(email, password )
       })
       .catch((error) => { // API вернулся с ошибкой
-        setAPIError(error.message); // Показываем ошибку
+        setAPIErrorWithTimer(error.message); // Показываем ошибку
       });
   }
 
@@ -123,6 +128,7 @@ function App() {
           <Route exact path="/signin">
             <Login
               login={login}
+              APIError={APIError}
             />
         </Route>
           <ProtectedRoute

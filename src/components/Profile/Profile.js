@@ -92,7 +92,7 @@ function Profile(props) {
               value={name}
               maxLength="25"
               minLength="2"
-              pattern="^(?! )[A-Za-zА-Яа-яЁё\- ]*[^\s]"
+              pattern="^[А-Яа-яa-zA-Z]+(([' -][А-Яа-яa-zA-Z ])?[А-Яа-яa-zA-Z]*)*$"
               required
               onChange={(e) => {
                 setName(e.target.value);

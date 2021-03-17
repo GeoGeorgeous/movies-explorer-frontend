@@ -76,6 +76,7 @@
 /* Каркас кнопки сохранения фильма */
 .movies-card__save-button {
   position: absolute;
+  z-index: 100;
   top: 14px;
   right: 14px;
 
@@ -84,12 +85,11 @@
   outline: none;
 
   appearance: none;
-  z-index: 100;
 }
 
 .movies-card__save-button:hover.movies-card__save-button::after {
-  background-color: #000;
   color: #FFFFFF;
+  background-color: #000;
 }
 
 .movies-card__save-button:hover.movies-card__save-button:checked::after {

@@ -70,12 +70,28 @@
   box-shadow: 0px 0px 0px 1px #4285F4 inset;
 }
 
+.spf__input:focus:valid {
+  box-shadow: 0px 0px 0px 1px #3DDC84 inset;
+}
+
+.spf__input:valid {
+  box-shadow: 0px 0px 0px 1px #3DDC847F inset;
+}
+.spf__input:focus:invalid {
+  box-shadow: 0px 0px 0px 1px #EE3465 inset;
+}
+.spf__input:invalid {
+  box-shadow: 0px 0px 0px 1px #EE34657F inset;
+}
+
 .spf__label {
-  display: flex;
-  flex-direction: column;
   position: relative;
   top: 0;
   left: 0;
+
+  display: flex;
+  flex-direction: column;
+
   margin-bottom: 20px;
 
   color: #8B8B8B;
@@ -93,13 +109,16 @@
 
 .spf__submit-error {
   display: none;
+
   margin: 30px auto -52px auto;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 12px;
+
   color: #EE3465;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 12px;
 }
 
 .spf__submit-error_show {
@@ -137,8 +156,9 @@
 }
 
 .spf__button:disabled {
-  opacity: .5;
   cursor: not-allowed;
+
+  opacity: .5;
 }
 
 .spf__hint {
@@ -173,21 +193,16 @@
   opacity: .8;
 }
 
-.spf__error {
-  box-shadow: 0px 0px 0px 1px #EE3465 inset;
-}
-
-.spf__error:focus {
-  box-shadow: 0px 0px 0px 1px #EE3465 inset;
-}
-
 .spf__error-message {
-  display: none;
-  color: #EE3465;
   position: absolute;
-  transform: translate(-5px, 15px);
-  bottom: 0;
   right: 0;
+  bottom: 0;
+
+  display: none;
+
+  transform: translate(-5px, 15px);
+
+  color: #EE3465;
 }
 
 .spf__error-message_shown {

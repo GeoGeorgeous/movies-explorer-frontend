@@ -1,46 +1,52 @@
-/*eslint-disable*/
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import '../SinglePageForm/SinglePageForm.css';
-import mainApi from '../../utils/MainApi';
+
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
 
 function Login(props) {
-  const { handleLogin, login, APIError } = props;
+  const { login, APIError } = props;
 
   Login.propTypes = {
-    handleLogin: PropTypes.func.isRequired, // Заголовок формы
+    login: PropTypes.string.isRequired, // Функция авторизации
+    APIError: PropTypes.func.isRequired, // Текст ошибки формы
   };
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const [isFormValid, setFormValidty] = React.useState(false);
-  const [submitErrorText, setSubmitErrorText] = React.useState('');
-
-  const history = useHistory();
+  const [isFormValid, setFormValidity] = React.useState(false);
 
   const handleSubmit = () => {
-    /* Логика сабмита форма регистрации */
+    /* Логика сабмита формы авторизации */
+
+    // Отправляем запрос:
     login(email, password);
+
+    // Сбрасываем стейты:
+    setEmail('');
+    setPassword('');
+
+    // Делаем форму невалидной:
+    setFormValidity(false);
   };
 
   const handleInputError = (input, message, isError) => {
     /* Логика отображения ошибки для инпута */
     const inputError = document.getElementById(`${input.id}Error`);
-    input.classList.toggle('spf__error', isError);
     inputError.textContent = message;
     inputError.classList.toggle('spf__error-message_shown', isError);
   };
 
   const checkFormValidity = () => {
+    /* Логика проверки валидности формы на основе валидности её инпутов */
     const inputs = Array.from(document.getElementsByTagName('input'));
     const areAllInputsValid = inputs.every((input) => input.validity.valid);
-    setFormValidty(areAllInputsValid)
+    setFormValidity(areAllInputsValid);
   };
 
   const validateInputOnChange = (e) => {
+    // Live-валидация
     const input = e.target;
 
     if (input.validity.valid) {
@@ -53,6 +59,7 @@ function Login(props) {
   };
 
   const setIputListeners = () => {
+    // Слушатели для кастомных текстов ошибок инпутов
     const emailInput = document.getElementById('email');
     emailInput.addEventListener('input', () => {
       if (emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
@@ -65,7 +72,7 @@ function Login(props) {
     const passwordInput = document.getElementById('password');
     passwordInput.addEventListener('input', () => {
       if (passwordInput.validity.tooShort) {
-        passwordInput.setCustomValidity(`Слишком короткий пароль, минимум 8 символов: [${passwordInput.value.length}/8].`);
+        passwordInput.setCustomValidity(`Слишком короткий пароль, минимум 8 символов (Сейчас ${passwordInput.value.length}).`);
       } else {
         passwordInput.setCustomValidity('');
       }
@@ -73,6 +80,7 @@ function Login(props) {
   };
 
   useEffect(() => {
+    // Ставим слушатели при монтировании
     setIputListeners();
   }, []);
 
@@ -84,9 +92,8 @@ function Login(props) {
       hintLinkText="Регистрация"
       hintLinkUrl="/signup"
       onSubmit={handleSubmit}
-      inputData={{ email, password }}
       isFormValid={isFormValid}
-      submitErrorText={submitErrorText}
+      submitErrorText={APIError}
     >
       <>
         <label htmlFor="email" className="spf__label">
@@ -106,7 +113,7 @@ function Login(props) {
             value={email}
             required
           />
-          <span className="spf__error-message" id="emailError"></span>
+          <span className="spf__error-message" id="emailError">Ошибка ввода.</span>
         </label>
 
         <label htmlFor="password" className="spf__label">
@@ -125,7 +132,7 @@ function Login(props) {
             value={password}
             minLength="8"
           />
-          <span className="spf__error-message" id="passwordError"></span>
+          <span className="spf__error-message" id="passwordError">Ошибка ввода.</span>
         </label>
       </>
     </SinglePageForm>
