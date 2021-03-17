@@ -56,7 +56,7 @@ function Login(props) {
   const checkFormValidity = () => {
     const inputs = Array.from(document.getElementsByTagName('input'));
     const areAllInputsValid = inputs.every((input) => input.validity.valid);
-    setFormValidty(areAllInputsValid);
+    setFormValidty(areAllInputsValid)
   };
 
   const validateInputOnChange = (e) => {

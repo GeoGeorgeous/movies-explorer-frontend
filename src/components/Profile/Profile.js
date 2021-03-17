@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import './Profile.css';
 
 function Profile(props) {
-  const { updateUserData } = props;
+  const { updateUserData, onLogout } = props;
 
   const user = React.useContext(UserContext);
   const [name, setName] = React.useState(user.name);
@@ -16,6 +16,10 @@ function Profile(props) {
     e.preventDefault();
     updateUserData({name, email});
   };
+
+  const handleLogOut = () => {
+    onLogout();
+  }
 
   const handleInputError = (input, message, isError) => {
     /* Логика отображения ошибки для инпута */
@@ -119,7 +123,7 @@ function Profile(props) {
         </form>
         <div className="profile__buttons">
           <button className="profile__button profile__button_type_submit" type="submit" form="profile" disabled={!isFormValid}>Редактировать</button>
-          <button className="profile__button profile__button_type_logout" type="button">Выйти из аккаунта</button>
+          <button className="profile__button profile__button_type_logout" type="button" onClick={handleLogOut}>Выйти из аккаунта</button>
         </div>
       </div>
     </>
