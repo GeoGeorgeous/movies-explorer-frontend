@@ -15,18 +15,12 @@ function Movies(props) {
     setShowShortMovies(isCheckBoxChecked);
   };
 
-  const getMoviesFromLocalStorage = () => JSON.parse(localStorage.getItem('movies'));
-
   const onFormSubmit = (userInput) => {
     fetchOriginalMovies(); // Получили фильмы
     setSearchKeyWords(userInput); // Ключевые слова для фильтрации
   };
 
   const handleMovieLike = (movie) => {
-    // mainApi.getFavouriteMovies()
-    //   .then((favouriteMovies) => {
-    //     console.log(favouriteMovies);
-    //   });
     toggleMovieLike(movie, localStorage.getItem('jwt'))
   };
 

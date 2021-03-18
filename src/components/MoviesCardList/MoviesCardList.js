@@ -66,7 +66,7 @@ function MoviesCardList(props) {
     }
     return (
       <p className="movies-card-list__message">
-        {`Показаны все (${moviesFound}) найденные фильмы по запросу «${searchKey}»`}
+        {searchKey ? `Показаны все [${moviesFound}] найденные фильмы по запросу «${searchKey}»` : `Сохранённых фильмов: [${moviesFound}]`}
       </p>
     );
   };

@@ -19,7 +19,7 @@ function Login(props) {
   const [email, setEmail] = React.useState(''); // Стейт для почты
   const [password, setPassword] = React.useState(''); // Стейт для пароля
 
-  const [isFormValid, setFormValidity] = React.useState(false); // Стейт валидности всей форм
+  const [isFormValid, setFormValidity] = React.useState(false); // Стейт валидности всей формы
 
   const handleSubmit = () => {
     /* Логика сабмита формы авторизации */

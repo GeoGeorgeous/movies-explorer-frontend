@@ -5,11 +5,13 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import mainApi from '../../utils/MainApi';
 
-function SavedMovies() {
+function SavedMovies(props) {
+  const {movies, fetchOriginalMovies, toggleMovieLike} = props;
   const [showShortMovies, setShowShortMovies] = React.useState(true);
-  const [movies, setMovies] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [searchKeyWords, setSearchKeyWords] = React.useState('');
+
+  console.log(`Saved Movies Amount: ${movies.length}`)
 
   const onCheckBoxToggle = (isCheckBoxChecked) => {
     setShowShortMovies(isCheckBoxChecked);
@@ -33,28 +35,13 @@ function SavedMovies() {
     setSearchKeyWords(userInput); // Ключевые слова для фильтрации
   };
 
-  const getSavedMovies = () => {
-    setLoading(true); // Включили прелоудер
-    mainApi.getFavouriteMovies() // Отправили запрос
-      .then((serverMovies) => {console.log(serverMovies)}) // Получили ответ
-      .then(movies => console.log(movies))
-    setLoading(false); // Выключили лоудер
-  }
 
   const handleMovieLike = (movie) => {
-    // mainApi.getFavouriteMovies()
-    //   .then((favouriteMovies) => {
-    //     console.log(favouriteMovies);
-    //   });
-
-    mainApi.likeMovie(movie)
-      .then((feedback) => {
-        console.log(feedback)
-      })
+    toggleMovieLike(movie, localStorage.getItem('jwt'))
   };
 
   useEffect(() => {
-    getSavedMovies();
+    fetchOriginalMovies(); // Получили фильмы
   }, []);
 
   return (

@@ -38,15 +38,22 @@ function App() {
   // Записываем фильмы в localStorage:
   const recordMoviesToLocalStorage = (data) => localStorage.setItem('movies', JSON.stringify(data));
 
-  const fetchLikedMovies = (jwt) => {
+  // Удаляем фильмы из localStorage:
+  const removeMoviesFromLocalStorage = () => localStorage.removeItem('movies');
+
+  const fetchLikedMovies = () => {
+    const jwt = localStorage.getItem('jwt');
+
     mainApi.getFavouriteMovies(jwt) // Фетчим любимые фильмы
     .then(likedMoviesArr => { // Перебираем любимые фильмы
+      console.log(likedMoviesArr);
       likedMoviesArr.forEach(movie => { // И проставляем лайки
         const originalMovie = movies.find(trueMovie => trueMovie.id === movie.movieId)
         originalMovie.isLiked = true;
       })
       recordMoviesToLocalStorage(movies) // обновляем localStorage
     })
+    .catch((err) => {console.log(err)})
   }
 
   const fetchOriginalMovies = () => {
@@ -54,7 +61,7 @@ function App() {
     setLoading(true); // Включили прелоудер
     const moviesFromLocalStorage = getMoviesFromLocalStorage();
     if (moviesFromLocalStorage) { // Есть ли фильмы в localStorage?
-      setMovies(moviesFromLocalStorage);// Взяли фильмы из localStorage и установили в стейт
+      setMovies(moviesFromLocalStorage); // Взяли фильмы из localStorage и установили в стейт
       setLoading(false); // Выключили лоудер
     } else { // В localStorage пусто
       moviesApi.getFilms() // Отправили запрос
@@ -64,8 +71,8 @@ function App() {
             ...movie,
             isLiked: false,
           }));
-          fetchLikedMovies(JSON.parse(localStorage.getItem('jwt'))) // Получили пролайканные фильмы
-          recordMoviesToLocalStorage(JSON.stringify(moviesEnhanced)); // Сохранили в localStorage
+          fetchLikedMovies() // Получили пролайканные фильмы
+          recordMoviesToLocalStorage(moviesEnhanced); // Сохранили в localStorage
           setMovies(moviesEnhanced); // Взяли фильмы с сервера и установили в стейт
           setLoading(false); // Выключили лоудер
         });
@@ -84,11 +91,13 @@ function App() {
   };
 
   const dislikeMovie = (movie, jwt) => {
+    console.log(movie.apiID)
     mainApi.deleteMovieLike(movie.apiID, jwt)
       .then((success) => {
-        console.log(success.message);
         const originalMovie = movies.find(movie => movie.id === movie.id)
-        // originalMovie.isLiked = false;
+        originalMovie.isLiked = false;
+        fetchLikedMovies(jwt);
+        console.log(success);
       })
       .catch((err) => console.log(err));
   };
@@ -180,6 +189,7 @@ function App() {
   const logout = () => {
     /* Выход из аккаунта */
     localStorage.removeItem('jwt');
+    removeMoviesFromLocalStorage();
     setLoggedIn(false);
     history.push('/signin');
     setUser({
@@ -229,6 +239,10 @@ function App() {
             path="/saved-movies"
             component={SavedMovies}
             isLoggedIn={isLoggedIn}
+            loading={loading}
+            toggleMovieLike={toggleMovieLike}
+            fetchOriginalMovies={fetchOriginalMovies}
+            movies={movies.filter(movie => movie.isLiked)}
           />
           <ProtectedRoute
             path="/profile"
