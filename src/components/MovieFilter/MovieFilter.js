@@ -82,6 +82,7 @@ function MovieFilter(props) {
           title={movie.nameRU}
           trailerLink={movie.trailerLink}
           handleMovieLike={handleMovieLike}
+          isLiked={movie.isLiked}
           wholeMovie={movie}
         />
       ));

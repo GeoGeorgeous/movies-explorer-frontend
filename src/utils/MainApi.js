@@ -38,6 +38,7 @@ class MainApi {
   }
 
   getUser(jwt) {
+    this._jwt = jwt;
     return this._fetchAndCatch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
@@ -48,7 +49,7 @@ class MainApi {
   }
 
   updateUser(newData, jwt) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._fetchAndCatch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -56,38 +57,24 @@ class MainApi {
       },
       body: JSON.stringify(newData),
     })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(new Error(`${response.status}`));
-    })
-    .catch((err) => { console.log(err); });
   }
 
-  getFavouriteMovies() {
-    return fetch(`${this._baseUrl}/movies`, {
+  getFavouriteMovies(jwt) {
+    return this._fetchAndCatch(`${this._baseUrl}/movies`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlM2FmN2E1MTBiZWVjNWEwZjAxODciLCJpYXQiOjE2MTU3Mzk2NDQsImV4cCI6MTYxNjM0NDQ0NH0.LeedYaM0URVUJPPvG_yGrci-Gb3AV8c3Qp3wjcH0kDE',
+        Authorization: `Bearer ${jwt}`,
       },
     })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(new Error(`${response.status}`));
-    })
-    .catch((err) => { console.log(err); });
   }
 
-  likeMovie(movie) {
-    return fetch(`${this._baseUrl}/movies`, {
+  likeMovie(movie, jwt) {
+    return this._fetchAndCatch(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlM2FmN2E1MTBiZWVjNWEwZjAxODciLCJpYXQiOjE2MTU3Mzk2NDQsImV4cCI6MTYxNjM0NDQ0NH0.LeedYaM0URVUJPPvG_yGrci-Gb3AV8c3Qp3wjcH0kDE',
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({
         movieId: movie.id,
@@ -103,13 +90,16 @@ class MainApi {
         thumbnail: `https://api.nomoreparties.co/uploads${movie.image.url}`,
       }),
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(new Error(`${response.status}`));
-      })
-      .catch((err) => { console.log(err); });
+  }
+
+  deleteMovieLike(id, jwt) {
+    return this._fetchAndCatch(`${this._baseUrl}/movies/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
   }
 }
 

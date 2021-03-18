@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import '../SinglePageForm/SinglePageForm.css';
 
 import SinglePageForm from '../SinglePageForm/SinglePageForm';
 
 function Login(props) {
-  const { login, APIError } = props;
+  const { login, APIError, isLoggedIn } = props;
 
   Login.propTypes = {
-    login: PropTypes.string.isRequired, // Функция авторизации
-    APIError: PropTypes.func.isRequired, // Текст ошибки формы
+    login: PropTypes.func.isRequired, // Функция авторизации
+    APIError: PropTypes.string.isRequired, // Текст ошибки формы
+    isLoggedIn: PropTypes.bool.isRequired,
   };
+
+  const history = useHistory();
 
   const [email, setEmail] = React.useState(''); // Стейт для почты
   const [password, setPassword] = React.useState(''); // Стейт для пароля
@@ -82,6 +86,9 @@ function Login(props) {
   useEffect(() => {
     // Ставим слушатели при монтировании
     setIputListeners();
+    if (isLoggedIn) {
+      history.push('/movies');
+    }
   }, []);
 
   return (

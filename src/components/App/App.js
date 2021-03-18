@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { UserContext } from '../../contexts/userContext';
@@ -9,6 +10,7 @@ import NotFound from '../NotFound/NotFound';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
+import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 
 function App() {
@@ -16,22 +18,102 @@ function App() {
   const [user, setUser] = React.useState({
     name: '',
     email: '',
+    id: '',
   });
   const [APIError, setAPIError] = React.useState('');
+  const [movies, setMovies] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   const history = useHistory();
+
+  /*
+  «»»—–––————««»
+    ФИЛЬМЫ:
+  «»»—–––————««»
+  */
+
+  // Получаем фильмы из localStorage:
+  const getMoviesFromLocalStorage = () => JSON.parse(localStorage.getItem('movies'));
+
+  // Записываем фильмы в localStorage:
+  const recordMoviesToLocalStorage = (data) => localStorage.setItem('movies', JSON.stringify(data));
+
+  const fetchLikedMovies = (jwt) => {
+    mainApi.getFavouriteMovies(jwt) // Фетчим любимые фильмы
+    .then(likedMoviesArr => { // Перебираем любимые фильмы
+      likedMoviesArr.forEach(movie => { // И проставляем лайки
+        const originalMovie = movies.find(trueMovie => trueMovie.id === movie.movieId)
+        originalMovie.isLiked = true;
+      })
+      recordMoviesToLocalStorage(movies) // обновляем localStorage
+    })
+  }
+
+  const fetchOriginalMovies = () => {
+  // Загружаем оригинальные фильмы с сервера
+    setLoading(true); // Включили прелоудер
+    const moviesFromLocalStorage = getMoviesFromLocalStorage();
+    if (moviesFromLocalStorage) { // Есть ли фильмы в localStorage?
+      setMovies(moviesFromLocalStorage);// Взяли фильмы из localStorage и установили в стейт
+      setLoading(false); // Выключили лоудер
+    } else { // В localStorage пусто
+      moviesApi.getFilms() // Отправили запрос
+        .then((serverMovies) => { // Получили ответ
+          const moviesEnhanced = serverMovies.map((movie) => ({
+            // Добавили для всех фильмов поле isLiked равное false
+            ...movie,
+            isLiked: false,
+          }));
+          fetchLikedMovies(JSON.parse(localStorage.getItem('jwt'))) // Получили пролайканные фильмы
+          recordMoviesToLocalStorage(JSON.stringify(moviesEnhanced)); // Сохранили в localStorage
+          setMovies(moviesEnhanced); // Взяли фильмы с сервера и установили в стейт
+          setLoading(false); // Выключили лоудер
+        });
+    }
+  };
+
+  const likeMovie = (movie, jwt) => {
+    mainApi.likeMovie(movie, jwt)
+      .then((cardFromAPI) => {
+        const originalMovie = movies.find(movie => movie.id === cardFromAPI.movieId)
+        originalMovie.isLiked = true;
+        originalMovie.apiID = cardFromAPI._id
+        fetchLikedMovies(jwt);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const dislikeMovie = (movie, jwt) => {
+    mainApi.deleteMovieLike(movie.apiID, jwt)
+      .then((success) => {
+        console.log(success.message);
+        const originalMovie = movies.find(movie => movie.id === movie.id)
+        // originalMovie.isLiked = false;
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const toggleMovieLike = (movie, jwt) => {
+    movie.isLiked // Лайк стоит?
+      ? dislikeMovie(movie, jwt) // Стоит, нужно убрать
+      : likeMovie(movie, jwt)// Не стоит, нужно поставить
+  };
+
+  /*
+  «»»—–––——––––––—–––——––––––—–––——––––––—–––——––––––—–––——–––––––—––««»
+    АВТОРИЗАЦИЯ, РЕГИСТРАЦИЯ, ТОКЕН И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЬСКИХ ДАННЫХ:
+  «»»—–––——––––––—–––——––––––—–––——––––––—–––——––––––—–––——–––––––—––««»
+  */
 
   const setAPIErrorWithTimer = (error) => {
     setAPIError(error);
     setTimeout(() => setAPIError(''), 5000);
   };
 
-  const tokenCheck = () => {
-    /* Проверка токена в LocalStorage */
-    localStorage.getItem('jwt'); // Есть ли токен в localStorage?
-  };
+  /* Проверка токена в LocalStorage */
+  function tokenCheck() { return localStorage.getItem('jwt'); }
 
-  const getUserData = () => {
+  const checkTokenAndGetUserData = () => {
     /* Получение данных пользователя */
     const jwt = tokenCheck();
     if (jwt) {
@@ -43,6 +125,7 @@ function App() {
               ...user,
               name: res.name,
               email: res.email,
+              _id: res._id,
             });
           } else { // Если токен неправильный:
             setLoggedIn(false);
@@ -59,7 +142,7 @@ function App() {
     )
       .then((response) => { // API вернул статус 2xx при авторизации
         localStorage.setItem('jwt', response.token); // Записали токен в LocalStorage
-        getUserData(); // Получили пользовательские данные
+        checkTokenAndGetUserData(); // Получили пользовательские данные
         setAPIError(''); // Убрали ошибку формы
         setLoggedIn(true);
         history.push('/movies'); // Переадресация на movies
@@ -78,7 +161,6 @@ function App() {
     )
       .then(() => { // API вернул статус 2xx при регистрации
         setAPIError(''); // Убрали ошибку формы
-        history.push('/signin'); // Переадресация на логин
         login(email, password);
       })
       .catch((error) => { // API вернулся с ошибкой
@@ -91,7 +173,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     mainApi.updateUser(newData, jwt)
       .then(() => {
-        getUserData();
+        checkTokenAndGetUserData();
       });
   };
 
@@ -108,7 +190,7 @@ function App() {
   };
 
   useEffect(() => {
-    getUserData();
+    checkTokenAndGetUserData();
   }, []);
 
   return (
@@ -124,18 +206,24 @@ function App() {
             <Register
               signup={signup}
               APIError={APIError}
+              isLoggedIn={isLoggedIn}
             />
           </Route>
           <Route exact path="/signin">
             <Login
               login={login}
               APIError={APIError}
+              isLoggedIn={isLoggedIn}
             />
           </Route>
           <ProtectedRoute
             path="/movies"
             component={Movies}
             isLoggedIn={isLoggedIn}
+            movies={movies}
+            loading={loading}
+            fetchOriginalMovies={fetchOriginalMovies}
+            toggleMovieLike={toggleMovieLike}
           />
           <ProtectedRoute
             path="/saved-movies"

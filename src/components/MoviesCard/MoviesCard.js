@@ -7,11 +7,11 @@ import noCover from '../../images/no-cover.png';
 
 function MoviesCard(props) {
   const {
-    duration, cover, title, trailerLink, uniqueId, handleMovieLike, wholeMovie
+    duration, cover, title, trailerLink, uniqueId, isLiked, handleMovieLike, wholeMovie
   } = props;
 
   const [isHovered, setHovered] = React.useState(false);
-  const [isChecked, setChecked] = React.useState(false);
+  const [isChecked, setChecked] = React.useState(isLiked);
 
   MoviesCard.propTypes = {
     uniqueId: PropTypes.number.isRequired, // Уникальный ID для добавления/удаления из сохранённых
