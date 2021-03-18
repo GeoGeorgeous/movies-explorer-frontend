@@ -1,7 +1,6 @@
-/*eslint-disable*/
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { UserContext, user } from '../../contexts/userContext';
+import { UserContext } from '../../contexts/userContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -17,15 +16,41 @@ function App() {
   const [user, setUser] = React.useState({
     name: '',
     email: '',
-  })
+  });
   const [APIError, setAPIError] = React.useState('');
 
   const history = useHistory();
 
   const setAPIErrorWithTimer = (error) => {
     setAPIError(error);
-    setTimeout(() => setAPIError(''), 5000)
-  }
+    setTimeout(() => setAPIError(''), 5000);
+  };
+
+  const tokenCheck = () => {
+    /* Проверка токена в LocalStorage */
+    localStorage.getItem('jwt'); // Есть ли токен в localStorage?
+  };
+
+  const getUserData = () => {
+    /* Получение данных пользователя */
+    const jwt = tokenCheck();
+    if (jwt) {
+      mainApi.getUser(jwt) // Отправляем токен на сервер
+        .then((res) => { // Получаем ответ от сервера
+          if (res) { // Если токен правильный:
+            setLoggedIn(true);
+            setUser({
+              ...user,
+              name: res.name,
+              email: res.email,
+            });
+          } else { // Если токен неправильный:
+            setLoggedIn(false);
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  };
 
   const login = (email, password) => {
     /* Авторизация */
@@ -34,17 +59,17 @@ function App() {
     )
       .then((response) => { // API вернул статус 2xx при авторизации
         localStorage.setItem('jwt', response.token); // Записали токен в LocalStorage
-        getUserData();
-        setAPIError('') // Убрали ошибку формы
+        getUserData(); // Получили пользовательские данные
+        setAPIError(''); // Убрали ошибку формы
         setLoggedIn(true);
         history.push('/movies'); // Переадресация на movies
       })
       .catch((error) => { // API вернулся с ошибкой
-        console.log(error.message)
+        console.log(error.message);
         setLoggedIn(false);
         setAPIErrorWithTimer(error.message); // Показываем ошибку
       });
-  }
+  };
 
   const signup = (name, email, password) => {
     /* Регистрация */
@@ -52,24 +77,23 @@ function App() {
       { name, email, password },
     )
       .then(() => { // API вернул статус 2xx при регистрации
-        setAPIError('') // Убрали ошибку формы
+        setAPIError(''); // Убрали ошибку формы
         history.push('/signin'); // Переадресация на логин
-        login(email, password )
+        login(email, password);
       })
       .catch((error) => { // API вернулся с ошибкой
         setAPIErrorWithTimer(error.message); // Показываем ошибку
       });
-  }
+  };
 
   const updateUserData = (newData) => {
     /* Обновление данных пользователя */
-    console.log(newData)
     const jwt = localStorage.getItem('jwt');
     mainApi.updateUser(newData, jwt)
-    .then((res) => {
-      getUserData();
-    })
-  }
+      .then(() => {
+        getUserData();
+      });
+  };
 
   const logout = () => {
     /* Выход из аккаунта */
@@ -80,32 +104,7 @@ function App() {
       name: '',
       email: '',
       id: '',
-    })
-  }
-
-  const getUserData = () => {
-    /* Получение данных пользователя */
-    let jwt = tokenCheck();
-    if (jwt) {
-      mainApi.getUser(jwt) // Отправляем токен на сервер
-      .then((res) => { // Получаем ответ от сервера
-        if (res) { // Если токен правильный:
-          setLoggedIn(true);
-          setUser({ ...user,
-            name: res.name,
-            email: res.email,
-          })
-        } else { // Если токен неправильный:
-          setLoggedIn(false);
-        }
-      })
-      .catch((err) => console.error(err));
-    }
-  }
-
-  const tokenCheck = () => {
-    /* Проверка токена в LocalStorage */
-    return localStorage.getItem('jwt'); // Есть ли токен в localStorage?
+    });
   };
 
   useEffect(() => {
@@ -114,45 +113,47 @@ function App() {
 
   return (
     <>
-    <UserContext.Provider value={user}>
-      <Switch>
-        <Route exact path="/">
-          <Main
-          isLoggedIn={isLoggedIn} />
-        </Route>
+      <UserContext.Provider value={user}>
+        <Switch>
+          <Route exact path="/">
+            <Main
+              isLoggedIn={isLoggedIn}
+            />
+          </Route>
           <Route exact path="/signup">
             <Register
               signup={signup}
-              APIError={APIError} />
-         </Route>
+              APIError={APIError}
+            />
+          </Route>
           <Route exact path="/signin">
             <Login
               login={login}
               APIError={APIError}
             />
-        </Route>
+          </Route>
           <ProtectedRoute
-          path="/movies"
-          component={Movies}
-          isLoggedIn={isLoggedIn}
-        />
-        <ProtectedRoute
-          path="/saved-movies"
-          component={SavedMovies}
-          isLoggedIn={isLoggedIn}
-        />
-        <ProtectedRoute
-          path="/profile"
-          component={Profile}
-          isLoggedIn={isLoggedIn}
-          updateUserData={updateUserData}
-          onLogout={logout}
-        />
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-    </UserContext.Provider>
+            path="/movies"
+            component={Movies}
+            isLoggedIn={isLoggedIn}
+          />
+          <ProtectedRoute
+            path="/saved-movies"
+            component={SavedMovies}
+            isLoggedIn={isLoggedIn}
+          />
+          <ProtectedRoute
+            path="/profile"
+            component={Profile}
+            isLoggedIn={isLoggedIn}
+            updateUserData={updateUserData}
+            onLogout={logout}
+          />
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </UserContext.Provider>
     </>
   );
 }
