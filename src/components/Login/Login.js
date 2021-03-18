@@ -11,7 +11,7 @@ function Login(props) {
   Login.propTypes = {
     login: PropTypes.func.isRequired, // Функция авторизации
     APIError: PropTypes.string.isRequired, // Текст ошибки формы
-    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired, // Стейт логина
   };
 
   const history = useHistory();
