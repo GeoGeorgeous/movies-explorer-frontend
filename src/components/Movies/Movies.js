@@ -7,7 +7,7 @@ import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 
 function Movies(props) {
-  const {movies, loading, fetchOriginalMovies, toggleMovieLike} = props
+  const {movies, loading, getMovies, toggleMovieLike, defMovieLike} = props
   const [showShortMovies, setShowShortMovies] = React.useState(true);
   const [searchKeyWords, setSearchKeyWords] = React.useState('');
 
@@ -16,12 +16,8 @@ function Movies(props) {
   };
 
   const onFormSubmit = (userInput) => {
-    fetchOriginalMovies(); // Получили фильмы
+    getMovies();
     setSearchKeyWords(userInput); // Ключевые слова для фильтрации
-  };
-
-  const handleMovieLike = (movie) => {
-    toggleMovieLike(movie, localStorage.getItem('jwt'))
   };
 
   return (
@@ -38,7 +34,8 @@ function Movies(props) {
         movies={movies}
         searchKey={searchKeyWords}
         isLoading={loading}
-        handleMovieLike={handleMovieLike}
+        defMovieLike={defMovieLike}
+        handleMovieLike={toggleMovieLike}
       />
     </>
   );

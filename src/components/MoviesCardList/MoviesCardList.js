@@ -7,7 +7,7 @@ import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList(props) {
   const {
-    movies, showShortMovies, searchKey, isLoading, handleMovieLike, favouriteOnly,
+    movies, showShortMovies, searchKey, isLoading, handleMovieLike, favouriteOnly, defMovieLike,
   } = props;
 
   MoviesCardList.propTypes = {
@@ -31,6 +31,7 @@ function MoviesCardList(props) {
     isLoading: PropTypes.bool.isRequired, // Промис pending? * Bool
     handleMovieLike: PropTypes.func.isRequired,
     favouriteOnly: PropTypes.bool,
+    defMovieLike: PropTypes.func.isRequired,
   };
 
   MoviesCardList.defaultProps = {
@@ -101,6 +102,7 @@ function MoviesCardList(props) {
               searchKey={searchKey} // Ключевые слова * String
               handleFoundMoviesAmount={handleFoundMoviesAmount}
               handleMovieLike={handleMovieLike}
+              defMovieLike={defMovieLike}
               // Коллбэк изменения количества фильмов * func
             />
           </section>

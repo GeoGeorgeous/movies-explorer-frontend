@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import './MoviesCard.css';
 import PropTypes from 'prop-types';
 import noCover from '../../images/no-cover.png';
 
 function MoviesCard(props) {
   const {
-    duration, cover, title, trailerLink, uniqueId, isLiked, handleMovieLike, wholeMovie
+    defMovieLike, duration, cover, title, trailerLink, uniqueId, isLiked, handleMovieLike, wholeMovie
   } = props;
 
   const [isHovered, setHovered] = React.useState(false);
-  const [isChecked, setChecked] = React.useState(isLiked);
+  const [isChecked, setChecked] = React.useState(defMovieLike(wholeMovie));
 
   MoviesCard.propTypes = {
     uniqueId: PropTypes.number.isRequired, // Уникальный ID для добавления/удаления из сохранённых
@@ -19,6 +19,7 @@ function MoviesCard(props) {
     cover: PropTypes.object.isRequired, // Изображение карточки
     title: PropTypes.string.isRequired, // Название фильма
     trailerLink: PropTypes.string.isRequired,
+    defMovieLike: PropTypes.func.isRequired,
   };
 
   /*
@@ -34,8 +35,8 @@ function MoviesCard(props) {
   }
 
   function onChange(e) {
-    setChecked(e.target.checked);
-    handleMovieLike(wholeMovie);
+    handleMovieLike(wholeMovie, isChecked);
+    setChecked(!isChecked);
   }
 
   let inputOpenClass;
@@ -45,6 +46,10 @@ function MoviesCard(props) {
 
   const inputId = `favourite${uniqueId}`;
   const movieImage = cover.image ? `https://api.nomoreparties.co${cover.image.url}` : noCover;
+
+  useEffect(() => {
+    defMovieLike(wholeMovie);
+  }, []);
 
   return (
     <article

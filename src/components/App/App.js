@@ -22,91 +22,61 @@ function App() {
   });
   const [APIError, setAPIError] = React.useState('');
   const [movies, setMovies] = React.useState([]);
+  const [likedMovies, setLikedMovies] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   const history = useHistory();
 
-  /*
-  «»»—–––————««»
-    ФИЛЬМЫ:
-  «»»—–––————««»
-  */
-
-  // Получаем фильмы из localStorage:
-  const getMoviesFromLocalStorage = () => JSON.parse(localStorage.getItem('movies'));
-
-  // Записываем фильмы в localStorage:
-  const recordMoviesToLocalStorage = (data) => localStorage.setItem('movies', JSON.stringify(data));
-
-  // Удаляем фильмы из localStorage:
-  const removeMoviesFromLocalStorage = () => localStorage.removeItem('movies');
-
-  const fetchLikedMovies = () => {
-    const jwt = localStorage.getItem('jwt');
-
-    mainApi.getFavouriteMovies(jwt) // Фетчим любимые фильмы
-    .then(likedMoviesArr => { // Перебираем любимые фильмы
-      console.log(likedMoviesArr);
-      likedMoviesArr.forEach(movie => { // И проставляем лайки
-        const originalMovie = movies.find(trueMovie => trueMovie.id === movie.movieId)
-        originalMovie.isLiked = true;
-      })
-      recordMoviesToLocalStorage(movies) // обновляем localStorage
+  const getFavouriteMovies = () => {
+    mainApi.getFavouriteMovies(localStorage.getItem('jwt')) // Фетчим любимые фильмы
+    .then(likedMovies => { // Перебираем любимые фильмы
+      setLikedMovies(likedMovies)
     })
+    .then(console.log(likedMovies))
     .catch((err) => {console.log(err)})
+
   }
 
-  const fetchOriginalMovies = () => {
-  // Загружаем оригинальные фильмы с сервера
-    setLoading(true); // Включили прелоудер
-    const moviesFromLocalStorage = getMoviesFromLocalStorage();
-    if (moviesFromLocalStorage) { // Есть ли фильмы в localStorage?
-      setMovies(moviesFromLocalStorage); // Взяли фильмы из localStorage и установили в стейт
-      setLoading(false); // Выключили лоудер
-    } else { // В localStorage пусто
-      moviesApi.getFilms() // Отправили запрос
-        .then((serverMovies) => { // Получили ответ
-          const moviesEnhanced = serverMovies.map((movie) => ({
-            // Добавили для всех фильмов поле isLiked равное false
-            ...movie,
-            isLiked: false,
-          }));
-          fetchLikedMovies() // Получили пролайканные фильмы
-          recordMoviesToLocalStorage(moviesEnhanced); // Сохранили в localStorage
-          setMovies(moviesEnhanced); // Взяли фильмы с сервера и установили в стейт
-          setLoading(false); // Выключили лоудер
-        });
-    }
-  };
+  const getMovies = () => {
+    setLoading(true); // Включаем прелоудер
+    moviesApi.getFilms() // Отправляем запрос на получение фильмов
+    .then((films) => {
+      setMovies(films);
+    })
+    getFavouriteMovies();
+    setLoading(false); // Выключает прелоудер
+  }
 
-  const likeMovie = (movie, jwt) => {
-    mainApi.likeMovie(movie, jwt)
-      .then((cardFromAPI) => {
-        const originalMovie = movies.find(movie => movie.id === cardFromAPI.movieId)
-        originalMovie.isLiked = true;
-        originalMovie.apiID = cardFromAPI._id
-        fetchLikedMovies(jwt);
+  const likeMovie = (movie) => {
+    mainApi.likeMovie(movie, localStorage.getItem('jwt'))
+      .then((movie) => {
+        setLikedMovies([...likedMovies, movie])
+        console.log(`Фильм «${movie.nameRU}» успешно лайкнут!`);
       })
+      .then(true)
       .catch((err) => console.log(err));
   };
 
-  const dislikeMovie = (movie, jwt) => {
-    console.log(movie.apiID)
-    mainApi.deleteMovieLike(movie.apiID, jwt)
+  const dislikeMovie = (movie) => {
+
+    const movieId = likedMovies.find((likedMovie) => likedMovie.movieId === movie.id)._id
+    mainApi.deleteMovieLike(movieId, localStorage.getItem('jwt'))
       .then((success) => {
-        const originalMovie = movies.find(movie => movie.id === movie.id)
-        originalMovie.isLiked = false;
-        fetchLikedMovies(jwt);
         console.log(success);
       })
       .catch((err) => console.log(err));
   };
 
-  const toggleMovieLike = (movie, jwt) => {
-    movie.isLiked // Лайк стоит?
-      ? dislikeMovie(movie, jwt) // Стоит, нужно убрать
-      : likeMovie(movie, jwt)// Не стоит, нужно поставить
-  };
+  const toggleMovieLike = (movie, isLiked) => {
+    console.log(isLiked)
+    isLiked // Лайк стоит?
+    ? dislikeMovie(movie) // Стоит, нужно убрать
+    : likeMovie(movie)// Не стоит, нужно поставить
+  }
+
+  const defMovieLike = (movie) => {
+    return likedMovies.some((likedMovie) => likedMovie.movieId === movie.id)
+  }
 
   /*
   «»»—–––——––––––—–––——––––––—–––——––––––—–––——––––––—–––——–––––––—––««»
@@ -232,8 +202,9 @@ function App() {
             isLoggedIn={isLoggedIn}
             movies={movies}
             loading={loading}
-            fetchOriginalMovies={fetchOriginalMovies}
+            getMovies={getMovies}
             toggleMovieLike={toggleMovieLike}
+            defMovieLike={defMovieLike}
           />
           <ProtectedRoute
             path="/saved-movies"
@@ -241,7 +212,6 @@ function App() {
             isLoggedIn={isLoggedIn}
             loading={loading}
             toggleMovieLike={toggleMovieLike}
-            fetchOriginalMovies={fetchOriginalMovies}
             movies={movies.filter(movie => movie.isLiked)}
           />
           <ProtectedRoute
