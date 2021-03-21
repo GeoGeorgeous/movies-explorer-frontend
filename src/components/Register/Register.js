@@ -100,10 +100,11 @@ function Register(props) {
   useEffect(() => {
     // Ставим слушатели при монтировании
     setIputListeners();
-    if (isLoggedIn) {
-      history.push('/movies');
-    }
   }, []);
+
+  useEffect(() => {
+    isLoggedIn && history.push('/movies');
+  }, [isLoggedIn]);
 
   return (
     <>

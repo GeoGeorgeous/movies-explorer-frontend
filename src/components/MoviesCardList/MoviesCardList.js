@@ -111,6 +111,24 @@ function MoviesCardList(props) {
       )
   );
 
+  const returnFavouriteMoviesMarkUp = () => {
+    <>
+      <section className="movies-card-list">
+        <p>любимые</p>
+        {/* <MovieFilter // Фильтрует фильмы и возвращает разметку
+          movies={movies} // Массив фильмов * Object
+          moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
+          showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
+          searchKey={searchKey} // Ключевые слова * String
+          handleFoundMoviesAmount={handleFoundMoviesAmount}
+          handleMovieLike={handleMovieLike}
+          defMovieLike={defMovieLike}
+          onlyFavourite
+        /> */}
+      </section>
+    </>;
+  };
+
   useEffect(() => {
     // Сбрасываем количество фильмов на странице при изменении ключевого слова
     setVisibleMoviesCount(6);
@@ -126,6 +144,11 @@ function MoviesCardList(props) {
         searchKey === '' && !favouriteOnly
           ? returnUntouchedSearchMarkUp() // Если ещё ничего не искали, то показать welcome-screen
           : returnSearchHandlingMarkUp() // А если искали, то работаем с фильмами дальше
+      }
+      {
+        favouriteOnly
+          ? returnFavouriteMoviesMarkUp()
+          : ''
       }
       <Footer />
     </>

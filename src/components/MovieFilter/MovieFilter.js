@@ -6,7 +6,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 function MovieFilter(props) {
   const {
     movies, moviesPerPage, showShortMovies, searchKey, handleFoundMoviesAmount,
-    handleMovieLike, defMovieLike,
+    handleMovieLike, defMovieLike, onlyFavourite,
   } = props;
 
   MovieFilter.propTypes = {
@@ -31,6 +31,11 @@ function MovieFilter(props) {
     handleFoundMoviesAmount: PropTypes.func.isRequired,
     handleMovieLike: PropTypes.func.isRequired,
     defMovieLike: PropTypes.func.isRequired,
+    onlyFavourite: PropTypes.bool,
+  };
+
+  MovieFilter.defaultProps = {
+    onlyFavourite: false,
   };
 
   // Стейт количества отображаемых фильмов
@@ -97,7 +102,9 @@ function MovieFilter(props) {
 
   return (
     <>
-      { createFilteredMoviesMarkUp() }
+      { onlyFavourite
+        ? <p>Показывать только избранные фильмы</p>
+        : createFilteredMoviesMarkUp() }
     </>
   );
 }

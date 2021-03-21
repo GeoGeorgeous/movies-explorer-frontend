@@ -68,7 +68,6 @@ function App() {
   };
 
   const toggleMovieLike = (movie, isLiked) => {
-    console.log(isLiked)
     isLiked // Лайк стоит?
     ? dislikeMovie(movie) // Стоит, нужно убрать
     : likeMovie(movie)// Не стоит, нужно поставить
@@ -173,6 +172,7 @@ function App() {
     checkTokenAndGetUserData();
   }, []);
 
+
   return (
     <>
       <UserContext.Provider value={user}>
@@ -212,6 +212,7 @@ function App() {
             isLoggedIn={isLoggedIn}
             loading={loading}
             toggleMovieLike={toggleMovieLike}
+            defMovieLike={defMovieLike}
             movies={movies.filter(movie => movie.isLiked)}
           />
           <ProtectedRoute
