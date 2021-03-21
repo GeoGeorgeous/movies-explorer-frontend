@@ -1,4 +1,4 @@
-/* eslint-disable */
+/*eslint-disable */
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { UserContext } from '../../contexts/userContext';
@@ -29,28 +29,34 @@ function App() {
 
   const getFavouriteMovies = () => {
     mainApi.getFavouriteMovies(localStorage.getItem('jwt')) // Фетчим любимые фильмы
-    .then(likedMovies => { // Перебираем любимые фильмы
-      setLikedMovies(likedMovies)
-    })
-    .then(console.log(likedMovies))
-    .catch((err) => {console.log(err)})
+      .then((favouriteMovies) => { // Перебираем любимые фильмы
+        setLikedMovies(favouriteMovies);
+      })
+      .catch((err) => { console.log(err); });
+  };
 
-  }
+  const filterMoviesByFavourites = () => {
+    const a =  movies.filter((movie) => {
+      return likedMovies.some((item) => item.movieId === movie.id);
+    })
+    console.log(a);
+    return a;
+  };
 
   const getMovies = () => {
     setLoading(true); // Включаем прелоудер
     moviesApi.getFilms() // Отправляем запрос на получение фильмов
-    .then((films) => {
-      setMovies(films);
-    })
+      .then((films) => {
+        setMovies(films);
+      });
     getFavouriteMovies();
     setLoading(false); // Выключает прелоудер
-  }
+  };
 
   const likeMovie = (movie) => {
     mainApi.likeMovie(movie, localStorage.getItem('jwt'))
-      .then((movie) => {
-        setLikedMovies([...likedMovies, movie])
+      .then((resWithLikedMovie) => {
+        setLikedMovies([...likedMovies, resWithLikedMovie]);
         console.log(`Фильм «${movie.nameRU}» успешно лайкнут!`);
       })
       .then(true)
@@ -58,8 +64,7 @@ function App() {
   };
 
   const dislikeMovie = (movie) => {
-
-    const movieId = likedMovies.find((likedMovie) => likedMovie.movieId === movie.id)._id
+    const movieId = likedMovies.find((likedMovie) => likedMovie.movieId === movie.id)._id;
     mainApi.deleteMovieLike(movieId, localStorage.getItem('jwt'))
       .then((success) => {
         console.log(success);
@@ -69,12 +74,14 @@ function App() {
 
   const toggleMovieLike = (movie, isLiked) => {
     isLiked // Лайк стоит?
-    ? dislikeMovie(movie) // Стоит, нужно убрать
-    : likeMovie(movie)// Не стоит, нужно поставить
-  }
+      ? dislikeMovie(movie) // Стоит, нужно убрать
+      : likeMovie(movie);// Не стоит, нужно поставить
+  };
 
-  const defMovieLike = (movie) => {
-    return likedMovies.some((likedMovie) => likedMovie.movieId === movie.id)
+  const defMovieLike = (movie) => likedMovies.some((likedMovie) => likedMovie.movieId === movie.id);
+
+  function keepOnlyFavourite() {
+    console.log(movies.filter((movie) => likedMovies.some((likedMovie) => likedMovie.movieId === movie.id)));
   }
 
   /*
@@ -158,7 +165,6 @@ function App() {
   const logout = () => {
     /* Выход из аккаунта */
     localStorage.removeItem('jwt');
-    removeMoviesFromLocalStorage();
     setLoggedIn(false);
     history.push('/signin');
     setUser({
@@ -171,7 +177,6 @@ function App() {
   useEffect(() => {
     checkTokenAndGetUserData();
   }, []);
-
 
   return (
     <>
@@ -213,7 +218,9 @@ function App() {
             loading={loading}
             toggleMovieLike={toggleMovieLike}
             defMovieLike={defMovieLike}
-            movies={movies.filter(movie => movie.isLiked)}
+            filterMoviesByFavourites={filterMoviesByFavourites}
+            movies={movies}
+            keepOnlyFavourite={keepOnlyFavourite}
           />
           <ProtectedRoute
             path="/profile"

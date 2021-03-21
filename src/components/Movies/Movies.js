@@ -1,10 +1,9 @@
-/*eslint-disable */
-import React from 'react';
+/*eslint-disable*/
+import React, { useEffect } from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import moviesApi from '../../utils/MoviesApi';
-import mainApi from '../../utils/MainApi';
+
 
 function Movies(props) {
   const {movies, loading, getMovies, toggleMovieLike, defMovieLike} = props
@@ -17,8 +16,9 @@ function Movies(props) {
 
   const onFormSubmit = (userInput) => {
     getMovies();
-    setSearchKeyWords(userInput); // Ключевые слова для фильтрации
-  };
+    setSearchKeyWords(userInput);
+  }
+
 
   return (
     <>

@@ -90,7 +90,24 @@ function MovieFilter(props) {
           title={movie.nameRU}
           trailerLink={movie.trailerLink}
           handleMovieLike={handleMovieLike}
-          isLiked={movie.isLiked}
+          wholeMovie={movie}
+        />
+      ));
+  }
+
+  function createFavouriteMoviesMarkUp() {
+    // Фильтрует массив и возвращает разметку
+    return movies
+      .map((movie) => ( // Создаём карточки с фильмом
+        <MoviesCard
+          defMovieLike={defMovieLike}
+          key={movie.id}
+          uniqueId={movie.id}
+          duration={movie.duration}
+          cover={movie}
+          title={movie.nameRU}
+          trailerLink={movie.trailerLink}
+          handleMovieLike={handleMovieLike}
           wholeMovie={movie}
         />
       ));
@@ -103,7 +120,7 @@ function MovieFilter(props) {
   return (
     <>
       { onlyFavourite
-        ? <p>Показывать только избранные фильмы</p>
+        ? createFavouriteMoviesMarkUp()
         : createFilteredMoviesMarkUp() }
     </>
   );

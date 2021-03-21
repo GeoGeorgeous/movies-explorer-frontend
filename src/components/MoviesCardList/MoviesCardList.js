@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useEffect } from 'react';
 import './MoviesCardList.css';
 import PropTypes from 'prop-types';
@@ -87,12 +88,19 @@ function MoviesCardList(props) {
   );
 
   // Возвращает разметку заданного поиска
-  const returnSearchHandlingMarkUp = () => (
-    isLoading
-      // Если ищем фильмы, то покажем прелоудер, пока они загружаются
-      ? <Preloader />
-      // Если фильмы найдены, передадим компоненту MovieFilter нужные пропсы
-      : (
+  const returnSearchHandlingMarkUp = () => {
+    if (searchKey === '') {
+      return (
+        <section className="movies-card-list__welcome-screen">
+          <p className="movies-card-list__message">
+            Введите название или ключевые слова в строку поиска, чтобы найти фильмы.
+          </p>
+        </section>
+      );
+    }
+    return (isLoading
+      ? <Preloader /> // Если ищем фильмы, то покажем прелоудер, пока они загружаются
+      : ( // Если фильмы найдены, передадим компоненту MovieFilter нужные пропсы
         <>
           <section className="movies-card-list">
             <MovieFilter // Фильтрует фильмы и возвращает разметку
@@ -103,19 +111,18 @@ function MoviesCardList(props) {
               handleFoundMoviesAmount={handleFoundMoviesAmount}
               handleMovieLike={handleMovieLike}
               defMovieLike={defMovieLike}
-              // Коллбэк изменения количества фильмов * func
             />
           </section>
           { handleButtonAppear() }
         </>
       )
-  );
+    );
+  };
 
   const returnFavouriteMoviesMarkUp = () => {
-    <>
+  return (<>
       <section className="movies-card-list">
-        <p>любимые</p>
-        {/* <MovieFilter // Фильтрует фильмы и возвращает разметку
+        <MovieFilter // Фильтрует фильмы и возвращает разметку
           movies={movies} // Массив фильмов * Object
           moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
           showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
@@ -124,9 +131,9 @@ function MoviesCardList(props) {
           handleMovieLike={handleMovieLike}
           defMovieLike={defMovieLike}
           onlyFavourite
-        /> */}
+        />
       </section>
-    </>;
+    </>)
   };
 
   useEffect(() => {
@@ -141,14 +148,9 @@ function MoviesCardList(props) {
   return (
     <>
       {
-        searchKey === '' && !favouriteOnly
-          ? returnUntouchedSearchMarkUp() // Если ещё ничего не искали, то показать welcome-screen
-          : returnSearchHandlingMarkUp() // А если искали, то работаем с фильмами дальше
-      }
-      {
         favouriteOnly
-          ? returnFavouriteMoviesMarkUp()
-          : ''
+          ? returnFavouriteMoviesMarkUp() // Если ещё ничего не искали, то показать welcome-screen
+          : returnSearchHandlingMarkUp()
       }
       <Footer />
     </>
