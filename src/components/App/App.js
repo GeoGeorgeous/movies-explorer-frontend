@@ -1,4 +1,3 @@
-/*eslint-disable */
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { UserContext } from '../../contexts/userContext';
@@ -35,13 +34,9 @@ function App() {
       .catch((err) => { console.log(err); });
   };
 
-  const filterMoviesByFavourites = () => {
-    const a =  movies.filter((movie) => {
-      return likedMovies.some((item) => item.movieId === movie.id);
-    })
-    console.log(a);
-    return a;
-  };
+  function filterMoviesByFavourites() {
+    return movies.filter((movie) => likedMovies.some((item) => item.movieId === movie.id));
+  }
 
   const getMovies = () => {
     setLoading(true); // Включаем прелоудер
@@ -81,7 +76,9 @@ function App() {
   const defMovieLike = (movie) => likedMovies.some((likedMovie) => likedMovie.movieId === movie.id);
 
   function keepOnlyFavourite() {
-    console.log(movies.filter((movie) => likedMovies.some((likedMovie) => likedMovie.movieId === movie.id)));
+    return movies
+      .filter((movie) => likedMovies
+        .some((likedMovie) => likedMovie.movieId === movie.id));
   }
 
   /*
@@ -159,6 +156,10 @@ function App() {
     mainApi.updateUser(newData, jwt)
       .then(() => {
         checkTokenAndGetUserData();
+        setAPIErrorWithTimer('Данные пользователя успешно обновлены.');
+      })
+      .catch(() => {
+        setAPIErrorWithTimer('Не получить обновить данные.');
       });
   };
 
@@ -228,6 +229,7 @@ function App() {
             isLoggedIn={isLoggedIn}
             updateUserData={updateUserData}
             onLogout={logout}
+            message={APIError}
           />
           <Route path="*">
             <NotFound />

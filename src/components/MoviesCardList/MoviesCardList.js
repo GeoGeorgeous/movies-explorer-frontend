@@ -41,6 +41,8 @@ function MoviesCardList(props) {
 
   // Количество фильмов, показываемых изначально (до нажатия на кнопку загрузить ещё)
   const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(6);
+  const [addMoreCount, setAddMoreCount] = React.useState(3);
+  const [screenWidth, setScreenWidth] = React.useState(0);
   let foundMovies = 0; // Количество найденных фильмов
   /*
     Warning: Cannot update a component (`MoviesCardList`)
@@ -52,7 +54,7 @@ function MoviesCardList(props) {
 
   // Обработчик нажатия кнопки добавления фильмов «Ещё»
   const handleShowMoreMovies = () => {
-    setVisibleMoviesCount(visibleMoviesCount + 3);
+    setVisibleMoviesCount(visibleMoviesCount + addMoreCount);
   };
 
   const handleButtonAppear = () => {
@@ -140,6 +142,39 @@ function MoviesCardList(props) {
     // Сбрасываем количество фильмов на странице при изменении ключевого слова
     setVisibleMoviesCount(6);
   }, [searchKey]);
+
+  function setNewWidth() {
+    setScreenWidth(window.innerWidth)
+  }
+
+
+  useEffect(() => {
+    function handleScreenResize() {
+      setTimeout(setNewWidth, 600)
+    }
+
+    window.addEventListener('resize', handleScreenResize)
+
+    return function () {
+      window.removeEventListener('resize', handleScreenResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    screenWidth
+    if (screenWidth <= 480) {
+      setVisibleMoviesCount(5);
+      setAddMoreCount(2);
+    }
+    if (screenWidth > 480 && screenWidth <= 768) {
+      setVisibleMoviesCount(8);
+      setAddMoreCount(2);
+    }
+    if (screenWidth > 768) {
+      setVisibleMoviesCount(12);
+      setAddMoreCount(3);
+    }
+  }, [screenWidth])
 
   useEffect(() => {
     setMoviesFoundAmount(foundMovies);
