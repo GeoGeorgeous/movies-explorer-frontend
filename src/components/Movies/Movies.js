@@ -1,12 +1,13 @@
-/*eslint-disable*/
-import React, { useEffect } from 'react';
+/* eslint-disable */
+import React, {useEffect} from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-
 function Movies(props) {
-  const {movies, loading, getMovies, toggleMovieLike, defMovieLike} = props
+  const {
+    movies, loading, getMovies, toggleMovieLike, defMovieLike,
+  } = props;
   const [showShortMovies, setShowShortMovies] = React.useState(true);
   const [searchKeyWords, setSearchKeyWords] = React.useState('');
 
@@ -17,8 +18,15 @@ function Movies(props) {
   const onFormSubmit = (userInput) => {
     getMovies();
     setSearchKeyWords(userInput);
-  }
+  };
 
+  useEffect(() => { // Изменение количества отображаемых фильмов при изменении стейта
+    const savedSearchKey = localStorage.getItem('searchKey');
+    if (savedSearchKey) {
+      getMovies();
+      setSearchKeyWords(savedSearchKey);
+    }
+  }, []);
 
   return (
     <>

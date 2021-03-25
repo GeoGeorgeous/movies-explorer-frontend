@@ -1,11 +1,13 @@
-/*eslint-disable*/
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies(props) {
-  const {movies, loading, getMovies, toggleMovieLike, defMovieLike, updateMovies } = props
+  const {
+    movies, loading, getMovies, toggleMovieLike, defMovieLike, updateMovies,
+  } = props;
   const [showShortMovies, setShowShortMovies] = React.useState(true);
   const [searchKeyWords, setSearchKeyWords] = React.useState('');
 
@@ -17,10 +19,17 @@ function SavedMovies(props) {
     setSearchKeyWords(userInput); // Ключевые слова для фильтрации
   };
 
-  useEffect( () => {
+  useEffect(() => {
     getMovies();
   }, []);
 
+  useEffect(() => { // Изменение количества отображаемых фильмов при изменении стейта
+    const savedSearchKey = localStorage.getItem('searchKey');
+    if (savedSearchKey) {
+      getMovies();
+      setSearchKeyWords(savedSearchKey);
+    }
+  }, []);
 
   return (
     <>

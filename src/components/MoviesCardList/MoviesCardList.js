@@ -1,4 +1,4 @@
-/*eslint-disable*/
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import './MoviesCardList.css';
 import PropTypes from 'prop-types';
@@ -80,15 +80,6 @@ function MoviesCardList(props) {
     foundMovies = foundMoviesCounter;
   };
 
-  // Возвращает разметку при незаданном поиске
-  const returnUntouchedSearchMarkUp = () => (
-    <section className="movies-card-list__welcome-screen">
-      <p className="movies-card-list__message">
-        Введите название или ключевые слова в строку поиска, чтобы найти фильмы.
-      </p>
-    </section>
-  );
-
   // Возвращает разметку заданного поиска
   const returnSearchHandlingMarkUp = () => {
     if (searchKey === '') {
@@ -121,53 +112,50 @@ function MoviesCardList(props) {
     );
   };
 
-  const returnFavouriteMoviesMarkUp = () => {
-  return (
+  const returnFavouriteMoviesMarkUp = () => (
     movies.length > 0
-    ? <section className="movies-card-list">
-        <MovieFilter // Фильтрует фильмы и возвращает разметку
-          movies={movies} // Массив фильмов * Object
-          moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
-          showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
-          searchKey={searchKey} // Ключевые слова * String
-          handleFoundMoviesAmount={handleFoundMoviesAmount} // Обработчик количества найденных фильмов
-          handleMovieLike={handleMovieLike} // Обработчик изменения лайка фильма
-          defMovieLike={defMovieLike} // Определяет, лайкнут ли фильм
-          onlyFavourite
-        />
-      </section>
+      ? (
+        <section className="movies-card-list">
+          <MovieFilter // Фильтрует фильмы и возвращает разметку
+            movies={movies} // Массив фильмов * Object
+            moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
+            showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
+            searchKey={searchKey} // Ключевые слова * String
+            handleFoundMoviesAmount={handleFoundMoviesAmount} // Обработчик количества найденных фильмов
+            handleMovieLike={handleMovieLike} // Обработчик изменения лайка фильма
+            defMovieLike={defMovieLike} // Определяет, лайкнут ли фильм
+            onlyFavourite
+          />
+        </section>
+      )
 
-      : <section className="movies-card-list__welcome-screen">
-        <p className="movies-card-list__message">
-           Вы ещё не сохранили ни одного фильма.
-        </p>
-         </section>)
-  };
+      : (
+        <section className="movies-card-list__welcome-screen">
+          <p className="movies-card-list__message">
+            Вы ещё не сохранили ни одного фильма.
+          </p>
+        </section>
+      ));
 
-  useEffect(() => {
-    // Сбрасываем количество фильмов на странице при изменении ключевого слова
-    setVisibleMoviesCount(6);
-  }, [searchKey]);
 
   function setNewWidth() {
-    setScreenWidth(window.innerWidth)
+    setScreenWidth(window.innerWidth);
   }
-
 
   useEffect(() => {
     function handleScreenResize() {
-      setTimeout(setNewWidth, 600)
+      setTimeout(setNewWidth, 600);
     }
 
-    window.addEventListener('resize', handleScreenResize)
+    window.addEventListener('resize', handleScreenResize);
 
     return function () {
-      window.removeEventListener('resize', handleScreenResize)
-    }
-  }, [])
+      window.removeEventListener('resize', handleScreenResize);
+    };
+  }, []);
 
   useEffect(() => {
-    screenWidth
+    screenWidth;
     if (screenWidth <= 480) {
       setVisibleMoviesCount(5);
       setAddMoreCount(2);
@@ -180,7 +168,7 @@ function MoviesCardList(props) {
       setVisibleMoviesCount(12);
       setAddMoreCount(3);
     }
-  }, [screenWidth])
+  }, [screenWidth]);
 
   useEffect(() => {
     setMoviesFoundAmount(foundMovies);

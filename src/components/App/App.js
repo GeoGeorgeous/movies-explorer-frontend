@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-param-reassign */
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { UserContext } from '../../contexts/userContext';
@@ -40,9 +40,9 @@ function App() {
         //     .some((likedMovie) => likedMovie.movieId === movie.id))
       })
       .catch((err) => {
-          console.log(err.message);
-          setLikedMovies([])
-      })
+        console.log(err.message);
+        setLikedMovies([]);
+      });
   };
 
   const fetchOriginalMovies = () => {
@@ -61,7 +61,7 @@ function App() {
         })
         .catch((err) => console.log(err));
     }
-  }
+  };
 
   const getMovies = () => {
     /*
@@ -74,14 +74,10 @@ function App() {
     setLoading(false); // Выключает прелоудер
   };
 
-  function filterMoviesByFavourites() {
-    return movies.filter((movie) => likedMovies.some((item) => item.movieId === movie.id));
-  }
-
   const likeMovie = (movie) => {
-    movie.country
-    ? movie.country = movie.country
-    : movie.country = 'none'
+    if (!movie.country) {
+      movie.country = 'none';
+    }
     mainApi.likeMovie(movie, localStorage.getItem('jwt'))
       .then((resWithLikedMovie) => {
         setLikedMovies([...likedMovies, resWithLikedMovie]);
@@ -93,9 +89,8 @@ function App() {
 
   const dislikeMovie = (movie) => {
     if (!movie._id) {
-      movie._id =
-        likedMovies
-          .find((likedMovie) => likedMovie.id === movie.id)._id;
+      movie._id = likedMovies
+        .find((likedMovie) => likedMovie.id === movie.id)._id;
     }
     mainApi.deleteMovieLike(movie._id, localStorage.getItem('jwt'))
       .then((success) => {
@@ -111,8 +106,7 @@ function App() {
       : likeMovie(movie);// Не стоит, нужно поставить
   };
 
-  const defMovieLike = (movie) => {
-    return likedMovies.some((likedMovie) => likedMovie.id === movie.id)};
+  const defMovieLike = (movie) => likedMovies.some((likedMovie) => likedMovie.id === movie.id);
 
   function keepOnlyFavourite() {
     return movies
