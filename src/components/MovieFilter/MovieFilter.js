@@ -97,7 +97,13 @@ function MovieFilter(props) {
 
   function createFavouriteMoviesMarkUp() {
     // Фильтрует массив и возвращает разметку
-    return movies
+
+    const filteredMovies = movies
+      .filter(filterSearch) // Фильтр по ключевому слову
+      .filter(filterDuration); // Фильтр по длительности
+    handleFoundMoviesAmount(filteredMovies.length); // Обработчик количество найденных фильмов
+
+    return filteredMovies
       .map((movie) => ( // Создаём карточки с фильмом
         <MoviesCard
           defMovieLike={defMovieLike}

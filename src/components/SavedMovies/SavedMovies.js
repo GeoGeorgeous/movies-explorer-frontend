@@ -14,7 +14,6 @@ function SavedMovies(props) {
   };
 
   const onFormSubmit = (userInput) => {
-    getMovies();
     setSearchKeyWords(userInput); // Ключевые слова для фильтрации
   };
 

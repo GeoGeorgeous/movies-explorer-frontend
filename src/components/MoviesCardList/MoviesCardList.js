@@ -110,9 +110,9 @@ function MoviesCardList(props) {
               moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
               showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
               searchKey={searchKey} // Ключевые слова * String
-              handleFoundMoviesAmount={handleFoundMoviesAmount}
-              handleMovieLike={handleMovieLike}
-              defMovieLike={defMovieLike}
+              handleFoundMoviesAmount={handleFoundMoviesAmount} // Обработчик количества найденных фильмов
+              handleMovieLike={handleMovieLike} // Обработчик изменения лайка фильма
+              defMovieLike={defMovieLike} // Определяет, лайкнут ли фильм
             />
           </section>
           { handleButtonAppear() }
@@ -130,9 +130,9 @@ function MoviesCardList(props) {
           moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
           showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
           searchKey={searchKey} // Ключевые слова * String
-          handleFoundMoviesAmount={handleFoundMoviesAmount}
-          handleMovieLike={handleMovieLike}
-          defMovieLike={defMovieLike}
+          handleFoundMoviesAmount={handleFoundMoviesAmount} // Обработчик количества найденных фильмов
+          handleMovieLike={handleMovieLike} // Обработчик изменения лайка фильма
+          defMovieLike={defMovieLike} // Определяет, лайкнут ли фильм
           onlyFavourite
         />
       </section>
