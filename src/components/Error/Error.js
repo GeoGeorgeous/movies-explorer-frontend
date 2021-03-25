@@ -3,11 +3,9 @@ import './Error.css';
 
 function Error() {
   return (
-    <>
-      <div className="error">
-        Ой! Что-то пошло не так..
-      </div>
-    </>
+    <div className="error">
+      Ой! Что-то пошло не так..
+    </div>
   );
 }
 

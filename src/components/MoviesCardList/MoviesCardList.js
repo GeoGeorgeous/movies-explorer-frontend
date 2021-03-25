@@ -64,7 +64,7 @@ function MoviesCardList(props) {
     if (moviesFound === 0) {
       return (
         <p className="movies-card-list__message">
-          {favouriteOnly ? 'Вы ещё не сохранили ни одного фильма.' : 'Ничего не найдено.'}
+          {favouriteOnly ? 'Похоже, что такой фильмы вы не сохраняли.' : 'Ничего не найдено.'}
         </p>
       );
     }
@@ -115,6 +115,7 @@ function MoviesCardList(props) {
   const returnFavouriteMoviesMarkUp = () => (
     movies.length > 0
       ? (
+        <>
         <section className="movies-card-list">
           <MovieFilter // Фильтрует фильмы и возвращает разметку
             movies={movies} // Массив фильмов * Object
@@ -127,6 +128,8 @@ function MoviesCardList(props) {
             onlyFavourite
           />
         </section>
+        { handleButtonAppear() }
+        </>
       )
 
       : (

@@ -78,6 +78,9 @@ function App() {
     if (!movie.country) {
       movie.country = 'none';
     }
+    if (!movie.nameEN) {
+      movie.nameEN = 'none';
+    }
     mainApi.likeMovie(movie, localStorage.getItem('jwt'))
       .then((resWithLikedMovie) => {
         setLikedMovies([...likedMovies, resWithLikedMovie]);
@@ -200,6 +203,7 @@ function App() {
     /* Выход из аккаунта */
     localStorage.removeItem('jwt');
     localStorage.removeItem('movies');
+    localStorage.removeItem('searchKey');
     setLoggedIn(false);
     history.push('/signin');
     setUser({

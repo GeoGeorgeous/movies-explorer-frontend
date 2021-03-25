@@ -55,6 +55,11 @@ function SearchForm(props) {
       setUserInput(savedSearchKey);
       onFormSubmit(userInput);
     }
+
+    return function () {
+      localStorage.removeItem('searchKey');
+      setUserInput('');
+    };
   }, []);
 
   isErrorShown

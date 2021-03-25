@@ -18,7 +18,7 @@ function MoviesCard(props) {
     duration: PropTypes.number.isRequired, // Длительность в минутах
     cover: PropTypes.object.isRequired, // Изображение карточки
     title: PropTypes.string.isRequired, // Название фильма
-    trailerLink: PropTypes.string.isRequired,
+    trailerLink: PropTypes.string,
     defMovieLike: PropTypes.func.isRequired,
   };
 
@@ -56,7 +56,7 @@ function MoviesCard(props) {
     onMouseLeave={(e) => setHovered(false)}
     className="movies-card">
       <a
-      href={trailerLink} target="_blank" className="movies-card__cover">
+      href={trailerLink ? trailerLink : ''} target="_blank" className="movies-card__cover">
         <img src={movieImage} className="movies-card__cover-image" alt={title} />
       </a>
       <h4 className="movies-card__title">{title}</h4>
