@@ -1,15 +1,35 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
+function SavedMovies(props) {
+  const {
+    movies, loading, getMovies, toggleMovieLike, defMovieLike, updateMovies,
+  } = props;
   const [showShortMovies, setShowShortMovies] = React.useState(true);
+  const [searchKeyWords, setSearchKeyWords] = React.useState('');
 
-  function onCheckBoxToggle(isCheckBoxChecked) {
+  const onCheckBoxToggle = (isCheckBoxChecked) => {
     setShowShortMovies(isCheckBoxChecked);
-  }
+  };
+
+  const onFormSubmit = (userInput) => {
+    setSearchKeyWords(userInput); // Ключевые слова для фильтрации
+  };
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  useEffect(() => { // Изменение количества отображаемых фильмов при изменении стейта
+    const savedSearchKey = localStorage.getItem('searchKey');
+    if (savedSearchKey) {
+      getMovies();
+      setSearchKeyWords(savedSearchKey);
+    }
+  }, []);
 
   return (
     <>
@@ -17,10 +37,17 @@ function SavedMovies() {
         loggedIn
       />
       <SearchForm
-        onCheckBoxToggle={onCheckBoxToggle}/>
+        onCheckBoxToggle={onCheckBoxToggle}
+        onFormSubmit={onFormSubmit}
+      />
       <MoviesCardList
-        onlyFavourite
         showShortMovies={showShortMovies}
+        movies={movies}
+        searchKey={searchKeyWords}
+        isLoading={loading}
+        defMovieLike={defMovieLike}
+        handleMovieLike={toggleMovieLike}
+        favouriteOnly
       />
     </>
   );

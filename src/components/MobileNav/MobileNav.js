@@ -25,31 +25,29 @@ function MobileNav(props) {
   };
 
   return (
-    <>
-      <div className={`mobile-nav__popup mobile-nav__popup${showPopUpClass}`}>
-        <nav className={`mobile-nav mobile-nav${showPopUpClass}`}>
-          <ul className="mobile-nav__links">
-            <li className="mobile-nav__link-item">
-              <Link to="/" className="mobile-nav__link">Главная</Link>
-            </li>
-            <li className="mobile-nav__link-item">
-              <Link to="/movies" className={`mobile-nav__link ${moviesActive}`}>Фильмы</Link>
-            </li>
-            <li className="mobile-nav__link-item">
-              <Link to="/saved-movies" className={`mobile-nav__link ${savedMoviesActive}`}>Сохранённые фильмы</Link>
-            </li>
-          </ul>
-          <Button
-            size="wide"
-            color="gray"
-            formFactor="extra-round"
-            text="Аккаунт"
-            url="/profile"
-          />
-          <button type="button" aria-label="Закрыть меню" className="mobile-nav__close-button" onClick={handlePopupClose} />
-        </nav>
-      </div>
-    </>
+    <div className={`mobile-nav__popup mobile-nav__popup${showPopUpClass}`}>
+      <nav className={`mobile-nav mobile-nav${showPopUpClass}`}>
+        <ul className="mobile-nav__links">
+          <li className="mobile-nav__link-item">
+            <Link to="/" className="mobile-nav__link">Главная</Link>
+          </li>
+          <li className="mobile-nav__link-item">
+            <Link to="/movies" className={`mobile-nav__link ${moviesActive}`}>Фильмы</Link>
+          </li>
+          <li className="mobile-nav__link-item">
+            <Link to="/saved-movies" className={`mobile-nav__link ${savedMoviesActive}`}>Сохранённые фильмы</Link>
+          </li>
+        </ul>
+        <Button
+          size="wide"
+          color="gray"
+          formFactor="extra-round"
+          text="Аккаунт"
+          url="/profile"
+        />
+        <button type="button" aria-label="Закрыть меню" className="mobile-nav__close-button" onClick={handlePopupClose} />
+      </nav>
+    </div>
   );
 }
 
