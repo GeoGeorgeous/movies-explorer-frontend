@@ -27,11 +27,6 @@ function Register(props) {
     // Отправляем запрос:
     signup(name, email, password);
 
-    // Сбрасываем стейты:
-    setName('');
-    setEmail('');
-    setPassword('');
-
     // Делаем форму невалидной:
     setFormValidity(false);
   };

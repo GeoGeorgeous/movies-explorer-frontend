@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import './MoviesCard.css';
 import PropTypes from 'prop-types';
 import noCover from '../../images/no-cover.png';
+import calcDuration from '../../utils/calcDuration';
 
 function MoviesCard(props) {
   const {
@@ -21,17 +22,6 @@ function MoviesCard(props) {
     trailerLink: PropTypes.string,
     defMovieLike: PropTypes.func.isRequired,
   };
-
-
-  function calcDuration(movieDurationInMinutes) {
-    /*
-    Вычисляет длительность фильма в часах и минутах
-    и возвращает строку вида '2ч 14м'
-    */
-    const hours = Math.floor(movieDurationInMinutes / 60);
-    const minutes = Math.floor(movieDurationInMinutes - hours * 60);
-    return `${hours}ч ${minutes}м`;
-  }
 
   function onChange(e) {
     handleMovieLike(wholeMovie, isChecked);

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import MovieFilter from '../MovieFilter/MovieFilter';
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
+import MOVIES_AMOUNT_BY_DEVICE from '../../utils/constants'
 
 function MoviesCardList(props) {
   const {
@@ -40,8 +41,8 @@ function MoviesCardList(props) {
   };
 
   // Количество фильмов, показываемых изначально (до нажатия на кнопку загрузить ещё)
-  const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(6);
-  const [addMoreCount, setAddMoreCount] = React.useState(3);
+  const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(MOVIES_AMOUNT_BY_DEVICE.DEFAULT.VISIBLE);
+  const [addMoreCount, setAddMoreCount] = React.useState(MOVIES_AMOUNT_BY_DEVICE.DEFAULT.ADDMORE);
   const [screenWidth, setScreenWidth] = React.useState(0);
   let foundMovies = 0; // Количество найденных фильмов
   /*
@@ -160,16 +161,16 @@ function MoviesCardList(props) {
   useEffect(() => {
     screenWidth;
     if (screenWidth <= 480) {
-      setVisibleMoviesCount(5);
-      setAddMoreCount(2);
+      setVisibleMoviesCount(MOVIES_AMOUNT_BY_DEVICE.SMALL.VISIBLE);
+      setAddMoreCount(MOVIES_AMOUNT_BY_DEVICE.SMALL.ADDMORE);
     }
     if (screenWidth > 480 && screenWidth <= 768) {
-      setVisibleMoviesCount(8);
-      setAddMoreCount(2);
+      setVisibleMoviesCount(MOVIES_AMOUNT_BY_DEVICE.MEDIUM.VISIBLE);
+      setAddMoreCount(MOVIES_AMOUNT_BY_DEVICE.MEDIUM.ADDMORE);
     }
     if (screenWidth > 768) {
-      setVisibleMoviesCount(12);
-      setAddMoreCount(3);
+      setVisibleMoviesCount(MOVIES_AMOUNT_BY_DEVICE.LARGE.VISIBLE);
+      setAddMoreCount(MOVIES_AMOUNT_BY_DEVICE.LARGE.ADDMORE);
     }
   }, [screenWidth]);
 

@@ -27,10 +27,6 @@ function Login(props) {
     // Отправляем запрос:
     login(email, password);
 
-    // Сбрасываем стейты:
-    setEmail('');
-    setPassword('');
-
     // Делаем форму невалидной:
     setFormValidity(false);
   };
