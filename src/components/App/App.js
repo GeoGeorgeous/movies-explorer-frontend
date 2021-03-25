@@ -27,21 +27,30 @@ function App() {
 
   const history = useHistory();
 
-  const getFavouriteMovies = () => {
+  const fetchFavouriteMovies = () => {
+    /*
+      Отправляет запрос на API /movies/, получает пролайканные фильмы
+      и устаналивает стейт likedMovies с массив пролайканных фильмов.
+    */
     mainApi.getFavouriteMovies(localStorage.getItem('jwt')) // Фетчим любимые фильмы
       .then((favouriteMovies) => { // Перебираем любимые фильмы
         setLikedMovies(favouriteMovies);
+        // return movies // Находим пролайканные фильмы среди всех фильмов
+        //     .filter((movie) => favouriteMovies
+        //     .some((likedMovie) => likedMovie.movieId === movie.id))
       })
-      .catch((message) => { console.log(message); });
+      .catch((err) => {
+          console.log(err.message);
+          setLikedMovies([])
+      })
   };
 
-  function filterMoviesByFavourites() {
-    return movies.filter((movie) => likedMovies.some((item) => item.movieId === movie.id));
-  }
-
-  const getMoviesFromLocalStorage = () => {
+  const fetchOriginalMovies = () => {
+    /*
+      Отправляет запрос на API BeatFilm, получает 100 фильмов,
+      устаналивает их в стейт movies.
+    */
     const moviesFromLocalStorage = localStorage.getItem('movies');
-    console.log(moviesFromLocalStorage);
     if (moviesFromLocalStorage) {
       setMovies(JSON.parse(moviesFromLocalStorage));
     } else {
@@ -52,30 +61,46 @@ function App() {
         })
         .catch((err) => console.log(err));
     }
-  };
+  }
 
   const getMovies = () => {
+    /*
+      Проверяем, есть ли фильмы в LocalStorage, если нет, получаем их
+      Также, получаем уже пролайканные фильмы
+    */
     setLoading(true); // Включаем прелоудер
-    getMoviesFromLocalStorage(); // Достаём фильмы из Local Storage или отправляем запрос к API
-    getFavouriteMovies(); // Достаём любимые фильмы
+    fetchOriginalMovies(); // Достаём фильмы из Local Storage или отправляем запрос к API
+    fetchFavouriteMovies(); // Достаём любимые фильмы
     setLoading(false); // Выключает прелоудер
   };
 
+  function filterMoviesByFavourites() {
+    return movies.filter((movie) => likedMovies.some((item) => item.movieId === movie.id));
+  }
+
   const likeMovie = (movie) => {
+    movie.country
+    ? movie.country = movie.country
+    : movie.country = 'none'
     mainApi.likeMovie(movie, localStorage.getItem('jwt'))
       .then((resWithLikedMovie) => {
         setLikedMovies([...likedMovies, resWithLikedMovie]);
         console.log(`Фильм «${movie.nameRU}» успешно лайкнут!`);
+        fetchFavouriteMovies();
       })
-      .then(true)
       .catch((err) => console.log(err));
   };
 
   const dislikeMovie = (movie) => {
-    const movieId = likedMovies.find((likedMovie) => likedMovie.movieId === movie.id)._id;
-    mainApi.deleteMovieLike(movieId, localStorage.getItem('jwt'))
+    if (!movie._id) {
+      movie._id =
+        likedMovies
+          .find((likedMovie) => likedMovie.id === movie.id)._id;
+    }
+    mainApi.deleteMovieLike(movie._id, localStorage.getItem('jwt'))
       .then((success) => {
         console.log(success);
+        fetchFavouriteMovies();
       })
       .catch((err) => console.log(err));
   };
@@ -86,7 +111,8 @@ function App() {
       : likeMovie(movie);// Не стоит, нужно поставить
   };
 
-  const defMovieLike = (movie) => likedMovies.some((likedMovie) => likedMovie.movieId === movie.id);
+  const defMovieLike = (movie) => {
+    return likedMovies.some((likedMovie) => likedMovie.id === movie.id)};
 
   function keepOnlyFavourite() {
     return movies
@@ -179,6 +205,7 @@ function App() {
   const logout = () => {
     /* Выход из аккаунта */
     localStorage.removeItem('jwt');
+    localStorage.removeItem('movies');
     setLoggedIn(false);
     history.push('/signin');
     setUser({
@@ -229,11 +256,12 @@ function App() {
             path="/saved-movies"
             component={SavedMovies}
             isLoggedIn={isLoggedIn}
+            movies={likedMovies}
             loading={loading}
+            getMovies={getMovies}
             toggleMovieLike={toggleMovieLike}
             defMovieLike={defMovieLike}
-            filterMoviesByFavourites={filterMoviesByFavourites}
-            movies={movies}
+            updateMovies={fetchFavouriteMovies}
             keepOnlyFavourite={keepOnlyFavourite}
           />
           <ProtectedRoute

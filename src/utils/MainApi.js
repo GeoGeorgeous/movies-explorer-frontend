@@ -77,7 +77,7 @@ class MainApi {
         Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({
-        movieId: movie.id,
+        id: movie.id,
         country: movie.country,
         director: movie.director,
         duration: movie.duration,

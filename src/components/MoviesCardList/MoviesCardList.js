@@ -122,8 +122,9 @@ function MoviesCardList(props) {
   };
 
   const returnFavouriteMoviesMarkUp = () => {
-  return (<>
-      <section className="movies-card-list">
+  return (
+    movies.length > 0
+    ? <section className="movies-card-list">
         <MovieFilter // Фильтрует фильмы и возвращает разметку
           movies={movies} // Массив фильмов * Object
           moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
@@ -135,7 +136,12 @@ function MoviesCardList(props) {
           onlyFavourite
         />
       </section>
-    </>)
+
+      : <section className="movies-card-list__welcome-screen">
+        <p className="movies-card-list__message">
+           Вы ещё не сохранили ни одного фильма.
+        </p>
+         </section>)
   };
 
   useEffect(() => {

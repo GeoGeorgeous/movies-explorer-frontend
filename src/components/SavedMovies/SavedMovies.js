@@ -5,10 +5,9 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies(props) {
-  const {movies, loading, getMovies, toggleMovieLike, defMovieLike, keepOnlyFavourite, filterMoviesByFavourites} = props
+  const {movies, loading, getMovies, toggleMovieLike, defMovieLike, updateMovies } = props
   const [showShortMovies, setShowShortMovies] = React.useState(true);
   const [searchKeyWords, setSearchKeyWords] = React.useState('');
-  const [favouriteMovies, setFavouriteMovies] = React.useState([]);
 
   const onCheckBoxToggle = (isCheckBoxChecked) => {
     setShowShortMovies(isCheckBoxChecked);
@@ -20,9 +19,8 @@ function SavedMovies(props) {
   };
 
   useEffect( () => {
-    setFavouriteMovies(filterMoviesByFavourites());
-    console.log(favouriteMovies);
-  }, [movies]);
+    getMovies();
+  }, []);
 
 
   return (
@@ -36,7 +34,7 @@ function SavedMovies(props) {
       />
       <MoviesCardList
         showShortMovies={showShortMovies}
-        movies={favouriteMovies}
+        movies={movies}
         searchKey={searchKeyWords}
         isLoading={loading}
         defMovieLike={defMovieLike}
