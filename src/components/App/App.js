@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { UserContext } from '../../contexts/userContext';
@@ -31,20 +32,32 @@ function App() {
       .then((favouriteMovies) => { // Перебираем любимые фильмы
         setLikedMovies(favouriteMovies);
       })
-      .catch((err) => { console.log(err); });
+      .catch((message) => { console.log(message); });
   };
 
   function filterMoviesByFavourites() {
     return movies.filter((movie) => likedMovies.some((item) => item.movieId === movie.id));
   }
 
+  const getMoviesFromLocalStorage = () => {
+    const moviesFromLocalStorage = localStorage.getItem('movies');
+    console.log(moviesFromLocalStorage);
+    if (moviesFromLocalStorage) {
+      setMovies(JSON.parse(moviesFromLocalStorage));
+    } else {
+      moviesApi.getFilms() // Отправляем запрос на получение фильмов
+        .then((moviesFromAPI) => {
+          localStorage.setItem('movies', JSON.stringify(moviesFromAPI));
+          setMovies(moviesFromAPI);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   const getMovies = () => {
     setLoading(true); // Включаем прелоудер
-    moviesApi.getFilms() // Отправляем запрос на получение фильмов
-      .then((films) => {
-        setMovies(films);
-      });
-    getFavouriteMovies();
+    getMoviesFromLocalStorage(); // Достаём фильмы из Local Storage или отправляем запрос к API
+    getFavouriteMovies(); // Достаём любимые фильмы
     setLoading(false); // Выключает прелоудер
   };
 
