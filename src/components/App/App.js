@@ -85,7 +85,7 @@ function App() {
       .then((resWithLikedMovie) => {
         setLikedMovies([...likedMovies, resWithLikedMovie]);
         console.log(`Фильм «${movie.nameRU}» успешно лайкнут!`);
-        fetchFavouriteMovies();
+        // fetchFavouriteMovies();
       })
       .catch((err) => console.log(err));
   };
