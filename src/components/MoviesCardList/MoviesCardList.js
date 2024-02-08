@@ -1,93 +1,190 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable */
+import React, { useEffect } from 'react';
 import './MoviesCardList.css';
 import PropTypes from 'prop-types';
-import MoviesCard from '../MoviesCard/MoviesCard';
+import MovieFilter from '../MovieFilter/MovieFilter';
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
-import movies from '../../utils/moviesDB';
-
-const moviesPerPage = 6; // Сколько фильмов отображать в начале
-const moviesPerAdding = 3; // Сколько фильмов добавляет кнопка «Ещё»
-// let arrayForHoldingMovies = []; // Массив для хранения фильмов
+import MOVIES_AMOUNT_BY_DEVICE from '../../utils/constants'
 
 function MoviesCardList(props) {
-  const { onlyFavourite, showShortMovies } = props;
+  const {
+    movies, showShortMovies, searchKey, isLoading, handleMovieLike, favouriteOnly, defMovieLike,
+  } = props;
+
   MoviesCardList.propTypes = {
-    onlyFavourite: PropTypes.bool.isRequired, // Показывать только любимые фильмы?
-    showShortMovies: PropTypes.bool.isRequired, // Показывать только полнометражные фильмы?
-  };
-  let arrayForHoldingMovies = []; // Массив для хранения фильмов
-  // Стейт для фильмов, которые отображаются на странице
-  const [moviesToShow, setMoviesToShow] = useState([]);
-  const [next, setNext] = useState(6); // Стейт для следующих фильмов
-  const [isAdding, setAdding] = useState(false); // Стейт для показа прелоудера
-  const [isShowShortMoviesOn, setShowShortMoviesOn] = useState(true);
-  const [isShowFavouriteMoviesOnlyOn, setShowFavouriteMoviesOnlyOn] = useState(false);
-
-  const filterMovies = (movie) => {
-    let durationCheck;
-    let favouriteCheck;
-
-    isShowShortMoviesOn
-      ? durationCheck = 0
-      : durationCheck = 40;
-
-    isShowFavouriteMoviesOnlyOn
-      ? favouriteCheck = 0
-      : favouriteCheck = -1;
-
-    const pass = (movie.duration >= durationCheck && movie.isFavourite > favouriteCheck);
-    return pass;
+    movies: PropTypes.arrayOf(PropTypes.shape({ // Массив объектов с фильмами * Object
+      country: PropTypes.string,
+      created_at: PropTypes.string,
+      description: PropTypes.string,
+      director: PropTypes.string,
+      duration: PropTypes.number,
+      id: PropTypes.number,
+      // eslint-disable-next-line react/forbid-prop-types
+      image: PropTypes.object,
+      nameEN: PropTypes.string,
+      nameRU: PropTypes.string,
+      trailerLink: PropTypes.string,
+      updated_at: PropTypes.string,
+      year: PropTypes.string,
+    })).isRequired,
+    showShortMovies: PropTypes.bool.isRequired, // Показывать короткий метр? * Bool
+    searchKey: PropTypes.string.isRequired, // Ключевые слова для поиска фильмов * String
+    isLoading: PropTypes.bool.isRequired, // Промис pending? * Bool
+    handleMovieLike: PropTypes.func.isRequired,
+    favouriteOnly: PropTypes.bool,
+    defMovieLike: PropTypes.func.isRequired,
   };
 
-  // Обрезает массив фильмов и передаёт новый массив
-  const loopWithSlice = (start, end) => {
-    const slicedMovies = movies.slice(start, end);
-    arrayForHoldingMovies = [...moviesToShow, ...slicedMovies];
-    setMoviesToShow(arrayForHoldingMovies);
+  MoviesCardList.defaultProps = {
+    favouriteOnly: false,
   };
+
+  // Количество фильмов, показываемых изначально (до нажатия на кнопку загрузить ещё)
+  const [visibleMoviesCount, setVisibleMoviesCount] = React.useState(MOVIES_AMOUNT_BY_DEVICE.DEFAULT.VISIBLE);
+  const [addMoreCount, setAddMoreCount] = React.useState(MOVIES_AMOUNT_BY_DEVICE.DEFAULT.ADDMORE);
+  const [screenWidth, setScreenWidth] = React.useState(0);
+  let foundMovies = 0; // Количество найденных фильмов
+  /*
+    Warning: Cannot update a component (`MoviesCardList`)
+    while rendering a different component (`MovieFilter`).
+    To locate the bad setState() call inside `MovieFilter`,
+    follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+  */
+  const [moviesFound, setMoviesFoundAmount] = React.useState(0); // Стейт найденных
 
   // Обработчик нажатия кнопки добавления фильмов «Ещё»
   const handleShowMoreMovies = () => {
-    loopWithSlice(next, next + moviesPerAdding); // Готовим новый массив фильмов
-    setNext(next + moviesPerAdding); // Меняем начальную точку для следующего добавления
-    setAdding(false); // Скрываем прелоудер
+    setVisibleMoviesCount(visibleMoviesCount + addMoreCount);
   };
 
-  // Хардкод для проверки прелоудера
-  const handleShowMoreMoviesWithTimeout = () => {
-    setAdding(true); // Показываем прелоудер
-    setTimeout(handleShowMoreMovies, 2000);
+  const handleButtonAppear = () => {
+    if (moviesFound > visibleMoviesCount) { // Логика показывания / скрывания кнопки «Ещё»
+      return <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMovies}>Ещё</button>;
+    }
+    if (moviesFound === 0) {
+      return (
+        <p className="movies-card-list__message">
+          {favouriteOnly ? 'Похоже, что такой фильмы вы не сохраняли.' : 'Ничего не найдено.'}
+        </p>
+      );
+    }
+    return (
+      <p className="movies-card-list__message">
+        {searchKey ? `Показаны все [${moviesFound}] найденные фильмы по запросу «${searchKey}»` : `Сохранённых фильмов: [${moviesFound}]`}
+      </p>
+    );
   };
+
+  // Задаём стейт shownEnough в зависимости от количество найденныхи показанных фильмов
+  const handleFoundMoviesAmount = (foundMoviesCounter) => {
+    foundMovies = foundMoviesCounter;
+  };
+
+  // Возвращает разметку заданного поиска
+  const returnSearchHandlingMarkUp = () => {
+    if (searchKey === '') {
+      return (
+        <section className="movies-card-list__welcome-screen">
+          <p className="movies-card-list__message">
+            Введите название или ключевые слова в строку поиска, чтобы найти фильмы.
+          </p>
+        </section>
+      );
+    }
+    return (isLoading
+      ? <Preloader /> // Если ищем фильмы, то покажем прелоудер, пока они загружаются
+      : ( // Если фильмы найдены, передадим компоненту MovieFilter нужные пропсы
+        <>
+          <section className="movies-card-list">
+            <MovieFilter // Фильтрует фильмы и возвращает разметку
+              movies={movies} // Массив фильмов * Object
+              moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
+              showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
+              searchKey={searchKey} // Ключевые слова * String
+              handleFoundMoviesAmount={handleFoundMoviesAmount} // Обработчик количества найденных фильмов
+              handleMovieLike={handleMovieLike} // Обработчик изменения лайка фильма
+              defMovieLike={defMovieLike} // Определяет, лайкнут ли фильм
+            />
+          </section>
+          { handleButtonAppear() }
+        </>
+      )
+    );
+  };
+
+  const returnFavouriteMoviesMarkUp = () => (
+    movies.length > 0
+      ? (
+        <>
+        <section className="movies-card-list">
+          <MovieFilter // Фильтрует фильмы и возвращает разметку
+            movies={movies} // Массив фильмов * Object
+            moviesPerPage={visibleMoviesCount} // Фильмов на странице * Number
+            showShortMovies={showShortMovies} // Показывать короткометражки? * Bool
+            searchKey={searchKey} // Ключевые слова * String
+            handleFoundMoviesAmount={handleFoundMoviesAmount} // Обработчик количества найденных фильмов
+            handleMovieLike={handleMovieLike} // Обработчик изменения лайка фильма
+            defMovieLike={defMovieLike} // Определяет, лайкнут ли фильм
+            onlyFavourite
+          />
+        </section>
+        { handleButtonAppear() }
+        </>
+      )
+
+      : (
+        <section className="movies-card-list__welcome-screen">
+          <p className="movies-card-list__message">
+            Вы ещё не сохранили ни одного фильма.
+          </p>
+        </section>
+      ));
+
+
+  function setNewWidth() {
+    setScreenWidth(window.innerWidth);
+  }
 
   useEffect(() => {
-    loopWithSlice(0, moviesPerPage);
+    function handleScreenResize() {
+      setTimeout(setNewWidth, 600);
+    }
+
+    window.addEventListener('resize', handleScreenResize);
+
+    return function () {
+      window.removeEventListener('resize', handleScreenResize);
+    };
   }, []);
 
-  useEffect(() => { // Обновляем стейт при изменении пропа
-    setShowShortMoviesOn(showShortMovies);
-    setShowFavouriteMoviesOnlyOn(onlyFavourite);
-  }, [props]);
+  useEffect(() => {
+    screenWidth;
+    if (screenWidth <= 480) {
+      setVisibleMoviesCount(MOVIES_AMOUNT_BY_DEVICE.SMALL.VISIBLE);
+      setAddMoreCount(MOVIES_AMOUNT_BY_DEVICE.SMALL.ADDMORE);
+    }
+    if (screenWidth > 480 && screenWidth <= 768) {
+      setVisibleMoviesCount(MOVIES_AMOUNT_BY_DEVICE.MEDIUM.VISIBLE);
+      setAddMoreCount(MOVIES_AMOUNT_BY_DEVICE.MEDIUM.ADDMORE);
+    }
+    if (screenWidth > 768) {
+      setVisibleMoviesCount(MOVIES_AMOUNT_BY_DEVICE.LARGE.VISIBLE);
+      setAddMoreCount(MOVIES_AMOUNT_BY_DEVICE.LARGE.ADDMORE);
+    }
+  }, [screenWidth]);
+
+  useEffect(() => {
+    setMoviesFoundAmount(foundMovies);
+  }, [handleFoundMoviesAmount]);
 
   return (
     <>
-      <section className="movies-card-list">
-        {moviesToShow && moviesToShow
-          .filter(filterMovies)
-          .map((movie) => (
-            <MoviesCard
-              key={movie._id}
-              uniqueId={movie._id}
-              duration={movie.duration}
-              cover={movie.cover}
-              title={movie.title}
-              isFavourite={movie.isFavourite}
-            />
-          ))}
-      </section>
-      {isAdding
-        ? <Preloader />
-        : <button className="movies-card-list__load-more" type="button" onClick={handleShowMoreMoviesWithTimeout}>Ещё</button>}
+      {
+        favouriteOnly
+          ? returnFavouriteMoviesMarkUp() // Если ещё ничего не искали, то показать welcome-screen
+          : returnSearchHandlingMarkUp()
+      }
       <Footer />
     </>
   );
